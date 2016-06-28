@@ -1,3 +1,19 @@
-ga_core_homepage:
+ga_core_annonce:
     path:     /
-    defaults: { _controller: GACoreBundle:Default:index }
+    defaults: { _controller: GACoreBundle:Annonce:index }
+
+ga_core_mono:
+    path:     /tournois-autres
+    defaults: { _controller: GACoreBundle:Mono:index }
+
+ga_core_multi:
+    path:     /tournois
+    defaults: { _controller: GACoreBundle:Multi:index }
+
+ga_core_agenda:
+    path:     /agenda
+    defaults: { _controller: GACoreBundle:Agenda:index }
+
+ga_core_static:
+    path:     /autres
+    defaults: { _controller: GACoreBundle:Static:index }
