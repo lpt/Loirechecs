@@ -1,0 +1,4 @@
+services:
+#    ga_core.example:
+#        class: GA\CoreBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
