@@ -1,22 +1,104 @@
 ga_core_annonce:
-    path:     /
+    path:     /{page}
     defaults:  
         _controller: GACoreBundle:Annonce:index 
+        page:    1
+    requirements:
+        page: \d*
+
+ga_core_annonce_id:
+    path:     /news/{id}
+    defaults:  
+        _controller: GACoreBundle:Annonce:view
+        requirements:
+        id: \d*
+
+ga_core_annonce_add:
+    path:   /admin/news/add/{type}
+    defaults:
+        _controller: GACoreBundle:Annonce:add
+
+ga_core_annonce_edit:
+    path:   /admin/news/edit/{id}
+    defaults:
+        _controller: GACoreBundle:Annonce:edit
+
+ga_core_annonce_delete:
+    path:   /admin/news/delete/{id}
+    defaults:
+        _controller: GACoreBundle:Annonce:delete
 
 ga_core_mono:
-    path:     /tournois-autres
+    path:     /tournois-autres/{id}
     defaults:
-        _controller: GACoreBundle:Mono:index 
+        _controller: GACoreBundle:Mono:view 
+        requirements:
+        id: \d*
+
+ga_core_mono_add:
+    path:   /admin/tournois-autres/add
+    defaults:
+        _controller: GACoreBundle:Mono:add
+
+ga_core_mono_edit:
+    path:   /admin/tournois-autres/edit/{id}
+    defaults:
+        _controller: GACoreBundle:Mono:edit
+        requirements:
+        id: \d*
+
+ga_core_mono_delete:
+    path:   /admin/tournois-autres/delete/{id}
+    defaults:
+        _controller: GACoreBundle:Mono:delete
+        requirements:
+        id: \d*
 
 ga_core_multi:
-    path:     /tournois
+    path:     /tournois/{id}
     defaults: 
-        _controller: GACoreBundle:Multi:index 
+        _controller: GACoreBundle:Multi:view
+        requirements:
+        id: \d*
+
+ga_core_multi_add:
+    path:   /admin/tournois/add
+    defaults:
+        _controller: GACoreBundle:Multi:add
+
+ga_core_multi_edit:
+    path:   /admin/tournois/edit/{id}
+    defaults:
+        _controller: GACoreBundle:Multi:edit
+        requirements:
+        id: \d*
+
+ga_core_multi_delete:
+    path:   /admin/tournois/delete/{id}
+    defaults:
+        _controller: GACoreBundle:Multi:delete
+        requirements:
+        id: \d*
 
 ga_core_agenda:
     path:     /agenda
     defaults:
         _controller: GACoreBundle:Agenda:index 
+
+ga_core_agenda_add:
+    path:     /admin/agenda/add
+    defaults:
+        _controller: GACoreBundle:Agenda:add
+
+ga_core_agenda_edit:
+    path:     /admin/agenda/edit
+    defaults:
+        _controller: GACoreBundle:Agenda:edit 
+
+ga_core_agenda_delete:
+    path:     /admin/agenda/delete
+    defaults:
+        _controller: GACoreBundle:Agenda:delete
 
 ga_core_static_presentation:
     path:    /presentation
