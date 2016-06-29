@@ -1,0 +1,99 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>{% block title %}Loire Echecs{% endblock %}</title>
+
+		{% block stylesheets %}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/temp/loirechecs.css">
+		{% endblock %}
+	</head>
+	
+	<body>
+		<div class="container">
+			<div id="bloc" class="row">
+				<div class="col-lg-12">
+					<header>
+						<div class="jumbotron">
+							<div class="row">
+								<div class="col-sm-2 hidden-xs"><p><img src="/documents/images/calque_logo_loirechec.png" alt="logo" id="logo"/></p>
+								</div>
+								<div class="col-sm-10 text-center"><h1> Comité Loire Echecs </h1></div> 
+								</div>
+							</div>
+					</header>
+		
+					<nav class="navbar navbar-default">
+						<div class="container">
+							<div >
+								<ul class="nav navbar-nav">
+									<li class="active"><a href="/app_dev.php"><span class="glyphicon glyphicon-home"></span></a></li>
+									<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Comité Loire Echecs <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="{{ path('ga_core_static_presentation') }}">Présentation</a></li>
+										<li><a href="{{ path('ga_core_static_organigramme') }}">Organigramme</a></li>
+										<li><a href="{{ path('ga_core_static_clubs') }}">Les clubs</a></li>
+										<li><a href="{{ path('ga_core_static_tarif') }}">Tarif des licences</a></li>
+									</ul>
+									</li>
+									<li><a href="{{ path('ga_core_agenda') }}">Agenda</a></li>
+									
+									{# devra récupérer la liste des tournois (nom, saison, catégorie, type)#}
+									<li class="dropdown">
+										<a  class="dropdown-toggle" data-toggle="dropdown"  href="#"> Compétition adulte<span class="caret"></span>
+										</a>
+										<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+											<li class="dropdown-submenu">
+												<a tabindex="-1" href="#">Principaux</a>
+												<ul class="dropdown-menu">
+													<li class="dropdown-submenu">
+													<a href="#">Nom du tournoi</a>
+													<ul class="dropdown-menu">
+														<li><a href="#">saison</a></li>
+														<li><a href="#">saison</a></li>
+													</ul>
+													</li>
+												
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li><a href="{{ path('ga_core_static_admin') }}">Espace reservé</a></li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+					
+					<article>
+					{% block core_body %}
+					{% endblock %}
+					</article>
+					
+					<footer>
+						<div class="row">
+							<div class="col-lg-4 col-lg-offset-4">
+								<div class="btn-group ">
+								<a href="/vues/organigramme.php" class="btn btn_link" ><span class="glyphicon glyphicon-envelope" ></span> Contacts</a>
+								<a type="button" class="btn btn-link" href="/vues/liens.php"><span class="glyphicon glyphicon-book" ></span> Liens</a>
+								<a type="button" class="btn btn-link" href="/vues/infos.php"><span class="glyphicon glyphicon-info-sign" ></span> Infos</a>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+  {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+
+	</body>
+</html>

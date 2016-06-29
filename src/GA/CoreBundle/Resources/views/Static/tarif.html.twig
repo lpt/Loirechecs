@@ -1,0 +1,82 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+  <h3> Tarif des licences </h3>
+
+<p><strong>La licence A</strong><br />
+Elle peut être assimilée a une <strong>licence sportive</strong>.<br />
+Elle permet de participer à toutes compétitions de la FFE, en particulier aux compétitions 
+homologuées pour le le classement Elo et FIDE ainsi qu'aux compétitions par équipes.</p>
+
+<p><strong>La licence B</strong><br />
+Elle peut être assimilée a une <strong>licence loisir</strong>.<br />
+Elle permet d'être couvert par l'assurance de la FFE et de participer aux tournois en parties rapides
+(moins d'1 heure et d'obtenir un classement rapide</p>
+
+<p>La licence est valable <strong>du 1er septembre au 31 août.</strong></p>
+
+<p>La licence A comme la licence B permettent à leur détenteur d'exercer une fonction de dirigeant
+au sein d'un club affilé à la FFE.</p>
+
+<p>Seuls les clubs affilés à la FFE sont habilités à délivrer une licence à un joueur.</p>
+
+<p><strong> Tarifs d'affiliation dans la Ligue du Lyonnais pour la saison 2015-2016 </strong></p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Catégorie d'âge</th>
+			<th>licence A</th>
+			<th>licence B</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Senior (né en 1995 et avant)</td>
+			<td>45 €</td>
+			<td>8 €</td>
+		</tr>
+		<tr>
+			<td>Junior (né en 1996 ou 1997)</td>
+			<td>25 €</td>
+			<td>3 €</td>
+		</tr>
+		<tr>
+			<td>Cadet (né en 1998 ou 1999)</td>
+			<td>25 €</td>
+			<td>3 €</td>
+		</tr>
+		<tr>
+			<td>Minime (né en 2000 ou 2001)</td>
+			<td>15.50 €</td>
+			<td>3 €</td>
+		</tr>
+		<tr>
+			<td>Benjamin (né en 2002 ou 2003)</td>
+			<td>15.50 €</td>
+			<td>3 €</td>
+		</tr>
+		<tr>
+			<td>Pupille (né en 2004 ou 2005)</td>
+			<td>13.50 €</td>
+			<td>3 €</td>
+		</tr>
+		<tr>
+			<td>Poussin (né en 2006 ou 2007)</td>
+			<td>13.50 €</td>
+			<td>3 €</td>
+		</tr>
+		<tr>
+			<td>Petit poussin (né en 2008 et après)td>
+			<td>13.50 €</td>
+			<td>3 €</td>
+		</tr>
+	</tbody>
+</table>
+
+{% endblock %}
