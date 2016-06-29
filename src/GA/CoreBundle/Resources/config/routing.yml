@@ -1,19 +1,44 @@
 ga_core_annonce:
     path:     /
-    defaults: { _controller: GACoreBundle:Annonce:index }
+    defaults:  
+        _controller: GACoreBundle:Annonce:index 
 
 ga_core_mono:
     path:     /tournois-autres
-    defaults: { _controller: GACoreBundle:Mono:index }
+    defaults:
+        _controller: GACoreBundle:Mono:index 
 
 ga_core_multi:
     path:     /tournois
-    defaults: { _controller: GACoreBundle:Multi:index }
+    defaults: 
+        _controller: GACoreBundle:Multi:index 
 
 ga_core_agenda:
     path:     /agenda
-    defaults: { _controller: GACoreBundle:Agenda:index }
+    defaults:
+        _controller: GACoreBundle:Agenda:index 
 
-ga_core_static:
-    path:     /autres
-    defaults: { _controller: GACoreBundle:Static:index }
+ga_core_static_presentation:
+    path:    /presentation
+    defaults:
+        _controller: GACoreBundle:Static:presentation
+
+ga_core_static_admin:
+    path:    /admin
+    defaults:
+        _controller: GACoreBundle:Static:admin
+
+ga_core_static_organigramme:
+    path:    /organigramme
+    defaults:
+        _controller: GACoreBundle:Static:organigramme
+
+ga_core_static_clubs:
+    path:    /clubs
+    defaults:
+        _controller: GACoreBundle:Static:clubs
+
+ga_core_static_tarif:
+    path:    /tarif
+    defaults:
+        _controller: GACoreBundle:Static:tarif

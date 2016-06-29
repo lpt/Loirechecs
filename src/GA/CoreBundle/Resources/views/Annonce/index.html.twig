@@ -1,1 +1,13 @@
-Hello World!
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+  <h2>Liste des news</h2>
+
+ <p> ici se trouvera la liste des news </p>
+
+{% endblock %}
