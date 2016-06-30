@@ -6,7 +6,24 @@
 
 {% block core_body %}
 
-  <h2>Voir une news</h2>
+	
+	<div class="row">
+					
+		<div class="well well-sm"  >
+						
+			<h4><strong>{{annonce.titre}} </strong>
+				<span class="label label-info"> Crée par {{annonce.auteur}} le {{ annonce.dateCreat|date('d/m/Y - H:i') }} </span>
+				</h4>
+						
+				<p>{{annonce.contenu}}</p>
+						
+				{% if annonce.dateCreat != annonce.dateModif %}
+				<p><span class="dateModif"><em>Modifiée par {{annonce.auteurModif}} le {{annonce.dateModif|date('d/m/Y - H:i')}}</em></span></p><br />
+				{% endif %}
+															
+		</div>
+					
+	</div>
 
 
 

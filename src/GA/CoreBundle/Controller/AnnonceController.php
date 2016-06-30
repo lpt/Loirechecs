@@ -27,8 +27,25 @@ class AnnonceController extends Controller
 		
 		public function viewAction($id)
 		{
-			//on récupère les éléments de l'annonce de l'annonce id=$id
-			return $this->render('GACoreBundle:Annonce:view.html.twig');
+			// On récupère le repository
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('GACoreBundle:Annonce');
+
+			// On récupère l'entité correspondante à l'id $id
+			$annonce = $repository->find($id);
+
+			// On verifie que l'Entity n'est pas null
+			if (null === $annonce) {
+				throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+			}
+		
+			// On envoie les données à la vue
+			
+			return $this->render('GACoreBundle:Annonce:view.html.twig', array(
+      'annonce' => $annonce
+			));
+	
 		}
 		
 		public function addAction($type)
