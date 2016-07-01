@@ -56,17 +56,11 @@ class Annonce
      */
     private $contenu;
 		
-		/**
-		* @var int
-		*
-		* @ORM\Column(name="type", type="integer")
-		*/
-		private $type;
-		
+				
 		/**
      * @var string
      *
-     * @ORM\Column(name="auteurModif", type="string", length=255)
+     * @ORM\Column(name="auteurModif", type="string", length=255, nullable=true)
      */
     private $auteurModif;
 		
@@ -210,31 +204,6 @@ class Annonce
     }
 		
 		
-
-    /**
-     * Set type
-     *
-     * @param integer $type
-     *
-     * @return Annonce
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return integer
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
     /**
      * Set auteurModif
      *

@@ -14,7 +14,7 @@ ga_core_annonce_id:
         id: \d*
 
 ga_core_annonce_add:
-    path:   /admin/news/add/{type}
+    path:   /admin/news/add
     defaults:
         _controller: GACoreBundle:Annonce:add
 

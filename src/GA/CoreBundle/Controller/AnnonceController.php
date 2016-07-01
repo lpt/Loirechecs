@@ -5,6 +5,12 @@ namespace GA\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use GA\CoreBundle\Entity\Annonce;
 
 class AnnonceController extends Controller
 {
@@ -15,14 +21,18 @@ class AnnonceController extends Controller
 			{
 				throw new notFoundHttpException('page "'.$page.'" inexistante');
 			}
-			// on affichera X news par pages 
+			// On récupère le repository
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('GACoreBundle:Annonce');
+				
+			$listeAnnonce  = $repository->findAll();
 			
-			// on calcul le nombre de page 
-			
-			// on affichera la page $page avec $nbrPages
-			
+			// on récupère la liste des news
 					
-      return $this->render('GACoreBundle:Annonce:index.html.twig');
+      return $this->render('GACoreBundle:Annonce:index.html.twig', array(
+      'listeAnnonce' => $listeAnnonce
+			));
     }
 		
 		public function viewAction($id)
@@ -48,10 +58,36 @@ class AnnonceController extends Controller
 	
 		}
 		
-		public function addAction($type)
+		public function addAction(Request $request)
 		{
-			//On ajoute une annonce en fonction du type => mono, multi ou divers
-			return $this->render('GACoreBundle:Annonce:add.html.twig');
+			$annonce = new Annonce();
+
+			$form = $this->get('form.factory')->createBuilder(FormType::class, $annonce)
+				->add('titre',     TextType::class)
+				->add('auteur',   TextType::class)
+				->add('contenu',    TextareaType::class)
+				->add('save',      SubmitType::class)
+				->getForm()
+			;
+			
+			if ($request->isMethod('POST')){
+				
+				$form->handleRequest($request);
+				
+				if($form->isValid()){
+					
+					$em = $this->getDoctrine()->getManager();
+					$em->persist($annonce);
+					$em->flush();
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Annonce enregistrée');
+					
+					return $this->redirectToRoute('ga_core_annonce_id', array('id' => $annonce->getId()));
+				}
+			}
+			
+			return $this->render('GACoreBundle:Annonce:add.html.twig', array(
+			'form' => $form->createView(),));
 			
 		}
 		
