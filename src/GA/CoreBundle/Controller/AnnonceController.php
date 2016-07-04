@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use GA\CoreBundle\Entity\Annonce;
+use GA\CoreBundle\Form\AnnonceType;
+use GA\CoreBundle\Form\AnnonceEditType;
 
 class AnnonceController extends Controller
 {
@@ -19,8 +21,11 @@ class AnnonceController extends Controller
 			// On renvoie une exeption si la page n'existe pas
 			if($page<1)
 			{
-				throw new notFoundHttpException('page "'.$page.'" inexistante');
+				throw new notFoundHttpException('La page "'.$page.'" n\'existe pas.');
 			}
+			
+			$nbPerPage = 3;
+			
 			// On récupère le repository
 			$repository = $this->getDoctrine()
 				->getManager()
@@ -28,10 +33,18 @@ class AnnonceController extends Controller
 				
 			$listeAnnonce  = $repository->findAll();
 			
+			$nbPages = ceil(count($listeAnnonce) / $nbPerPage);
+			// Si la page n'existe pas, on retourne une 404
+			if ($page > $nbPages) {
+      throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
+			}
+			
 			// on récupère la liste des news
 					
       return $this->render('GACoreBundle:Annonce:index.html.twig', array(
-      'listeAnnonce' => $listeAnnonce
+      'listeAnnonce'	=> $listeAnnonce,
+			'nbPages'				=> $nbPages,
+			'page'					=> $page,
 			));
     }
 		
@@ -60,14 +73,11 @@ class AnnonceController extends Controller
 		
 		public function addAction(Request $request)
 		{
+			
 			$annonce = new Annonce();
-
-			$form = $this->get('form.factory')->createBuilder(FormType::class, $annonce)
-				->add('titre',     TextType::class)
-				->add('auteur',   TextType::class)
-				->add('contenu',    TextareaType::class)
-				->add('save',      SubmitType::class)
-				->getForm()
+			
+			$form = $this->get('form.factory')->create(AnnonceType::class, $annonce)
+				
 			;
 			
 			if ($request->isMethod('POST')){
@@ -91,15 +101,63 @@ class AnnonceController extends Controller
 			
 		}
 		
-		public function editAction($id)
+		public function editAction($id, Request $request)
 		{
-			//On modifie une annonce en fonction du type => mono, multi ou divers
-			return $this->render('GACoreBundle:Annonce:edit.html.twig');
+			$em = $this->getDoctrine()->getManager();
+			
+			$annonce = $em->getRepository('GACoreBundle:Annonce')->find($id);
+			
+			if ($annonce === null){
+				throw new NotFoundHttpException('L\'annonce '.$id.'n\'existe pas.');
+			}
+			
+			$form = $this->get('form.factory')->create(AnnonceEditType::class, $annonce);
+			
+			if ($request->isMethod('POST')){
+				
+				$form->handleRequest($request);
+				
+				if($form->isValid()){
+					
+					$em = $this->getDoctrine()->getManager();
+					$annonce->setDateModif(New \DateTime);
+					$em->persist($annonce);
+					$em->flush();
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Annonce modifié');
+					
+					return $this->redirectToRoute('ga_core_annonce_id', array('id' => $annonce->getId()));
+				}
+			}
+			
+			return $this->render('GACoreBundle:Annonce:edit.html.twig', array(
+			'form' => $form->createView(),));
 		}
 		
-		public function deleteAction($id)
+		public function deleteAction($id, Request $request)
 		{
-			//On supprime une annonce en fonction du type => mono, multi ou divers
-			return $this->render('GACoreBundle:Annonce:delete.html.twig');
+			$em = $this->getDoctrine()->getManager();
+			$annonce = $em->getRepository('GACoreBundle:Annonce')->find($id);
+			
+			if (null === $annonce) {
+				throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+			}
+			// On crée un formulaire vide, qui ne contiendra que le champ CSRF
+    // Cela permet de protéger la suppression d'annonce contre cette faille
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+				$em->remove($annonce);
+				$em->flush();
+				$request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+				
+				return $this->redirectToRoute('ga_core_annonce', array('page' => 1));
+			}
+    
+			return $this->render('GACoreBundle:Annonce:delete.html.twig', array(
+      'annonce' => $annonce,
+      'form'   => $form->createView(),
+			));
+			
 		}
 }

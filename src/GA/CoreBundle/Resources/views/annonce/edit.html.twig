@@ -6,8 +6,56 @@
 
 {% block core_body %}
 
-  <h2>Editer une news</h2>
+  
 
+<h3>Formulaire d'annonce</h3>
+
+<div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {# Les erreurs générales du formulaire. #}
+  {{ form_errors(form) }}
+
+  
+  {# Génération manuelle et éclatée : #}
+  <div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.titre, "Titre", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.titre) }}
+
+    <div class="col-sm-10">
+      {# Génération de l'input. #}
+      {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div> 
+
+  <div class="form-group">
+    {{ form_label(form.contenu, "Contenu", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.contenu) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+	
+	<div class="form-group">
+    {{ form_label(form.auteurModif, "Auteur", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.auteurModif) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.auteurModif, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+  
+  {{ form_widget(form.Publier, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {# Génération automatique des champs pas encore écrits.
+     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+     et tous les champs cachés (type « hidden »). #}
+  {{ form_rest(form) }}
+
+   {{ form_end(form) }}
+</div>
 
 
 {% endblock %}

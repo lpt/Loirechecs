@@ -8,7 +8,15 @@ class StaticController extends Controller
 {
     public function adminAction()
     {
-        return $this->render('GACoreBundle:Static:admin.html.twig');
+				$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('GACoreBundle:Annonce');
+				
+				$listeAnnonce  = $repository->findAll();
+				
+				return $this->render('GACoreBundle:Static:admin.html.twig',	array(
+				'listeAnnonce' => $listeAnnonce
+				));
     }
 		
 		public function presentationAction()

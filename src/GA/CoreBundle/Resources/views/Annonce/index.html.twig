@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block core_body %}
-
-  <div class="row">
+	
+	<div class="col-sm-9">
+  
 		
 		{%for annonce in listeAnnonce%}
+		<div class="row">
 		
 		<div class="well well-sm"  >
 						
@@ -17,15 +19,93 @@
 				</h4>
 						
 				<p>{{annonce.contenu}}</p>
-						
+					
+				<p><a href="{{ path('ga_core_annonce_id', {'id': annonce.id})}}">Plus de détail</a>
 				{% if annonce.dateCreat != annonce.dateModif %}
-				<p><span class="dateModif"><em>Modifiée par {{annonce.auteurModif}} le {{annonce.dateModif|date('d/m/Y - H:i')}}</em></span></p><br />
+				<span class="dateModif"><em>Modifiée par {{annonce.auteurModif}} le {{annonce.dateModif|date('d/m/Y - H:i')}}</em></span>
 				{% endif %}
+				</p><br />
 															
 		</div>
 		
+		</div>
+		
 		{%endfor%}
+		
+		<ul class="pagination">
+    {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+    {% for p in range(1, nbPages) %}
+      <li{% if p == page %} class="active"{% endif %}>
+        <a href="{{ path('ga_core_annonce', {'page': p}) }}">{{ p }}</a>
+      </li>
+    {% endfor %}
+		</ul>
+
 					
 	</div>
+	
+	<div class="col-sm-3">
+	
+		<!--inclusion des 3 prochains évenements -->
+		
+			<div class="well well-sm" >
+					<h4>Prochains évenements</h4>						
+						<div class="alert alert-success">
+   						<p> <strong>Samedi 28 mai</strong></p>
+  						<p> Blitz de St Chamond</p>
+ 						</div>
+						<div class="alert alert-success">
+   						<p> <strong>Dimanche 5 juin  </strong></p>
+  						<p> Coupe de la Loire</p>
+ 						</div>
+						<div class="alert alert-success">
+   						<p> <strong>Samedi 11 juin  </strong></p>
+  						<p> Open de Saint Just</p>
+ 						</div>
+			</div>
+			
+			<div class="well well-sm" >						
+				<h4>Les clubs </h4>
+				<p><a href="{{path('ga_core_static_clubs')}}">Contacter un club</a></p>			
 
+				<ul class="list-group">
+				<li class="list-group-item">
+				<p><strong>CLUB D'ECHECS DE ST-CHAMOND</strong></p>
+				<p>42400 SAINT CHAMOND <br />
+				
+				</li>
+				<li class="list-group-item">
+				<p><strong>CERCLE D'ECHECS DU ROANNAIS</strong></p>
+				<p>42300 ROANNE<br />
+				
+				</li>
+				<li class="list-group-item">
+				<p><strong>LE CHAMP DU FOU </strong> 
+				<p>43110 AUREC SUR LOIRE<br />
+				
+				</li>
+				<li class="list-group-item">
+				<p><strong>MJC CLUB D'ECHECS DU FOREZ</strong></p>
+				<p>42170 SAINT-JUST SAINT-RAMBERT<br />
+				
+				</li>
+				<li class="list-group-item">
+				<p><strong>ECHIQUIER DU ROANNAIS</strong></p>
+				<p>42300 ROANNE<br />
+			 
+				</li>
+				<li class="list-group-item">
+				<p><strong>ECHIQUIER SPORTIF DE ST ETIENNE</strong></p>
+				<p>42100 SAINT-ÉTIENNE<br />
+				
+				</li>
+				<li class="list-group-item">
+				<p><strong>MJC CHAZELLES SUR LYON</strong></p>
+				<p>42140 CHAZELLES SUR LYON<br />
+				
+				</li>
+				</ul>
+			</div>
+		</div>
+	
 {% endblock %}
