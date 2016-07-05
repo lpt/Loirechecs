@@ -11,7 +11,21 @@ class TournoiController extends Controller
 {
     public function viewAction($id)
     {
-			return $this->render('GACoreBundle:Tournoi:view.html.twig', array('id' => $id));
+			$em = $this->getDoctrine()->getManager();
+			$tournoi = $em->getRepository('GACoreBundle:Tournoi')->find($id);
+
+			if (null === $tournoi) {
+      throw new NotFoundHttpException("Le tournoi d'id ".$id." n'existe pas.");
+			}
+			
+			$listRonde = $em
+				->getRepository('GACoreBundle:Ronde')
+				->findBy(array('tournoi' => $tournoi))
+    ;
+			return $this->render('GACoreBundle:Tournoi:view.html.twig', array(
+			'tournoi' => $tournoi,
+			'listRonde' => $listRonde
+			));
     }
 		
 		public function addAction()

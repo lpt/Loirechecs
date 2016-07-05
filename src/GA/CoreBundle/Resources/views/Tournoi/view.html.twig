@@ -1,12 +1,43 @@
 {% extends "GACoreBundle::layout.html.twig" %}
 
 {% block title %}
-  une news - {{ parent() }}
+  Tournoi - {{ parent() }}
 {% endblock %}
 
 {% block core_body %}
 
-  <h2>Voir une news</h2>
+  <div class="row">
+										
+			<h4><strong>{{tournoi.nom}} </strong></h4>
+			
+			<div class="well">
+			
+			<p>{{tournoi.description}}</p>
+			
+			</div>
+			
+			{%if tournoi.contactNom != null%}
+			<div class="well">
+			
+			<p> Tournoi géré par {{tournoi.contactNom}} - {{tournoi.contactTph}} - {{tournoi.contactMail}}</p>
+			
+			</div>
+			{%endif%}
+			
+			<div class="well">
+			
+			
+			{%for ronde in listRonde%}
+			
+			<h3> Ronde {{ronde.numero}} </h3>
+			
+			<p>Le {{ ronde.dateEvent|date('d/m/Y') }} à  l'adresse : {{ronde.adresse}} -  {{ronde.ville}} </p>
+			
+			<p> appariement ou résultat à construire </p>
+			
+			{%endfor%}
+			
+			</div>
 
 
 
