@@ -14,7 +14,7 @@ class Ronde
 {		
 
 		/**
-			* @ORM\ManyToOne(targetEntity="GA\CoreBundle\Entity\Tournoi")
+			* @ORM\ManyToOne(targetEntity="GA\CoreBundle\Entity\Tournoi", inversedBy="rondes")
 			* @ORM\JoinColumn(nullable=false)
 			*/
 		private $tournoi;
