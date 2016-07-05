@@ -28,55 +28,29 @@ ga_core_annonce_delete:
     defaults:
         _controller: GACoreBundle:Annonce:delete
 
-ga_core_mono:
-    path:     /tournois-autres/{id}
+ga_core_tournoi:
+    path:     /tournoi/{id}
     defaults:
-        _controller: GACoreBundle:Mono:view 
+        _controller: GACoreBundle:Tournoi:view 
         requirements:
         id: \d*
 
-ga_core_mono_add:
-    path:   /admin/tournois-autres/add
+ga_core_tournoi_add:
+    path:   /admin/tournoi/add
     defaults:
-        _controller: GACoreBundle:Mono:add
+        _controller: GACoreBundle:Tournoi:add
 
-ga_core_mono_edit:
-    path:   /admin/tournois-autres/edit/{id}
+ga_core_tournoi_edit:
+    path:   /admin/tournoi/edit/{id}
     defaults:
-        _controller: GACoreBundle:Mono:edit
+        _controller: GACoreBundle:Tournoi:edit
         requirements:
         id: \d*
 
-ga_core_mono_delete:
-    path:   /admin/tournois-autres/delete/{id}
+ga_core_tournoi_delete:
+    path:   /admin/tournoi/delete/{id}
     defaults:
-        _controller: GACoreBundle:Mono:delete
-        requirements:
-        id: \d*
-
-ga_core_multi:
-    path:     /tournois/{id}
-    defaults: 
-        _controller: GACoreBundle:Multi:view
-        requirements:
-        id: \d*
-
-ga_core_multi_add:
-    path:   /admin/tournois/add
-    defaults:
-        _controller: GACoreBundle:Multi:add
-
-ga_core_multi_edit:
-    path:   /admin/tournois/edit/{id}
-    defaults:
-        _controller: GACoreBundle:Multi:edit
-        requirements:
-        id: \d*
-
-ga_core_multi_delete:
-    path:   /admin/tournois/delete/{id}
-    defaults:
-        _controller: GACoreBundle:Multi:delete
+        _controller: GACoreBundle:Tournoi:delete
         requirements:
         id: \d*
 
