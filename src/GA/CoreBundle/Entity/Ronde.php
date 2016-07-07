@@ -13,11 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Ronde
 {		
 
-		/**
-			* @ORM\ManyToOne(targetEntity="GA\CoreBundle\Entity\Tournoi")
-			* @ORM\JoinColumn(nullable=false)
-			*/
-		private $tournoi;
+		
 	 
     /**
      * @var int
@@ -163,27 +159,5 @@ class Ronde
         return $this->ville;
     }
 
-    /**
-     * Set tournoi
-     *
-     * @param \GA\CoreBundle\Entity\Tournoi $tournoi
-     *
-     * @return Ronde
-     */
-    public function setTournoi(\GA\CoreBundle\Entity\Tournoi $tournoi)
-    {
-        $this->tournoi = $tournoi;
-
-        return $this;
-    }
-
-    /**
-     * Get tournoi
-     *
-     * @return \GA\CoreBundle\Entity\Tournoi
-     */
-    public function getTournoi()
-    {
-        return $this->tournoi;
-    }
+    
 }

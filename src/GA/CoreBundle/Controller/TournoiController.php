@@ -35,13 +35,13 @@ class TournoiController extends Controller
 			$ronde2->setAdresse('36 Rue Des Vercheres');
 			$ronde2->setVille('GENILAC');
 			
-			$ronde1->setTournoi($tournoi);
-			$ronde2->setTournoi($tournoi);
+			$tournoi->addRonde($ronde1);
+			$tournoi->addRonde($ronde2);
 			
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($tournoi);
-			$em->persist($ronde1);
-			$em->persist($ronde2);
+			//$em->persist($ronde1);
+			//$em->persist($ronde2);
 			$em->flush();
 			
 			return $this->redirectToRoute('ga_core_annonce', array('page' => 1));

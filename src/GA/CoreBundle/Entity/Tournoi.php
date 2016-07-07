@@ -12,7 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tournoi
 {
-    /**
+   
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist"})
+		*/
+		private $rondes; 
+		
+		/**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -185,5 +191,46 @@ class Tournoi
     public function getContactMail()
     {
         return $this->contactMail;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rondes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ronde
+     *
+     * @param \GA\CoreBundle\Entity\Ronde $ronde
+     *
+     * @return Tournoi
+     */
+    public function addRonde(\GA\CoreBundle\Entity\Ronde $ronde)
+    {
+        $this->rondes[] = $ronde;
+
+        return $this;
+    }
+
+    /**
+     * Remove ronde
+     *
+     * @param \GA\CoreBundle\Entity\Ronde $ronde
+     */
+    public function removeRonde(\GA\CoreBundle\Entity\Ronde $ronde)
+    {
+        $this->rondes->removeElement($ronde);
+    }
+
+    /**
+     * Get rondes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRondes()
+    {
+        return $this->rondes;
     }
 }
