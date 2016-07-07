@@ -9,6 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use GA\CoreBundle\Form\RondeType;
+use GA\CoreBundle\Form\OneType;
+use GA\CoreBundle\Form\ManyType;
+
 
 
 class TournoiType extends AbstractType
@@ -26,11 +30,21 @@ class TournoiType extends AbstractType
             ->add('contactTph',			TextType::class)
             ->add('contactMail',		TextType::class)
 						
-						->add('ronde',				CollectionType::class, array(
+						->add('one',						OneType::class)
+						
+						->add('manys', CollectionType::class, array(
+							'entry_type'		=> ManyType::class,
+							'allow_add'			=> true,
+							'allow_delete'	=> true
+						))
+						
+						->add('rondes', CollectionType::class, array(
 							'entry_type'		=> RondeType::class,
 							'allow_add'			=> true,
 							'allow_delete'	=> true
 						))
+						
+						
 						->add('save',						SubmitType::class)
         ;
     }

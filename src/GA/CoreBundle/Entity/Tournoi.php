@@ -13,8 +13,20 @@ use Doctrine\ORM\Mapping as ORM;
 class Tournoi
 {
 		/**
-			* @ORM\OneToMany(targetEntity="GA\CoreBundle\Entity\Ronde", mappedBy="ronde")
+			* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Many", cascade={"persist"})
 			*/
+		private $manys;
+
+	
+		/**
+			* @ORM\OneToOne(targetEntity="GA\CoreBundle\Entity\One", cascade={"persist"})
+			*/
+		private $one;
+
+		
+		/**
+     * @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist"})
+     */
 		private $rondes;
 		
     /**
@@ -192,11 +204,71 @@ class Tournoi
         return $this->contactMail;
     }
 		
+   
+
+    /**
+     * Set one
+     *
+     * @param \GA\CoreBundle\Entity\One $one
+     *
+     * @return Tournoi
+     */
+    public function setOne(\GA\CoreBundle\Entity\One $one = null)
+    {
+        $this->one = $one;
+
+        return $this;
+    }
+
+    /**
+     * Get one
+     *
+     * @return \GA\CoreBundle\Entity\One
+     */
+    public function getOne()
+    {
+        return $this->one;
+    }
+
+    /**
+     * Add many
+     *
+     * @param \GA\CoreBundle\Entity\Many $many
+     *
+     * @return Tournoi
+     */
+    public function addMany(\GA\CoreBundle\Entity\Many $many)
+    {
+        $this->manys[] = $many;
+
+        return $this;
+    }
+
+    /**
+     * Remove many
+     *
+     * @param \GA\CoreBundle\Entity\Many $many
+     */
+    public function removeMany(\GA\CoreBundle\Entity\Many $many)
+    {
+        $this->manys->removeElement($many);
+    }
+
+    /**
+     * Get manys
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getManys()
+    {
+        return $this->manys;
+    }
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->manys = new \Doctrine\Common\Collections\ArrayCollection();
         $this->rondes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

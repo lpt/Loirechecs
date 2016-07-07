@@ -6,7 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
+use GA\CoreBundle\Entity\One;
 use GA\CoreBundle\Form\TournoiType;
+use GA\CoreBundle\Form\RondeType;
+
 
 class TournoiController extends Controller
 {
@@ -29,7 +32,7 @@ class TournoiController extends Controller
 			));
     }
 		
-		public function addAction()
+		public function addAction(Request $request)
 		{	
 			/*
 			$tournoi = new Tournoi();
@@ -51,8 +54,6 @@ class TournoiController extends Controller
 			$ronde2->setAdresse('36 Rue Des Vercheres');
 			$ronde2->setVille('GENILAC');
 			
-			$ronde1->setTournoi($tournoi);
-			$ronde2->setTournoi($tournoi);
 			
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($tournoi);
@@ -62,24 +63,51 @@ class TournoiController extends Controller
 			
 			return $this->redirectToRoute('ga_core_annonce', array('page' => 1));
 			//return $this->render('GACoreBundle:Tournoi:add.html.twig');
-			*/
+			
 			$tournoi = new tournoi();
 			$form   = $this->get('form.factory')->create(TournoiType::class, $tournoi);
-/*
+
 				if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 					$em = $this->getDoctrine()->getManager();
 					$em->persist($tournoi);
+					$rondes = $tournoi->getRondes();
+					
+					foreach($rondes as $ronde){
+				  
+					$em->persist($ronde);
+					
+					}
 					$em->flush();
 
       $request->getSession()->getFlashBag()->add('notice', 'Tournoi bien enregistrée.');
 
       return $this->redirectToRoute('ga_core_tounoi_id', array('id' => $tournoi->getId()));
-    }
-*/
-    return $this->render('GACoreBundle:Tournoi:add.html.twig', array(
+			
+			return $this->render('GACoreBundle:Tournoi:add.html.twig', array(
       'form' => $form->createView(),));
 			
-		}
+			*/
+			 $tournoi = new Tournoi();
+    $form   = $this->get('form.factory')->create(tournoiType::class, $tournoi);
+
+    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($tournoi);
+      $em->flush();
+
+      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+
+      return $this->redirectToRoute('ga_core_tournoi', array('id' => $tournoi->getId()));
+    }
+
+    return $this->render('GACoreBundle:Tournoi:add.html.twig', array(
+      'form' => $form->createView(),
+    ));
+    }
+
+    
+			
+		
 		
 		public function editAction($id)
 		{
