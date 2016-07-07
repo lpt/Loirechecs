@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
+use GA\CoreBundle\Form\TournoiType;
 
 class TournoiController extends Controller
 {
@@ -14,38 +15,24 @@ class TournoiController extends Controller
 			return $this->render('GACoreBundle:Tournoi:view.html.twig', array('id' => $id));
     }
 		
-		public function addAction()
+		public function addAction(Request $request)
 		{	
 			$tournoi = new Tournoi();
-			$tournoi->setNom('Tournoi Test1');
-			$tournoi->setDescription('Description du tournoi Test1');
-			$tournoi->setContactNom('GA');
-			$tournoi->setContactTph('06-45-27-54-39');
-			$tournoi->setContactMail('gandre@etn.fr');
+			$form = $this->get('form.factory')->create(TournoiType::class, $tournoi);
 			
-			$ronde1 = new Ronde();
-			$ronde1->setNumero(1);
-			$ronde1->setDateEvent(New \DateTime);
-			$ronde1->setAdresse('36 Rue Des Vercheres');
-			$ronde1->setVille('GENILAC');
+			if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($tournoi);
+				$em->flush();
+				
+				$request->getSession()->getFlashbag()->add('notice', 'Tournoi bien enregistré.');
+				
+				return $this->redirectToRoute('ga_core_tournoi', array('id' => $tournoi->getId()));
+			}
 			
-			$ronde2 = new Ronde();
-			$ronde2->setNumero(2);
-			$ronde2->setDateEvent(New \DateTime);
-			$ronde2->setAdresse('36 Rue Des Vercheres');
-			$ronde2->setVille('GENILAC');
-			
-			$tournoi->addRonde($ronde1);
-			$tournoi->addRonde($ronde2);
-			
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($tournoi);
-			//$em->persist($ronde1);
-			//$em->persist($ronde2);
-			$em->flush();
-			
-			return $this->redirectToRoute('ga_core_annonce', array('page' => 1));
-			//return $this->render('GACoreBundle:Tournoi:add.html.twig');
+			return $this->render('GACoreBundle:Tournoi:add.html.twig',array(
+				'form' => $form->createView(),
+			));
 			
 		}
 		
