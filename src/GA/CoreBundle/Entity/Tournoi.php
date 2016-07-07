@@ -14,7 +14,7 @@ class Tournoi
 {
    
 		/**
-		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist"})
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist", "remove"})
 		*/
 		private $rondes; 
 		

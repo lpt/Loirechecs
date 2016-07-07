@@ -1,12 +1,22 @@
 {% extends "GACoreBundle::layout.html.twig" %}
 
 {% block title %}
-  Supprimer une news - {{ parent() }}
+  Supprimer un tournoi - {{ parent() }}
 {% endblock %}
 
 {% block core_body %}
 
-  <h2>effacer une news</h2>
+  <h2>Supprimer un tournoi</h2>
+
+<p>Etes-vous certain de vouloir supprimer le tournoi "{{ tournoi.nom }}" ?  </p>
+
+	<form action="{{ path('ga_core_tournoi_delete', {'id': tournoi.id}) }}" method="post">
+		<a href="{{ path('ga_core_tournoi', {'id': tournoi.id}) }}" class="btn btn-default">
+    <i class="glyphicon glyphicon-chevron-left"></i>Retour au tournoi</a>
+  
+		<input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+	</form>
 
  
 {% endblock %}

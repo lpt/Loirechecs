@@ -1,13 +1,18 @@
 {% extends "GACoreBundle::layout.html.twig" %}
 
 {% block title %}
-  une news - {{ parent() }}
+  Tournoi- {{ parent() }}
 {% endblock %}
 
 {% block core_body %}
 
-  <h2>Voir une news</h2>
+  <h3>{{tournoi.nom}}</h3>
+	
 
+{%for ronde in tournoi.rondes%}
 
+<h4>Ronde N° {{ronde.numero}}</h4>
+
+{%endfor%}
 
 {% endblock %}
