@@ -1,0 +1,95 @@
+[33mcommit 9c81a26d268dfb32cffa5a65333debe698bf4a29[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Thu Jul 7 23:19:27 2016 +0200
+
+    CRUD tournoi ronde
+
+[33mcommit b77b3d636db492b9694d05eb1aece497a35d1bb5[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Thu Jul 7 09:20:11 2016 +0200
+
+    formulaire multiple tournoi ronde
+
+[33mcommit ba4995bb99cb2461cfca1c2c42363869e619fb60[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Thu Jul 7 08:45:21 2016 +0200
+
+    table many to many tournoi/ronde - essai dur ok
+
+[33mcommit 90664d092540c217ddf6021d4f6a321cfa5329f7[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Tue Jul 5 08:10:19 2016 +0200
+
+    test en dur many to one tournoi ronde
+
+[33mcommit c38107d90b380a509d69f119da2b1bee23a30a91[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Mon Jul 4 21:21:09 2016 +0200
+
+    CRUD annonce et page admin
+
+[33mcommit 9df01d99d0643bfdf4d39a99e88bd3909ef0fa77[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Fri Jul 1 23:02:49 2016 +0200
+
+    ajouter une annonce via formulaire
+
+[33mcommit f3e1bdd26e215bdd38b42f0c7007d35a0b17adb0[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Thu Jun 30 21:09:54 2016 +0200
+
+    ajout au commit de Entity annonce
+
+[33mcommit 162ddf0996febf21fb95d9549046619fb3fadc57[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Thu Jun 30 21:07:59 2016 +0200
+
+    vue anonnce divers avec entity
+
+[33mcommit 0e6cdb8cde6d5df159a63ebce3ed5acc3f960296[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Wed Jun 29 23:50:27 2016 +0200
+
+    commit des fichiers non passé sur la cde précendente
+
+[33mcommit e09845716c2816e11456c90a36c0d03297a099a5[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Wed Jun 29 23:45:08 2016 +0200
+
+    Ajout des fonctions/routes/vues
+
+[33mcommit e196f29572eb60d059052dbdb939f1af9d3ad662[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Wed Jun 29 13:35:12 2016 +0200
+
+    fichiers non passé en commit -am
+
+[33mcommit 9ee4f24b150b0c1a4619dd185ca4b4ab756a975e[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Wed Jun 29 13:32:59 2016 +0200
+
+    css temporaire et page/routage/controller static
+
+[33mcommit 128da86e03482f2a1226d873862354a1280952ba[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Tue Jun 28 21:56:23 2016 +0200
+
+    ajout des controlleurs
+
+[33mcommit f6fc5b1358030bf7e7cb6ab96a0a6839c6a4b09e[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Tue Jun 28 21:52:46 2016 +0200
+
+    création des controlleurs
+
+[33mcommit 82146c83c3bf9f7d232017baa43e6cf4125756a6[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Tue Jun 28 13:53:26 2016 +0200
+
+    Personalistation du README
+
+[33mcommit e97d61f57fa59cfbe7464ed2643d0f2d35401f56[m
+Author: lpt <lpt42@hotmail.fr>
+Date:   Tue Jun 28 13:07:28 2016 +0200
+
+    version initiale

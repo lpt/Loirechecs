@@ -6,9 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
-use GA\CoreBundle\Entity\One;
 use GA\CoreBundle\Form\TournoiType;
-use GA\CoreBundle\Form\RondeType;
 
 
 class TournoiController extends Controller
@@ -16,53 +14,40 @@ class TournoiController extends Controller
     public function viewAction($id)
     {
 			$em = $this->getDoctrine()->getManager();
-			$tournoi = $em->getRepository('GACoreBundle:Tournoi')->find($id);
 
-			if (null === $tournoi) {
-      throw new NotFoundHttpException("Le tournoi d'id ".$id." n'existe pas.");
+			$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($id);
+					
+			if ($tournoi === null){
+				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
 			}
 			
-			$listRonde = $em
-				->getRepository('GACoreBundle:Ronde')
-				->findBy(array('tournoi' => $tournoi))
-    ;
 			return $this->render('GACoreBundle:Tournoi:view.html.twig', array(
-			'tournoi' => $tournoi,
-			'listRonde' => $listRonde
-			));
+				'id' => $id,
+				'tournoi' => $tournoi
+				));
+
     }
 		
 		public function addAction(Request $request)
 		{	
-			/*
-			$tournoi = new Tournoi();
-			$tournoi->setNom('Tournoi Test1');
-			$tournoi->setDescription('Description du tournoi Test1');
-			$tournoi->setContactNom('GA');
-			$tournoi->setContactTph('06-45-27-54-39');
-			$tournoi->setContactMail('gandre@etn.fr');
 			
-			$ronde1 = new Ronde();
-			$ronde1->setNumero(1);
-			$ronde1->setDateEvent(New \DateTime);
-			$ronde1->setAdresse('36 Rue Des Vercheres');
-			$ronde1->setVille('GENILAC');
+
 			
-			$ronde2 = new Ronde();
-			$ronde2->setNumero(2);
-			$ronde2->setDateEvent(New \DateTime);
-			$ronde2->setAdresse('36 Rue Des Vercheres');
-			$ronde2->setVille('GENILAC');
+			if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($tournoi);
+				$em->flush();
+				
+				$request->getSession()->getFlashbag()->add('notice', 'Tournoi bien enregistré.');
+				
+				return $this->redirectToRoute('ga_core_tournoi', array('id' => $tournoi->getId()));
+			}
 			
-			
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($tournoi);
-			$em->persist($ronde1);
-			$em->persist($ronde2);
-			$em->flush();
-			
-			return $this->redirectToRoute('ga_core_annonce', array('page' => 1));
-			//return $this->render('GACoreBundle:Tournoi:add.html.twig');
+			return $this->render('GACoreBundle:Tournoi:add.html.twig',array(
+				'form' => $form->createView(),
+			));
 			
 			$tournoi = new tournoi();
 			$form   = $this->get('form.factory')->create(TournoiType::class, $tournoi);
@@ -109,15 +94,61 @@ class TournoiController extends Controller
 			
 		
 		
-		public function editAction($id)
+		public function editAction($id, Request $request)
 		{
+			$em = $this->getDoctrine()->getManager();
+			$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($id);
+					
+			if ($tournoi === null){
+				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
+			}
 			
-			return $this->render('GACoreBundle:Tournoi:edit.html.twig', array('id' => $id));
+			$form = $this->get('form.factory')->create(TournoiType::class, $tournoi);
+			
+			if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($tournoi);
+				$em->flush();
+				
+				$request->getSession()->getFlashbag()->add('notice', 'Tournoi bien enregistré.');
+				
+				return $this->redirectToRoute('ga_core_tournoi', array('id' => $tournoi->getId()));
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:edit.html.twig', array(
+			'form' => $form->createView(),
+			'id' => $id,
+			'tournoi' => $tournoi
+			));
 		}
 		
-		public function deleteAction($id)
+		public function deleteAction($id, Request $request)
 		{
+			$em = $this->getDoctrine()->getManager();
+			$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($id);
+					
+			if ($tournoi === null){
+				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($tournoi);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+				
+			return $this->redirectToRoute('ga_core_annonce', array('page' => 1));
+			}
 			
-			return $this->render('GACoreBundle:Tournoi:delete.html.twig', array('id' => $id));
+			return $this->render('GACoreBundle:Tournoi:delete.html.twig', array(
+      'tournoi' => $tournoi,
+      'form'   => $form->createView(),
+			));
+			
 		}
 }

@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Ronde
 {		
 
-		
     /**
      * @var int
      *

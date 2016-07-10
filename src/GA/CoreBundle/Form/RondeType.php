@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
+
 class RondeType extends AbstractType
 {
     /**
@@ -20,11 +21,10 @@ class RondeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numero',			 	IntegerType::class)
-            ->add('dateEvent',	 	DateTimeType::class)
-            ->add('adresse',			TextType::class)
-            ->add('ville',				TextType::class)
-            
+            ->add('numero',			IntegerType::class)
+            ->add('dateEvent',	DateTimeType::class)
+            ->add('adresse',		TextType::class)
+            ->add('ville',			TextType::class)
         ;
     }
     
