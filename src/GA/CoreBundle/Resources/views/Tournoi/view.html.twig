@@ -17,6 +17,18 @@
 
 <h4>Ronde N° {{ronde.numero}}</h4>
 
+{%if ressource[ressource.type] == 1%}
+<h5> Liens </h5>
+
+{%for ressource in ronde.ressources%}
+<p> <a href="{{ressource.url}}"> {{ressource.nom}} </a></p>
+{%endfor%}
+
+{%endif%}
+
+
+
+
 {%endfor%}
 
 {% endblock %}

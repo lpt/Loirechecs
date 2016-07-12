@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Ressource
 {
 		/**
-		* @ORM\OneToOne(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist"})
+		* @ORM\OneToOne(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
 		*/
 		private $Lien;
 		

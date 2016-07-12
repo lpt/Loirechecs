@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ronde
 {		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ressource", cascade={"persist", "remove"})
+		*/
+		private $ressources; 
 
     /**
      * @var int
@@ -158,4 +162,45 @@ class Ronde
     }
 
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ressources = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ressource
+     *
+     * @param \GA\CoreBundle\Entity\Ressource $ressource
+     *
+     * @return Ronde
+     */
+    public function addRessource(\GA\CoreBundle\Entity\Ressource $ressource)
+    {
+        $this->ressources[] = $ressource;
+
+        return $this;
+    }
+
+    /**
+     * Remove ressource
+     *
+     * @param \GA\CoreBundle\Entity\Ressource $ressource
+     */
+    public function removeRessource(\GA\CoreBundle\Entity\Ressource $ressource)
+    {
+        $this->ressources->removeElement($ressource);
+    }
+
+    /**
+     * Get ressources
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRessources()
+    {
+        return $this->ressources;
+    }
 }

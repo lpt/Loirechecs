@@ -20,7 +20,6 @@ class Tournoi
 		private $rondes; 
 		
 		/**
->>>>>>> test
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
