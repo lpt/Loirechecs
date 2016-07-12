@@ -79,11 +79,6 @@ ga_core_static_presentation:
     defaults:
         _controller: GACoreBundle:Static:presentation
 
-ga_core_static_admin:
-    path:    /admin
-    defaults:
-        _controller: GACoreBundle:Static:admin
-
 ga_core_static_organigramme:
     path:    /organigramme
     defaults:
@@ -98,3 +93,23 @@ ga_core_static_tarif:
     path:    /tarif
     defaults:
         _controller: GACoreBundle:Static:tarif
+
+ga_core_admin:
+    path:    /admin
+    defaults:
+        _controller: GACoreBundle:Admin:index
+
+ga_core_admin_annonce:
+    path:    /admin/annonce
+    defaults:
+        _controller: GACoreBundle:Admin:annonceIndex
+
+ga_core_admin_tournoi:
+    path:    /admin/tournoi
+    defaults:
+        _controller: GACoreBundle:Admin:tournoiIndex
+
+ga_core_admin_agenda:
+    path:    /admin/agenda
+    defaults:
+        _controller: GACoreBundle:Admin:agendaIndex

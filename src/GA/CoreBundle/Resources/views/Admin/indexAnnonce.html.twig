@@ -1,0 +1,27 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+Admin - Annonce - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+	
+	<div class="well">
+  
+		<h2> Liste des annonces </h2>
+		{%for annonce in listeAnnonce%}
+	
+			<p>{{annonce.titre}} - {{ annonce.dateCreat|date('d/m/Y - H:i') }} 
+				<a href="{{ path('ga_core_annonce_id', {'id': annonce.id})}}"> - Modifier - </a>
+				<a href="{{ path('ga_core_annonce_id', {'id': annonce.id})}}">  Supprimer </a>
+			</p>
+				
+		{%endfor%}
+		
+		<h2> Ajouter une annonce </h2>				
+	
+		<p><a href="{{ path('ga_core_annonce_add')}}">Ajouter</a>
+	
+	</div>
+	
+{% endblock %}

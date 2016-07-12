@@ -39,7 +39,7 @@ class AdminController extends Controller
 	
 	public function agendaIndexAction()
 	{
-		return $this->render('GACoreBundle:Admin:indexAngenda.html.twig');
+		return $this->render('GACoreBundle:Admin:indexAgenda.html.twig');
 	}
 	
 	
