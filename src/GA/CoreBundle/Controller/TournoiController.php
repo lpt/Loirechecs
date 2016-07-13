@@ -111,4 +111,17 @@ class TournoiController extends Controller
 			));
 			
 		}
+			
+		public function adminAction()
+		{
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Tournoi');
+				
+			$listeTournoi  = $repository->findAll();
+		
+			return $this->render('GACoreBundle:Tournoi:admin.html.twig', array(
+				'listeTournoi' => $listeTournoi
+			));
+		}
 }

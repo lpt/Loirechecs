@@ -160,4 +160,17 @@ class AnnonceController extends Controller
 			));
 			
 		}
+		
+		public function admin()
+		{
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Annonce');
+				
+			$listeAnnonce  = $repository->findAll();
+				
+			return $this->render('GACoreBundle:Annonce:admin.html.twig', array(
+			'listeAnnonce' => $listeAnnonce
+			));
+	}
 }

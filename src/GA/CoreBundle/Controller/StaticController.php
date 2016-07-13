@@ -39,5 +39,10 @@ class StaticController extends Controller
         return $this->render('GACoreBundle:Static:tarif.html.twig');
     }
 		
+		public function indexAction()
+	{
+		return $this->render('GACoreBundle:Admin:index.html.twig');
+	}
+		
 		
 }

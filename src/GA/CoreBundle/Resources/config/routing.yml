@@ -1,30 +1,41 @@
 ga_core_annonce:
     path:     /{page}
-    defaults:  
-        _controller: GACoreBundle:Annonce:index 
-        
-    requirements:
-        page: \d*
+    defaults:  { _controller: GACoreBundle:Annonce:index, page: 1 }
+    requirements: 
+            page: \d*
 
 ga_core_annonce_id:
-    path:     /news/{id}
+    path:     /annonce/{id}
     defaults:  
         _controller: GACoreBundle:Annonce:view
         requirements:
         id: \d*
 
+ga_core_annonce_id_admin:
+    path:     /admin/annonce/view/{id}
+    defaults:  
+        _controller: GACoreBundle:Annonce:adminView
+        requirements:
+        id: \d*
+
+ga_core_annonce_admin:
+    path:   /admin/annonce
+    defaults:
+        _controller: GACoreBundle:Annonce:admin
+
+
 ga_core_annonce_add:
-    path:   /admin/news/add
+    path:   /admin/annonce/add
     defaults:
         _controller: GACoreBundle:Annonce:add
 
 ga_core_annonce_edit:
-    path:   /admin/news/edit/{id}
+    path:   /admin/annonce/edit/{id}
     defaults:
         _controller: GACoreBundle:Annonce:edit
 
 ga_core_annonce_delete:
-    path:   /admin/news/delete/{id}
+    path:   /admin/annonce/delete/{id}
     defaults:
         _controller: GACoreBundle:Annonce:delete
 
@@ -34,6 +45,11 @@ ga_core_tournoi:
         _controller: GACoreBundle:Tournoi:view 
         requirements:
         id: \d*
+
+ga_core_tournoi_admin:
+    path:     /admin/tournoi
+    defaults:
+        _controller: GACoreBundle:Tournoi:admin
 
 ga_core_tournoi_add:
     path:   /admin/tournoi/add
@@ -58,6 +74,11 @@ ga_core_agenda:
     path:     /agenda
     defaults:
         _controller: GACoreBundle:Agenda:index 
+
+ga_core_agenda_admin:
+    path:     /admin/agenda
+    defaults:
+        _controller: GACoreBundle:Agenda:admin
 
 ga_core_agenda_add:
     path:     /admin/agenda/add
@@ -97,19 +118,42 @@ ga_core_static_tarif:
 ga_core_admin:
     path:    /admin
     defaults:
-        _controller: GACoreBundle:Admin:index
+        _controller: GACoreBundle:Static:admin
 
-ga_core_admin_annonce:
-    path:    /admin/annonce
+ga_core_ressource_add_tournoi:
+    path:    /admin/ressource/add/tournoi/{idT}/{type}
     defaults:
-        _controller: GACoreBundle:Admin:annonceIndex
+        _controller: GACoreBundle:Ressource:add
 
-ga_core_admin_tournoi:
-    path:    /admin/tournoi
+ga_core_ressource_edit_tournoi:
+    path:    /admin/ressource/edit/tournoi/{idT}/{type}/{idR}
     defaults:
-        _controller: GACoreBundle:Admin:tournoiIndex
+        _controller: GACoreBundle:Ressource:edit
 
-ga_core_admin_agenda:
-    path:    /admin/agenda
+ga_core_ressource_delete_tournoi:
+    path:    /admin/ressource/delete/tournoi/{idT}/{type}/{idR}
     defaults:
-        _controller: GACoreBundle:Admin:agendaIndex
+        _controller: GACoreBundle:Ressource:delete
+
+ga_core_ressource_add_annonce:
+    path:    /admin/ressource/add/annonce/{idA}/{type}
+    defaults:
+        _controller: GACoreBundle:Ressource:add
+
+ga_core_ressource_edit_annonce:
+    path:    /admin/ressource/edit/annonce/{idA}/{type}/{idR}
+    defaults:
+        _controller: GACoreBundle:Ressource:edit
+
+ga_core_ressource_delete_annonce:
+    path:    /admin/ressource/delete/annonce/{idA}/{type}/{idR}
+    defaults:
+        _controller: GACoreBundle:Ressource:delete
+
+ga_core_tournoi_admin_view:
+    path:     /admin/tournoi/view/{id}
+    defaults:
+        _controller: GACoreBundle:Tournoi:adminView
+        requirements:
+        id: \d*
+
