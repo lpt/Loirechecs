@@ -3,6 +3,7 @@
 namespace GA\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
@@ -124,4 +125,23 @@ class TournoiController extends Controller
 				'listeTournoi' => $listeTournoi
 			));
 		}
+		
+		public function adminViewAction($id)
+    {
+			$em = $this->getDoctrine()->getManager();
+
+			$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($id);
+					
+			if ($tournoi === null){
+				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:adminView.html.twig', array(
+				'id' => $id,
+				'tournoi' => $tournoi
+				));
+
+    }
 }

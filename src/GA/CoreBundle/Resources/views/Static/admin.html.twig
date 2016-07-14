@@ -1,0 +1,13 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil Admin - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+<p><a href="{{ path('ga_core_annonce_admin') }}"> Gestion des annonces </a></p>
+<p><a href="{{ path('ga_core_tournoi_admin') }}"> Gestion des tournois</a></p>
+<p><a href="{{ path('ga_core_agenda_admin') }}"> Gestion de l'agenda </a></p>
+
+{% endblock %}

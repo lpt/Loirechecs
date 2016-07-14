@@ -161,7 +161,7 @@ class AnnonceController extends Controller
 			
 		}
 		
-		public function admin()
+		public function adminAction()
 		{
 			$repository = $this->getDoctrine()
 					->getManager()

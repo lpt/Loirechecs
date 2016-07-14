@@ -1,0 +1,28 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+
+  Tournoi -  admin - {{ parent() }}
+
+{% endblock %}
+
+{% block core_body %}
+
+<div class="well">
+
+		<h4> Ajouter un tournoi </h4>				
+	
+		<p><a href="{{ path('ga_core_tournoi_add')}}">Ajouter</a>
+  
+		<h4> Liste des tournois</h4>
+		{%for tournoi in listeTournoi%}
+	
+			<p><strong>{{tournoi.nom}} </strong>
+				<a href="{{ path('ga_core_tournoi_id_admin', {'id': tournoi.id})}}"> administrer </a>
+			</p>
+				
+		{%endfor%}
+		
+	</div>
+
+{% endblock %}

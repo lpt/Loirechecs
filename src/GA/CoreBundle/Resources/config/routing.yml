@@ -150,7 +150,7 @@ ga_core_ressource_delete_annonce:
     defaults:
         _controller: GACoreBundle:Ressource:delete
 
-ga_core_tournoi_admin_view:
+ga_core_tournoi_id_admin:
     path:     /admin/tournoi/view/{id}
     defaults:
         _controller: GACoreBundle:Tournoi:adminView
