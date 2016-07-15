@@ -28,11 +28,6 @@ class RondeType extends AbstractType
             ->add('adresse',		TextType::class)
             ->add('ville',			TextType::class)
 						
-						->add('ressources',				CollectionType::class, array(
-							'entry_type'		=> 	RessourceAddLienType::class,
-							'allow_add'			=>	true,
-							'allow_delete'	=>	true
-						))
 						
 						
         ;

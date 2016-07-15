@@ -4,8 +4,6 @@ namespace GA\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use GA\CoreBundle\Form\RessourceType;
 
 class RessourceAddLienType extends RessourceType
 {
@@ -16,17 +14,15 @@ class RessourceAddLienType extends RessourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->remove('lien');
+            ->remove('lien')
+						->remove('type')
+            ->remove('dateCreate')
+            ->remove('dateModif')
         ;
     }
     
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+     public function getParent()
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'GA\CoreBundle\Entity\Ressource'
-        ));
+        return RessourceType::class;
     }
 }

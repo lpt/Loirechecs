@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use GA\CoreBundle\Entity\Annonce;
-use GA\CoreBundle\Form\AnnonceType;
+use GA\CoreBundle\Form\AnnonceAddType;
 use GA\CoreBundle\Form\AnnonceEditType;
 
 class AnnonceController extends Controller
@@ -76,7 +76,7 @@ class AnnonceController extends Controller
 			
 			$annonce = new Annonce();
 			
-			$form = $this->get('form.factory')->create(AnnonceType::class, $annonce)
+			$form = $this->get('form.factory')->create(AnnonceAddType::class, $annonce)
 				
 			;
 			

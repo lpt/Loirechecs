@@ -121,34 +121,49 @@ ga_core_admin:
         _controller: GACoreBundle:Static:admin
 
 ga_core_ressource_add_tournoi:
-    path:    /admin/ressource/add/tournoi/{idT}/{type}
+    path:    /admin/ressource/add/tournoi/{id}/{type}
     defaults:
-        _controller: GACoreBundle:Ressource:add
+        _controller: GACoreBundle:Ressource:addTournoi
 
 ga_core_ressource_edit_tournoi:
-    path:    /admin/ressource/edit/tournoi/{idT}/{type}/{idR}
+    path:    /admin/ressource/edit/tournoi/{id}/{type}/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:edit
+        _controller: GACoreBundle:Ressource:editTournoi
 
 ga_core_ressource_delete_tournoi:
-    path:    /admin/ressource/delete/tournoi/{idT}/{type}/{idR}
+    path:    /admin/ressource/delete/tournoi/{id}/{type}/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:delete
+        _controller: GACoreBundle:Ressource:deleteTournoi
 
 ga_core_ressource_add_annonce:
-    path:    /admin/ressource/add/annonce/{idA}/{type}
+    path:    /admin/ressource/add/annonce/{id}/{type}
     defaults:
-        _controller: GACoreBundle:Ressource:add
+        _controller: GACoreBundle:Ressource:addAnnonce
 
 ga_core_ressource_edit_annonce:
-    path:    /admin/ressource/edit/annonce/{idA}/{type}/{idR}
+    path:    /admin/ressource/edit/annonce/{id}/{type}/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:edit
+        _controller: GACoreBundle:Ressource:editAnnonce
 
 ga_core_ressource_delete_annonce:
-    path:    /admin/ressource/delete/annonce/{idA}/{type}/{idR}
+    path:    /admin/ressource/delete/annonce/{id}/{type}/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:delete
+        _controller: GACoreBundle:Ressource:deleteAnnonce
+
+ga_core_ressource_add_ronde:
+    path:    /admin/ressource/add/tournoi/{id}/{type}/{num}
+    defaults:
+        _controller: GACoreBundle:Ressource:addRonde
+
+ga_core_ressource_edit_ronde:
+    path:    /admin/ressource/edit/annonce/{id}/{type}/{num}/{idR}
+    defaults:
+        _controller: GACoreBundle:Ressource:editRonde
+
+ga_core_ressource_delete_ronde:
+    path:    /admin/ressource/delete/annonce/{id}/{type}/{num}/{idR}
+    defaults:
+        _controller: GACoreBundle:Ressource:deleteRonde
 
 ga_core_tournoi_id_admin:
     path:     /admin/tournoi/view/{id}

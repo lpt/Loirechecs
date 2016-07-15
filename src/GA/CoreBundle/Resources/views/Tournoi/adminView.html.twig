@@ -10,8 +10,8 @@
 
 
 <h3>{{tournoi.nom}} - <a href="{{ path('ga_core_tournoi_edit', {'id': tournoi.id})}}"> modifier le tournoi et les rondes</a></h3>
-<p><a href="{{ path('ga_core_ressource_add_tournoi', {'idT': tournoi.id, 'type': 3, })}}">ajouter un résultat général ou liste participant</a></p>
-<p><a href="{{ path('ga_core_ressource_add_tournoi', {'idT': tournoi.id, 'type': 4, })}}">ajouter une affiche </a></p>
+<p><a href="{{ path('ga_core_ressource_add_tournoi', {'id': tournoi.id, 'type': 3, })}}">ajouter un résultat général ou liste participant</a></p>
+<p><a href="{{ path('ga_core_ressource_add_tournoi', {'id': tournoi.id, 'type': 4, })}}">ajouter une affiche </a></p>
 
 <p>liste des ressources liés aux tournoi</p>
 <br />
@@ -22,7 +22,7 @@
 <h4>Ronde N° {{ronde.numero}}</h4>
 
 
-<h5><strong> Liste des liens</strong> - <a href="{{ path('ga_core_ressource_add_tournoi', {'idT': tournoi.id, 'type': 1, })}}">ajouter un lien </a>:</h5>
+<h5><strong> Liste des liens</strong> - <a href="{{ path('ga_core_ressource_add_ronde', {'id': tournoi.id, 'num': ronde.numero, 'type': 1, })}}">ajouter un lien </a>:</h5>
 
 {%for ressource in ronde.ressources%}
 {%if ressource.type == 1 %}
@@ -31,7 +31,7 @@
 {%endfor%}
 
 
-<h5><strong>Liste des images:</strong> -^)p) <a href="">ajouter une image</a>: </h5>
+<h5><strong>Liste des images:</strong> -  <a href="">ajouter une image</a>: </h5>
 
 {%for ressource in ronde.ressources%}
 {%if ressource.type == 2 %}

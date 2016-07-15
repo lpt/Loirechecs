@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 
-class AnnonceEditType extends AbstractType
+class AnnonceAddType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,12 +17,12 @@ class AnnonceEditType extends AbstractType
         $builder
             ->remove('dateCreat')
             ->remove('dateModif')
-            ->remove('auteur')
-					;
+						->remove('auteurModif')
+        ;
     }
     
-    public function getParent()
+		public function getParent()
 		{
 				return AnnonceType::class;
 		}
-}
+ }
