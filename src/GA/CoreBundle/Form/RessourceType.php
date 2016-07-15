@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 class RessourceType extends AbstractType
 {
@@ -25,7 +26,7 @@ class RessourceType extends AbstractType
             ->add('dateCreate')
             ->add('dateModif')
             ->add('nom',								TextType::class)
-            ->add('url',								TextType::class)
+            ->add('url',								UrlType::class)
             //->add('Lien')
 						->add('Sauvegarder',				SubmitType::class)
         ;
