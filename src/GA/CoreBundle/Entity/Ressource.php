@@ -13,9 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Ressource
 {
 		/**
+		* @ORM\OneToOne(targetEntity="GA\CoreBundle\Entity\Resultat", cascade={"persist", "remove"})
+		*/
+		private $resultat;
+		
+		/**
 		* @ORM\OneToOne(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
 		*/
 		private $Lien;
+		
 		
     /**
      * @var int
@@ -199,7 +205,7 @@ class Ressource
      *
      * @return Ressource
      */
-    public function setLien(\GA\CoreBundle\Entity\Lien $lien)
+    public function setLien(\GA\CoreBundle\Entity\Lien $lien = null)
     {
         $this->Lien = $lien;
 
@@ -214,5 +220,30 @@ class Ressource
     public function getLien()
     {
         return $this->Lien;
+    }
+
+
+    /**
+     * Set resultat
+     *
+     * @param \GA\CoreBundle\Entity\Resultat $resultat
+     *
+     * @return Ressource
+     */
+    public function setResulat(\GA\CoreBundle\Entity\Resulat $resultat = null)
+    {
+        $this->resultat = $resultat;
+
+        return $this;
+    }
+
+    /**
+     * Get resultat
+     *
+     * @return \GA\CoreBundle\Entity\Resultat
+     */
+    public function getResultat()
+    {
+        return $this->resultat;
     }
 }

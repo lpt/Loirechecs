@@ -34,6 +34,9 @@ class RessourceController extends Controller
 					//return $this->forward('ga_core.lien_controller:addRondeAction', array('request' => $request, 'id' => $id, 'num' => $num));
 					return $this->addRondeLien($id, $num, $request);
 					break;
+				case 2:
+					return $this->addRondeResultat($id, $num, $request);
+					break;
 				default:
 					throw new NotFoundHttpException("le type ".$type." n'existe pas.");
 			}
@@ -166,6 +169,11 @@ class RessourceController extends Controller
       'form'   => $form->createView(),
 			));
 			
+		}
+		
+		public function addRondeResultat($id, $num, $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
 		}
 		
 }
