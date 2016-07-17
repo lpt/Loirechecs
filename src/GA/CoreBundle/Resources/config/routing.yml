@@ -172,3 +172,8 @@ ga_core_tournoi_id_admin:
         requirements:
         id: \d*
 
+ga_core_test:
+   path:    /test
+   defaults:
+       _controller: GACoreBundle:Test:test1
+

@@ -2,5 +2,9 @@ services:
 #    ga_core.example:
 #        class: GA\CoreBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
-    ga_core.lien:
-        class: GA\CoreBundle\Lien
+    ga_core.lien_controller:
+        class: GA\CoreBundle\Controller\LienController
+        arguments: ['@templating']
+
+    ga_core.test_controller:
+        class: GA\CoreBundle\Controller\TestaController

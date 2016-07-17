@@ -9,49 +9,28 @@ use GA\CoreBundle\Entity\Ressource;
 use GA\CoreBundle\Entity\Lien;
 use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Form\RessourceAddLienType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
-
-
-class RessourceController extends Controller
+class LienController extends Controller
 {
-   	public function addAnnonceAction($id, $type, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
+		private $templating;
 		
-		public function addTournoiAction($id, $type, Request $request)
+		public function __construct(EngineInterface $templating)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$this->templating = $templating;
 		}
-		
-		public function addRondeAction($id, $num, $type, Request $request)
+   	
+		public function addRondeAction($id, $num, $request)
 		{
-			switch($type)
-			{
-				case 1:	
-					//return $this->forward('ga_core.lien_controller:addRondeAction', array('request' => $request, 'id' => $id, 'num' => $num));
-					return $this->addRondeLien($id, $num, $request);
-					break;
-				default:
-					throw new NotFoundHttpException("le type ".$type." n'existe pas.");
-			}
 			
+			$form   = $this->container->get('form.factory')->createBuilder(ressourceAddLienType::class, $ressource)->getForm();
+			return $this->templating->renderResponse('GACoreBundle:Static:admin.html.twig');
 		}
+
+
 		
-		public function editRondeAction($id, $num, $type, $idR, Request $request)
-		{
-			switch($type)
-			{
-				case 1:	
-					return $this-> editRondelien($idR, $request);
-					break;
-				default:
-					throw new NotFoundHttpException("le type ".$type." n'existe pas.");
-			}
-			
-		}
-		
-		public function addRondeLien($id, $num, $request)
+		public function addiRondeAction($id, $num, $request)
 		{
 			$ressource = new Ressource;
 			$lien = new Lien;
@@ -62,7 +41,7 @@ class RessourceController extends Controller
 				
 					$em = $this->getDoctrine()->getManager();
 					$ressource->setLien($lien); 
-					$ressource->setType(1);
+					$ressource->setType($type);
 					$ressource->setDateCreate(New \DateTime);
 					$ressource->setDateModif(New \DateTime);
 					
@@ -91,6 +70,6 @@ class RessourceController extends Controller
 				'form' => $form->createView(),
 			));
 		}
-		
+
 		
 }

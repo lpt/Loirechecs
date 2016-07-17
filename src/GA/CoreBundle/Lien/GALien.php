@@ -1,6 +1,6 @@
 <?php
 
-namespace GA\CoreBundle\Controller;
+namespace GA\CoreBundle\Lien;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,59 +10,21 @@ use GA\CoreBundle\Entity\Lien;
 use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Form\RessourceAddLienType;
 
-
-
-class RessourceController extends Controller
+class GALien extends Controller
 {
-   	public function addAnnonceAction($id, $type, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-		
-		public function addTournoiAction($id, $type, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-		
-		public function addRondeAction($id, $num, $type, Request $request)
-		{
-			switch($type)
-			{
-				case 1:	
-					//return $this->forward('ga_core.lien_controller:addRondeAction', array('request' => $request, 'id' => $id, 'num' => $num));
-					return $this->addRondeLien($id, $num, $request);
-					break;
-				default:
-					throw new NotFoundHttpException("le type ".$type." n'existe pas.");
-			}
-			
-		}
-		
-		public function editRondeAction($id, $num, $type, $idR, Request $request)
-		{
-			switch($type)
-			{
-				case 1:	
-					return $this-> editRondelien($idR, $request);
-					break;
-				default:
-					throw new NotFoundHttpException("le type ".$type." n'existe pas.");
-			}
-			
-		}
-		
+   			
 		public function addRondeLien($id, $num, $request)
 		{
 			$ressource = new Ressource;
 			$lien = new Lien;
 						
-			$form   = $this->container->get('form.factory')->create(ressourceAddLienType::class, $ressource);
+			$form   = $this->get('form.factory')->create(ressourceAddLienType::class, $ressource);
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
 				
 					$em = $this->getDoctrine()->getManager();
 					$ressource->setLien($lien); 
-					$ressource->setType(1);
+					$ressource->setType($type);
 					$ressource->setDateCreate(New \DateTime);
 					$ressource->setDateModif(New \DateTime);
 					
@@ -91,6 +53,6 @@ class RessourceController extends Controller
 				'form' => $form->createView(),
 			));
 		}
-		
+
 		
 }
