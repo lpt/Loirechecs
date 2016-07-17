@@ -9,6 +9,8 @@ use GA\CoreBundle\Entity\Ressource;
 use GA\CoreBundle\Entity\Lien;
 use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Form\RessourceAddLienType;
+use GA\CoreBundle\Form\RessourceDeleteLienType;
+use GA\CoreBundle\Form\DeleteType;
 
 
 
@@ -43,11 +45,26 @@ class RessourceController extends Controller
 			switch($type)
 			{
 				case 1:	
-					return $this-> editRondelien($idR, $request);
+					return $this-> editlien($idR, $request);
 					break;
 				default:
 					throw new NotFoundHttpException("le type ".$type." n'existe pas.");
 			}
+			
+			
+		}
+		
+		public function deleteRondeAction($id, $num, $type, $idR, Request $request)
+		{
+			switch($type)
+			{
+				case 1:	
+					return $this-> deletelien($idR, $request);
+					break;
+				default:
+					throw new NotFoundHttpException("le type ".$type." n'existe pas.");
+			}
+			
 			
 		}
 		
@@ -92,5 +109,63 @@ class RessourceController extends Controller
 			));
 		}
 		
+		public function editLien($idR, $request)
+		{	
+			$em = $this->getDoctrine()->getManager();
+					$ressource = $em
+						->getRepository('GACoreBundle:Ressource')
+						->find($idR);
+						
+			$form   = $this->container->get('form.factory')->create(ressourceAddLienType::class, $ressource);
+
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
+				
+					$ressource->setDateModif(New \DateTime);
+					$em->persist($ressource);
+					$em->flush();
+					
+					if ($ressource === null)
+					{
+						throw new NotFoundHttpException("la ressource ".$idr."n\'existe pas.");
+					}
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Ressource bien enregistrée.');
+
+					return $this->redirectToRoute('ga_core_admin');
+					
+			}
+			
+			return $this->render('GACoreBundle:Ressource:editLien.html.twig', array(
+				'form' => $form->createView(),
+			));
+		}
+		
+		public function deleteLien($idR, Request $request)
+		{
+			$em = $this->getDoctrine()->getManager();
+			$ressource = $em
+					->getRepository('GACoreBundle:Ressource')
+					->find($idR);
+					
+			if ($ressource === null){
+				throw new NotFoundHttpException("la ressource ".$idR."n'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create(DeleteType::class, $ressource);
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+				$em->remove($ressource);						
+				$em->flush();
+				$request->getSession()->getFlashBag()->add('info', "La ressource a bien été supprimée.");
+				
+				return $this->redirectToRoute('ga_core_admin');
+			}
+			
+			return $this->render('GACoreBundle:Ressource:deleteLien.html.twig', array(
+      'ressource' => $ressource,
+      'form'   => $form->createView(),
+			));
+			
+		}
 		
 }

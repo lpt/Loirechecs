@@ -26,7 +26,9 @@
 
 {%for ressource in ronde.ressources%}
 {%if ressource.type == 1 %}
-<p> <a href="{{ressource.url}}"> {{ressource.nom}} </a> => <a href="">modifier</a> - <a href=""> supprimer </a></p>
+<p> <a href="{{ressource.url}}"> {{ressource.nom}} </a> => 
+<a href="{{ path('ga_core_ressource_edit_ronde', {'id': tournoi.id, 'num': ronde.numero, 'idR': ressource.id, 'type': 1,})}} ">modifier</a> - 
+<a href="{{ path('ga_core_ressource_delete_ronde', {'id': tournoi.id, 'num': ronde.numero, 'idR': ressource.id, 'type': 1,})}}"> supprimer </a></p>
 {%endif%}
 {%endfor%}
 

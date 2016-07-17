@@ -1,0 +1,28 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer un tournoi - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+  <h2>Supprimer un lien</h2>
+
+	<p>Etes-vous certain de vouloir supprimer le lien <strong>"{{ ressource.nom }}"</strong>?  </p>
+	<a href="{{ path('ga_core_admin')}}" class="btn btn-default">
+    <i class="glyphicon glyphicon-chevron-left"></i>Retour au tournoi
+	</a>
+	<br />
+	<p>
+	
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+  {{ form_errors(form) }}
+	{{ form_widget(form.Supprimer, {'label':'Supprimer', 'attr': {'class': 'btn btn-danger'}}) }}
+  {{ form_rest(form) }}
+  {{ form_end(form) }}
+	
+	</p>
+	
+
+ 
+{% endblock %}
