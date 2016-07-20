@@ -33,7 +33,7 @@
 {%endfor%}
 
 
-<h5><strong>Liste des images:</strong> -  <a href="">ajouter une image</a>: </h5>
+<h5><strong>Liste des images:</strong> -  <a href="{{ path('ga_core_ressource_add_ronde', {'id': tournoi.id, 'num': ronde.numero, 'type': 3, })}}">ajouter une image</a>: </h5>
 
 {%for ressource in ronde.ressources%}
 {%if ressource.type == 2 %}
@@ -41,7 +41,7 @@
 {%endif%}
 {%endfor%}
 
-<h5><strong>Liste des appariements ou résulats:</strong> - <a href="">ajouter un appariement ou un résultat </a>: </h5>
+<h5><strong>Liste des appariements ou résulats:</strong> - <a href="{{ path('ga_core_ressource_add_ronde', {'id': tournoi.id, 'num': ronde.numero, 'type': 2, })}}">ajouter un appariement ou un résultat </a>: </h5>
 
 {%for ressource in ronde.ressources%}
 {%if ressource.type == 3 %}

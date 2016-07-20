@@ -18,6 +18,8 @@ class RessourceDeleteLienType extends RessourceType
 						->remove('type')
             ->remove('dateCreate')
             ->remove('dateModif')
+						->remove('Lien')
+						->remove('Resultat')
         ;
     }
     

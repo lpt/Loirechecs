@@ -15,4 +15,5 @@ class TestController extends Controller
 			return $this->forward('ga_core.test_controller:indexAction');
 		}
     
+		public function newAction()
 }

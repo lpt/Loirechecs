@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use GA\CoreBundle\Form\ResultatType;
 
 class RessourceType extends AbstractType
 {
@@ -28,6 +29,7 @@ class RessourceType extends AbstractType
             ->add('nom',								TextType::class)
             ->add('url',								UrlType::class)
             //->add('Lien')
+						->add('Resultat',						ResultatType::class)
 						->add('Sauvegarder',				SubmitType::class)
         ;
     }

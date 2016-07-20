@@ -8,9 +8,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GA\CoreBundle\Entity\Ressource;
 use GA\CoreBundle\Entity\Lien;
 use GA\CoreBundle\Entity\Ronde;
+use GA\CoreBundle\Entity\Resultat;
 use GA\CoreBundle\Form\RessourceAddLienType;
 use GA\CoreBundle\Form\RessourceDeleteLienType;
 use GA\CoreBundle\Form\DeleteType;
+use GA\CoreBundle\Form\RessourceAddResultatType;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 
@@ -173,7 +176,42 @@ class RessourceController extends Controller
 		
 		public function addRondeResultat($id, $num, $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$ressource = new Ressource;
+			$resultat = new Resultat;
+						
+			$form   = $this->container->get('form.factory')->create(ressourceAddResultatType::class, $ressource);
+
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
+				
+					$ressource->getResultat()->upload();
+					$em = $this->getDoctrine()->getManager();
+					$ressource->setType(2);
+					$ressource->setDateCreate(New \DateTime);
+					$ressource->setDateModif(New \DateTime);
+					
+					$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($id);
+										
+					$listeRonde = $tournoi->getRondes();
+					
+					$numero = $num - 1;
+					$ronde = $listeRonde[$numero];
+					
+					$ronde->addRessource($ressource);
+								
+					$em->persist($ressource);
+					$em->persist($ronde);
+					$em->flush();
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Ressource bien enregistrée.');
+
+					return $this->redirectToRoute('ga_core_tournoi', array('id' => $id));
+					
+			}
+			
+			return $this->render('GACoreBundle:Ressource:addResultat.html.twig', array(
+				'form' => $form->createView(),
+			));
 		}
-		
 }

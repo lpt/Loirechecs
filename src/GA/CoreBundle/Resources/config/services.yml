@@ -8,3 +8,7 @@ services:
 
     ga_core.test_controller:
         class: GA\CoreBundle\Controller\TestaController
+
+    ga_core.brochure_uploader:
+        class: GA\CoreBundle\FileUploader\FileUploader
+        arguments: ['%brochures_directory%']
