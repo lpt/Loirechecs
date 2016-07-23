@@ -18,25 +18,7 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $file stores the uploaded PDF file
-            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-            $file = $product->getBrochure();
-
-            // Generate a unique name for the file before saving it
-          //  $fileName = md5(uniqid()).'.'.$file->guessExtension();
-					  $fileName = $this->get('ga_core.brochure_uploader')->upload($file);
-
-            // Move the file to the directory where brochures are stored
-            //$file->move(
-             //   $this->getParameter('brochures_directory'),
-               // $fileName
-            //);
-
-            // Update the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $product->setBrochure($fileName);
-
-            // ... persist the $product variable or any other work
+                         
 						$em = $this->getDoctrine()->getManager();
 						$em->persist($product);
 						$em->flush();
@@ -49,10 +31,23 @@ class ProductController extends Controller
         ));
     }
 		
-		public function viewAction()
+		public function viewAction($id, Request $request)
 		{
+			$em = $this->getDoctrine()->getManager();
+
+			$product = $em
+					->getRepository('GACoreBundle:Product')
+					->find($id);
+					
+			if ($product === null){
+				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
+			}
+			
+			return $this->render('GACoreBundle:Product:view.html.twig', array(
+				'id' => $id,
+				'product' => $product
+				));
 			
 			
-			return $this->redirect($this->generateUrl('ga_core_admin'));
 		}
 }
