@@ -48,16 +48,23 @@ class BrochureUploadListener
 		
 		$fileName = $this->uploader->upload($file);
 		$entity->setBrochure($fileName);
+	//	$entity->setNom($file);
 		
 	}
 	
 	public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+				
+				if(!$entity instanceof Product)
+				{
+					return;
+				}
 
         $fileName = $entity->getBrochure();
 
-        $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+        $entity->setBrochure(new File('uploads/brochures/'.$fileName));
     }
+		
 	
 }

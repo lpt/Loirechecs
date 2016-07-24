@@ -18,7 +18,7 @@ class FileUploader
         $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
         $file->move($this->targetDir, $fileName);
-
-        return $fileName;
+				
+				return $fileName;
     }
 }

@@ -16,6 +16,7 @@ services:
     ga_core.brochure_listener:
         class: GA\CoreBundle\EventListener\BrochureUploadListener
         arguments: ['@ga_core.brochure_uploader']
+ 
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }

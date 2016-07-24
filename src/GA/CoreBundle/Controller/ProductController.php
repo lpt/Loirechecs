@@ -42,10 +42,10 @@ class ProductController extends Controller
 			if ($product === null){
 				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
 			}
-			
+						
 			return $this->render('GACoreBundle:Product:view.html.twig', array(
 				'id' => $id,
-				'product' => $product
+				'product' => $product,
 				));
 			
 			
