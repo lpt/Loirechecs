@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Ronde
 {		
 		/**
-		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ressource", cascade={"persist", "remove"})
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
 		*/
-		private $ressources; 
+		private $liens; 
 
     /**
      * @var int
@@ -167,40 +167,40 @@ class Ronde
      */
     public function __construct()
     {
-        $this->ressources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->liens = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add ressource
+     * Add lien
      *
-     * @param \GA\CoreBundle\Entity\Ressource $ressource
+     * @param \GA\CoreBundle\Entity\lien $lien
      *
      * @return Ronde
      */
-    public function addRessource(\GA\CoreBundle\Entity\Ressource $ressource)
+    public function addlien(\GA\CoreBundle\Entity\lien $lien)
     {
-        $this->ressources[] = $ressource;
+        $this->liens[] = $lien;
 
         return $this;
     }
 
     /**
-     * Remove ressource
+     * Remove lien
      *
-     * @param \GA\CoreBundle\Entity\Ressource $ressource
+     * @param \GA\CoreBundle\Entity\lien $lien
      */
-    public function removeRessource(\GA\CoreBundle\Entity\Ressource $ressource)
+    public function removelien(\GA\CoreBundle\Entity\lien $lien)
     {
-        $this->ressources->removeElement($ressource);
+        $this->liens->removeElement($lien);
     }
 
     /**
-     * Get ressources
+     * Get liens
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRessources()
+    public function getliens()
     {
-        return $this->ressources;
+        return $this->liens;
     }
 }

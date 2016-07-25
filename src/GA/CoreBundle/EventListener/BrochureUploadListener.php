@@ -77,7 +77,7 @@ class BrochureUploadListener
 					return;
 				}
 				
-		// recupere l'adresse absolu du fichier de l'id
+		// stocke l'adresse du fichier avant la suppression de l'id
 		$fileName = $entity->getBrochure();
 		$tempFile = __DIR__.'/../../../../web/'.$fileName;
 		$entity->setTempFile(new File($tempFile));
@@ -87,7 +87,7 @@ class BrochureUploadListener
 	
 	public function postRemove(LifecycleEventArgs $args)
 	{
-		// supprime le fichier 
+		
 		$entity = $args->getEntity();
 				
 				if(!$entity instanceof Product)
@@ -95,13 +95,12 @@ class BrochureUploadListener
 					return;
 				}
 		
+		// récupère l'adresse du fichier de l'entité supprimé et supprime le fichier
 		$tempFile = $entity->getTempFile();
 		
 				
-		if (file_exists($tempFile)) {
-      
-			
-		
+		if (file_exists($tempFile))
+		{		
       unlink($tempFile);
     }
 	}

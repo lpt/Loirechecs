@@ -11,7 +11,9 @@ use GA\CoreBundle\Form\TournoiType;
 
 
 class TournoiController extends Controller
-{
+{		
+		//GESTION DU TOURNOI
+		
     public function viewAction($id)
     {
 			$em = $this->getDoctrine()->getManager();
@@ -50,10 +52,6 @@ class TournoiController extends Controller
 				'form' => $form->createView(),
     ));
     }
-
-    
-			
-		
 		
 		public function editAction($id, Request $request)
 		{
@@ -144,4 +142,132 @@ class TournoiController extends Controller
 				));
 
     }
+		
+		// GESTION DES RESSOURCES DU TOURNOI
+		
+			//AJOUTS
+		
+		public function addTournoiLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+	
+		public function addTournoiAfficheAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+			
+			//EDITIONS
+			
+		public function editTournoiLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function editTournoiAfficheAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+			
+			// SUPPRESSIONS
+			
+		public function deleteTournoiLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function deleteTournoiAfficheAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		// GESTION DES RESSOURCES D UNE RONDE
+		
+			// AJOUTS
+		
+		public function addRondeLienAction($id, $num,  Request $request)
+		{
+			
+			$lien = new Lien;
+						
+			$form   = $this->container->get('form.factory')->create(AddLienType::class, $lien);
+
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
+				
+					$em = $this->getDoctrine()->getManager();
+					$lien->setDateCreate(New \DateTime);
+					$lien>setDateModif(New \DateTime);
+					
+					$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($id);
+										
+					$listeRonde = $tournoi->getRondes();
+					
+					$numero = $num - 1;
+					$ronde = $listeRonde[$numero];
+					
+					$ronde->addLien($lien);
+								
+					$em->persist($lien);
+					$em->persist($ronde);
+					$em->flush();
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Lien bien enregistré.');
+
+					return $this->redirectToRoute('ga_core_tournoi', array('id' => $id));
+					
+			}
+			
+			return $this->render('GACoreBundle:Ressource:addLien.html.twig', array(
+				'form' => $form->createView(),
+			));
+		
+		}
+		
+		public function addRondeImageAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function addRondeResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+				
+			// EDITIONS
+				
+		public function editRondeLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function editRondeImageAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function editRondeResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+					
+			// SUPPRESSIONS
+			
+		public function deleteRondeLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function deleteRondeImageAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function deleteRondeResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
 }

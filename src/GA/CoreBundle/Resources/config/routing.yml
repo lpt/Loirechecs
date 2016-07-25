@@ -23,7 +23,6 @@ ga_core_annonce_admin:
     defaults:
         _controller: GACoreBundle:Annonce:admin
 
-
 ga_core_annonce_add:
     path:   /admin/annonce/add
     defaults:
@@ -120,20 +119,35 @@ ga_core_admin:
     defaults:
         _controller: GACoreBundle:Static:admin
 
-ga_core_ressource_add_tournoi:
-    path:    /admin/ressource/add/tournoi/{id}/{type}
+ga_core_ressource_add_tournoi_lien:
+    path:    /admin/ressource/add/tournoi/{id}/lien
     defaults:
-        _controller: GACoreBundle:Ressource:addTournoi
+        _controller: GACoreBundle:Tournoi:addTournoiLien
 
-ga_core_ressource_edit_tournoi:
-    path:    /admin/ressource/edit/tournoi/{id}/{type}/{idR}
+ga_core_ressource_add_tournoi_affiche:
+    path:    /admin/ressource/add/tournoi/{id}/affiche
     defaults:
-        _controller: GACoreBundle:Ressource:editTournoi
+        _controller: GACoreBundle:Tournoi:addTournoiAffiche
 
-ga_core_ressource_delete_tournoi:
-    path:    /admin/ressource/delete/tournoi/{id}/{type}/{idR}
+ga_core_ressource_edit_tournoi_lien:
+    path:    /admin/ressource/edit/tournoi/lien/{id}
     defaults:
-        _controller: GACoreBundle:Ressource:deleteTournoi
+        _controller: GACoreBundle:Tournoi:editTournoiLien
+
+ga_core_ressource_edit_tournoi_affiche:
+    path:    /admin/ressource/edit/tournoi/affiche/{id}
+    defaults:
+        _controller: GACoreBundle:Tournoi:editTournoiAffiche
+
+ga_core_ressource_delete_tournoi_lien:
+    path:    /admin/ressource/delete/tournoi/lien/{id}
+    defaults:
+        _controller: GACoreBundle:Ressource:deleteTournoiLien
+
+ga_core_ressource_delete_tournoi_affiche:
+    path:    /admin/ressource/delete/tournoi/affiche/{id}
+    defaults:
+        _controller: GACoreBundle:Ressource:deleteTournoiAffiche
 
 ga_core_ressource_add_annonce:
     path:    /admin/ressource/add/annonce/{id}/{type}

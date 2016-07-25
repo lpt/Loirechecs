@@ -173,4 +173,71 @@ class AnnonceController extends Controller
 			'listeAnnonce' => $listeAnnonce
 			));
 	}
+	
+	// GESTION DES RESSOURCES D UNE ANNONCE
+			// AJOUTS
+		
+		public function addRondeLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function addRondeImageAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function addRondeResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function addRondeAfficheAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+			// EDITIONS
+				
+		public function editRondeLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function editRondeImageAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function editRondeResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function editRondeAfficheAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+			
+			// SUPPRESSIONS
+			
+		public function deleteRondeLienAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function deleteRondeImageAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function deleteRondeResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+		
+		public function deleteRondeAfficheAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
 }
