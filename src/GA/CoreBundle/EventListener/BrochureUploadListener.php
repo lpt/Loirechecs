@@ -8,6 +8,8 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use GA\CoreBundle\Entity\Product;
 use GA\CoreBundle\FileUploader\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+
 
 class BrochureUploadListener
 {
@@ -48,7 +50,7 @@ class BrochureUploadListener
 		
 		$fileName = $this->uploader->upload($file);
 		$entity->setBrochure($fileName);
-	//	$entity->setNom($file);
+
 		
 	}
 	
@@ -66,5 +68,42 @@ class BrochureUploadListener
         $entity->setBrochure(new File('uploads/brochures/'.$fileName));
     }
 		
+	public function preRemove(LifecycleEventArgs $args)
+	{
+		$entity = $args->getEntity();
+				
+				if(!$entity instanceof Product)
+				{
+					return;
+				}
+				
+		// recupere l'adresse absolu du fichier de l'id
+		$fileName = $entity->getBrochure();
+		$tempFile = __DIR__.'/../../../../web/'.$fileName;
+		$entity->setTempFile(new File($tempFile));
+		
+	
+	}
+	
+	public function postRemove(LifecycleEventArgs $args)
+	{
+		// supprime le fichier 
+		$entity = $args->getEntity();
+				
+				if(!$entity instanceof Product)
+				{
+					return;
+				}
+		
+		$tempFile = $entity->getTempFile();
+		
+				
+		if (file_exists($tempFile)) {
+      
+			
+		
+      unlink($tempFile);
+    }
+	}
 	
 }

@@ -47,7 +47,34 @@ class ProductController extends Controller
 				'id' => $id,
 				'product' => $product,
 				));
+						
+		}
+		
+		public function deleteAction($id, Request $request)
+		{
+			$em = $this->getDoctrine()->getManager();
+			$product = $em
+					->getRepository('GACoreBundle:Product')
+					->find($id);
+					
+			if ($product === null){
+				throw new NotFoundHttpException("le product d'id".$id."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($product);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+				
+			return $this->redirect($this->generateUrl('ga_core_admin'));
+			}
 			
+			return $this->render('GACoreBundle:product:delete.html.twig', array(
+      'product' => $product,
+      'form'   => $form->createView(),
+			));
 			
 		}
 }

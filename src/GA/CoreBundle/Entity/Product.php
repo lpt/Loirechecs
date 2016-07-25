@@ -36,7 +36,8 @@ class Product
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
-
+		
+		private $tempFile;
 
     /**
      * Get id
@@ -84,5 +85,18 @@ class Product
     public function getNom()
     {
         return $this->nom;
+    }
+		
+		public function setTempFile($tempFile)
+    {
+        $this->tempFile = $tempFile;
+
+        return $this;
+    }
+
+    
+    public function getTempFile()
+    {
+        return $this->tempFile;
     }
 }

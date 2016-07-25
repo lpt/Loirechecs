@@ -1,0 +1,21 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer un tournoi - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+  <h2>Supprimer un product</h2>
+
+<p>Etes-vous certain de vouloir supprimer le product "{{ product.nom }}" ?  </p>
+
+	<form action="{{ path('ga_core_product_delete', {'id': product.id}) }}" method="post">
+		
+  
+		<input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+	</form>
+
+ 
+{% endblock %}

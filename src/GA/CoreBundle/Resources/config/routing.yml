@@ -184,4 +184,11 @@ ga_core_product_id:
        requirements:
        id: \d*
 
+ga_core_product_delete:
+   path:    /delete/product/{id}
+   defaults:
+       _controller: GACoreBundle:Product:delete
+       requirements:
+       id: \d*
+
 
