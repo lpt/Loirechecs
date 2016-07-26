@@ -10,7 +10,7 @@
 
 
 <h3>{{tournoi.nom}} - <a href="{{ path('ga_core_tournoi_edit', {'id': tournoi.id})}}"> modifier le tournoi et les rondes</a></h3>
-<p><a href="{{ path('ga_core_ressource_add_tourno_resultati', {'id': tournoi.id})}}">ajouter un résultat général ou liste participant</a></p>
+<p><a href="{{ path('ga_core_ressource_add_tournoi_resultat', {'id': tournoi.id})}}">ajouter un résultat général ou liste participant</a></p>
 <p><a href="{{ path('ga_core_ressource_add_tournoi_affiche', {'id': tournoi.id})}}">ajouter une affiche </a></p>
 
 <p>liste des ressources liés aux tournoi</p>
@@ -26,29 +26,12 @@
 
 {% for lien in ronde.liens%}
 <p> <a href="{{lien.url}}"> {{lien.nom}} </a> => 
-<a href="{{ path('ga_core_ressource_edit_ronde_lien', {'id': ressource.id})}} ">modifier</a> - 
-<a href="{{ path('ga_core_ressource_delete_ronde_lien', {'id': ressource.id})}}"> supprimer </a></p>
+<a href="{{ path('ga_core_ressource_edit_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}} ">modifier</a> - 
+<a href="{{ path('ga_core_ressource_delete_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}}"> supprimer </a></p>
 
 {% endfor %}
 
-{#
-<h5><strong>Liste des images:</strong> -  <a href="{{ path('ga_core_ressource_add_ronde', {'id': tournoi.id, 'num': ronde.numero, 'type': 3, })}}">ajouter une image</a>: </h5>
 
-{% for ressource in ronde.ressources %}
-{%if ressource.type == 2 %}
-<p> <a href="{{ressource.url}}"> {{ressource.nom}} </a></p>
-{% endif %}
-{% endfor %}
-
-<h5><strong>Liste des appariements ou résulats:</strong> - <a href="{{ path('ga_core_ressource_add_ronde', {'id': tournoi.id, 'num': ronde.numero, 'type': 2, })}}">ajouter un appariement ou un résultat </a>: </h5>
-
-{% for ressource in ronde.ressources %}
-{% if ressource.type == 3 %}
-<p> <a href="{{ressource.url}}"> {{ressource.nom}} </a></p>
-{% endif %}
-{% endfor %}
-
-<br /> #}
 {% endfor %}
 
 {% endblock %}

@@ -9,19 +9,19 @@
 {% block core_body %}
 
 
-  <h3>{{tournoi.nom}}</h3>
+  <h3>{{ tournoi.nom }}</h3>
 	
 
 
-{%for ronde in tournoi.rondes%}
+{% for ronde in tournoi.rondes %}
 
-<h4>Ronde N° {{ronde.numero}}</h4>
+<h4>Ronde N° {{ ronde.numero }}</h4>
 
 
 <h5> Liens </h5>
 
-{%for ressource in ronde.ressources%}
-<p> <a href="{{ressource.url}}"> {{ressource.nom}} </a></p>
+{% for lien in ronde.liens %}
+<p> <a href="{{lien.url}}"> {{lien.nom}} </a></p>
 {%endfor%}
 
 
@@ -29,6 +29,6 @@
 
 
 
-{%endfor%}
+{% endfor %}
 
 {% endblock %}

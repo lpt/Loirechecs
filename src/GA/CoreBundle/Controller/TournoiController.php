@@ -7,7 +7,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
+use GA\CoreBundle\Entity\Lien;
+use GA\CoreBundle\Form\LienAddType;
 use GA\CoreBundle\Form\TournoiType;
+use GA\CoreBundle\Form\DeleteType;
 
 
 class TournoiController extends Controller
@@ -156,6 +159,12 @@ class TournoiController extends Controller
 		{
 			return $this->redirectToRoute('ga_core_admin');
 		}
+		
+		public function addTournoiResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+			
 			
 			//EDITIONS
 			
@@ -168,6 +177,12 @@ class TournoiController extends Controller
 		{
 			return $this->redirectToRoute('ga_core_admin');
 		}
+		
+		public function editTournoiResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+			
 			
 			// SUPPRESSIONS
 			
@@ -181,6 +196,12 @@ class TournoiController extends Controller
 			return $this->redirectToRoute('ga_core_admin');
 		}
 		
+		public function deleteTournoiResultatAction($id, Request $request)
+		{
+			return $this->redirectToRoute('ga_core_admin');
+		}
+			
+		
 		// GESTION DES RESSOURCES D UNE RONDE
 		
 			// AJOUTS
@@ -190,13 +211,13 @@ class TournoiController extends Controller
 			
 			$lien = new Lien;
 						
-			$form   = $this->container->get('form.factory')->create(AddLienType::class, $lien);
+			$form   = $this->container->get('form.factory')->create(lienAddType::class, $lien);
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
 				
 					$em = $this->getDoctrine()->getManager();
 					$lien->setDateCreate(New \DateTime);
-					$lien>setDateModif(New \DateTime);
+					$lien->setDateModif(New \DateTime);
 					
 					$tournoi = $em
 					->getRepository('GACoreBundle:Tournoi')
@@ -219,7 +240,7 @@ class TournoiController extends Controller
 					
 			}
 			
-			return $this->render('GACoreBundle:Ressource:addLien.html.twig', array(
+			return $this->render('GACoreBundle:Tournoi:addLien.html.twig', array(
 				'form' => $form->createView(),
 			));
 		
@@ -237,9 +258,35 @@ class TournoiController extends Controller
 				
 			// EDITIONS
 				
-		public function editRondeLienAction($id, Request $request)
+		public function editRondeLienAction($id, $num, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$lien = $em
+						->getRepository('GACoreBundle:Lien')
+						->find($idR);
+						
+			$form   = $this->container->get('form.factory')->create(lienAddType::class, $lien);
+
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
+				
+					$lien->setDateModif(New \DateTime);
+					$em->persist($lien);
+					$em->flush();
+					
+					if ($lien === null)
+					{
+						throw new NotFoundHttpException("Le lien ".$idr."n\'existe pas.");
+					}
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Lien bien enregistré.');
+
+					return $this->redirectToRoute('ga_core_admin');
+					
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:editLien.html.twig', array(
+				'form' => $form->createView(),
+			));
 		}
 		
 		public function editRondeImageAction($id, Request $request)
@@ -247,7 +294,7 @@ class TournoiController extends Controller
 			return $this->redirectToRoute('ga_core_admin');
 		}
 		
-		public function editRondeResultatAction($id, Request $request)
+		public function editRondeResultatAction($id, $num, $idR, Request $request)
 		{
 			return $this->redirectToRoute('ga_core_admin');
 		}
@@ -255,10 +302,35 @@ class TournoiController extends Controller
 					
 			// SUPPRESSIONS
 			
-		public function deleteRondeLienAction($id, Request $request)
+		public function deleteRondeLienAction($id, $num, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$lien = $em
+					->getRepository('GACoreBundle:Lien')
+					->find($idR);
+					
+			if ($lien === null)
+			{
+				throw new NotFoundHttpException("le lien ".$idR."n'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create(DeleteType::class, $lien);
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+				$em->remove($lien);						
+				$em->flush();
+				$request->getSession()->getFlashBag()->add('info', "Le lien a bien été supprimée.");
+				
+				return $this->redirectToRoute('ga_core_admin');
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:deleteLien.html.twig', array(
+      'lien' => $lien,
+      'form'   => $form->createView(),
+			));
 		}
+	
 		
 		public function deleteRondeImageAction($id, Request $request)
 		{
