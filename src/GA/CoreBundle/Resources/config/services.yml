@@ -23,3 +23,18 @@ services:
             - { name: doctrine.event_listener, event: postLoad }
             - { name: doctrine.event_listener, event: preRemove}
             - { name: doctrine.event_listener, event: postRemove}
+
+    ga_core.resultat_uploader:
+        class: GA\CoreBundle\FileUploader\FileUploader
+        arguments: ['%resultat_directory%']
+
+    ga_core.resultat_listener:
+        class: GA\CoreBundle\EventListener\ResultatUploadListener
+        arguments: ['@ga_core.resultat_uploader']
+ 
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
+            - { name: doctrine.event_listener, event: preRemove}
+            - { name: doctrine.event_listener, event: postRemove}

@@ -29,6 +29,8 @@
 <a href="{{ path('ga_core_ressource_edit_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}} ">modifier</a> - 
 <a href="{{ path('ga_core_ressource_delete_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}}"> supprimer </a></p>
 
+<h5><strong> Liste des résultat</strong> - <a href="{{ path('ga_core_ressource_add_ronde_resultat', {'id': tournoi.id, 'num': ronde.numero})}}">ajouter un resultat </a>:</h5>
+
 {% endfor %}
 
 

@@ -170,7 +170,7 @@ ga_core_ressource_delete_annonce:
         _controller: GACoreBundle:Ressource:deleteAnnonce
 
 ga_core_ressource_add_ronde_lien:
-    path:    /admin/ressource/add/tournoi/{id}/ronde/{num}
+    path:    /admin/ressource/add/tournoi/{id}/ronde/{num}/lien
     defaults:
         _controller: GACoreBundle:Tournoi:addRondeLien
 
@@ -183,6 +183,11 @@ ga_core_ressource_delete_ronde_lien:
     path:    /admin/ressource/delete/tournoi/{id}/ronde/{num}/lien/{idR}
     defaults:
         _controller: GACoreBundle:Tournoi:deleteRondeLien
+
+ga_core_ressource_add_ronde_resultat:
+    path:    /admin/ressource/add/tournoi/{id}/ronde/{num}/resultat
+    defaults:
+        _controller: GACoreBundle:Tournoi:addRondeResultat
 
 ga_core_tournoi_id_admin:
     path:     /admin/tournoi/view/{id}

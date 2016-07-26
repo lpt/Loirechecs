@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Entity\Lien;
+use GA\CoreBundle\Entity\Resultat;
 use GA\CoreBundle\Form\LienAddType;
+use GA\CoreBundle\Form\ResultatAddType;
 use GA\CoreBundle\Form\TournoiType;
 use GA\CoreBundle\Form\DeleteType;
 
@@ -246,14 +248,43 @@ class TournoiController extends Controller
 		
 		}
 		
-		public function addRondeImageAction($id, Request $request)
+		public function addRondeImageAction($id, $num, Request $request)
 		{
 			return $this->redirectToRoute('ga_core_admin');
 		}
 		
-		public function addRondeResultatAction($id, Request $request)
+		public function addRondeResultatAction($id, $num, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+				$resultat = new Resultat();
+        $form = $this->createForm(ResultatAddType::class, $resultat);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+                         
+						$em = $this->getDoctrine()->getManager();
+						$resultat->setDateCreate(New \DateTime);
+						$resultat->setDateModif(New \DateTime);
+						
+						$tournoi = $em
+						->getRepository('GACoreBundle:Tournoi')
+						->find($id);
+						
+						$listeRonde = $tournoi->getRondes();
+					
+						$numero = $num - 1;
+						$ronde = $listeRonde[$numero];
+					
+						$ronde->addResultat($resultat);
+						
+						$em->persist($resultat);
+						$em->flush();
+
+            return $this->redirect($this->generateUrl('ga_core_admin'));
+        }
+
+        return $this->render('GACoreBundle:Tournoi:addResultat.html.twig', array(
+            'form' => $form->createView(),
+        ));
 		}
 				
 			// EDITIONS

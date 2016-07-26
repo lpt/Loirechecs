@@ -8,6 +8,7 @@ imports:
 parameters:
     locale: en
     brochures_directory: '%kernel.root_dir%/../web/uploads/brochures'
+    resultat_directory: '%kernel.root_dir%/../web/uploads/resultat'
 
 framework:
     #esi:             ~

@@ -16,6 +16,11 @@ class Ronde
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
 		*/
 		private $liens; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Resultat", cascade={"persist", "remove"})
+		*/
+		private $resultats; 
 
     /**
      * @var int
@@ -168,6 +173,7 @@ class Ronde
     public function __construct()
     {
         $this->liens = new \Doctrine\Common\Collections\ArrayCollection();
+				$this->resultats = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -203,4 +209,40 @@ class Ronde
     {
         return $this->liens;
     }
+		
+		/**
+     * Add resultat
+     *
+     * @param \GA\CoreBundle\Entity\resultat $resultat
+     *
+     * @return Ronde
+     */
+    public function addresultat(\GA\CoreBundle\Entity\resultat $resultat)
+    {
+        $this->resultats[] = $resultat;
+
+        return $this;
+    }
+
+    /**
+     * Remove resultat
+     *
+     * @param \GA\CoreBundle\Entity\resultat $resultat
+     */
+    public function removeresultat(\GA\CoreBundle\Entity\resultat $resultat)
+    {
+        $this->resultats->removeElement($resultat);
+    }
+
+    /**
+     * Get resultats
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getresultats()
+    {
+        return $this->resultats;
+    }
+		
+		
 }
