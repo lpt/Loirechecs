@@ -17,7 +17,7 @@ class DeleteType extends AbstractType
     {
         $builder
             
-						->add('supprimer',		SubmitType::class)
+						->add('Supprimer',		SubmitType::class)
         ;
     }
     
