@@ -17,7 +17,7 @@ class ResultatAddType extends ResultatType
         $builder
             ->remove('dateCreate')
             ->remove('dateModif')
-            ->remove('chemin')
+           
         ;
     }
     

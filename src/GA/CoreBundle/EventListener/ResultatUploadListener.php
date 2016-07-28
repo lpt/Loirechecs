@@ -58,19 +58,21 @@ class ResultatUploadListener
     {
         $entity = $args->getEntity();
 				
-				if(!$entity instanceof Resultat)
+				if(!$entity instanceof Ronde)
 				{
 					return;
 				}
 
         $fileName = $entity->getChemin();
 
-        $entity->setChemin(new File('uploads/resultats/'.$fileName));
+        $entity->setChemin(new File('/uploads/resultats/'.$fileName));
     }
 		
 	public function preRemove(LifecycleEventArgs $args)
 	{
 		$entity = $args->getEntity();
+		
+
 				
 				if(!$entity instanceof Resultat)
 				{
@@ -79,8 +81,10 @@ class ResultatUploadListener
 				
 		// stocke l'adresse du fichier avant la suppression de l'id
 		$fileName = $entity->getChemin();
-		$tempFile = __DIR__.'/../../../../web/'.$fileName;
-		$entity->setCheminTemp(new File($tempFile));
+		
+		
+		
+		$entity->setCheminTemp(new File($fileName));
 		
 	
 	}

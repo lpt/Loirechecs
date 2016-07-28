@@ -320,17 +320,7 @@ class TournoiController extends Controller
 			));
 		}
 		
-		public function editRondeImageAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
 		
-		public function editRondeResultatAction($id, $num, $idR, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-		
-					
 			// SUPPRESSIONS
 			
 		public function deleteRondeLienAction($id, $num, $idR, Request $request)
@@ -368,9 +358,34 @@ class TournoiController extends Controller
 			return $this->redirectToRoute('ga_core_admin');
 		}
 		
-		public function deleteRondeResultatAction($id, Request $request)
+		public function deleteRondeResultatAction($idR, $id, $num, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$resultat = $em
+					->getRepository('GACoreBundle:Resultat')
+					->find($idR);
+								
+			if ($resultat === null){
+				throw new NotFoundHttpException("le resultat d'id".$idR."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($resultat);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "Le resultat a bien été supprimé.");
+				
+			return $this->redirect($this->generateUrl('ga_core_admin'));
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:deleteResultat.html.twig', array(
+      'resultat' => $resultat,
+			'id' => $id,
+			'num' => $num,
+      'form'   => $form->createView(),
+			));
+			
 		}
 		
 }

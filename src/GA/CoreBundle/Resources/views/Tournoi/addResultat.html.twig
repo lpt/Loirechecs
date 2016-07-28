@@ -7,8 +7,16 @@
 {% block core_body %}
 
 	
-<a href="{{asset(resultat.chemin)}}"> resultat </a>
 			
+<h1>Ajouter une pdf</h1>
+
+{{ form_start(form) }}
+    {# ... #}
+
+    {{ form_row(form.chemin) }}
+{{ form_end(form) }}
+
+<h2> pdf</h2>
 
 
 

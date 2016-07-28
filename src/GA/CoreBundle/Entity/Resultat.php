@@ -46,8 +46,8 @@ class Resultat
     /**
      * @ORM\Column(type="string")
      *
-     * @Assert\NotBlank(message="Please, upload the product brochure as a html file.")
-     * @Assert\File(mimeTypes={ "application/html" })
+     * @Assert\NotBlank(message="Uploader un resultat en html")
+     * @Assert\File(mimeTypes={ "text/html" })
      */
     private $chemin;
 		
@@ -158,6 +158,30 @@ class Resultat
     public function getChemin()
     {
         return $this->chemin;
+    }
+		
+		/**
+     * Set cheminTemp
+     *
+     * @param string $cheminTemp
+     *
+     * @return Resultat
+     */
+    public function setCheminTemp($cheminTemp)
+    {
+        $this->cheminTemp = $cheminTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get cheminTemp
+     *
+     * @return string
+     */
+    public function getCheminTemp()
+    {
+        return $this->cheminTemp;
     }
 }
 

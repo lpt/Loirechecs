@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ResultatType extends AbstractType
 {
@@ -19,8 +20,16 @@ class ResultatType extends AbstractType
         $builder
             ->add('dateCreate')
             ->add('dateModif')
-            ->add('nom')
-            ->add('chemin', 						FileType::class, array('label' => 'Chemin (HTML File)'))
+            ->add('nom' ,								ChoiceType::class, array(
+																									'choices'  => array(
+																											'Resultat' => 'Resultat',
+																											'Appariement' => 'Appariement',
+																											),
+																									'required'    => false,
+																									'empty_data'  => 'Resultat'
+																									,))
+																							
+            ->add('chemin', 						FileType::class, array('label' => '(fichier .html'))
 						->add('sauvegarder',			SubmitType::class)
         ;
     }
