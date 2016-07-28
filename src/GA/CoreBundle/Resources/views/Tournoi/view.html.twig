@@ -1,0 +1,50 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+
+  Tournoi - {{ parent() }}
+
+{% endblock %}
+
+{% block core_body %}
+
+
+<h3>{{tournoi.nom}} </h3>
+
+<h5><strong> Liste des liens:</strong></h5>
+
+{% for lien in tournoi.liens%}
+<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
+
+{% endfor %}
+
+
+<br />
+
+
+{% for ronde in tournoi.rondes %}
+
+<h4>Ronde N° {{ronde.numero}}</h4>
+
+
+<h5><strong> Liste des liens:</strong></h5>
+
+{% for lien in ronde.liens%}
+<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
+
+{% endfor %}
+
+<h5><strong> Liste des résultat:</strong></h5>
+
+
+{% for resultat in ronde.resultats%}
+
+<p><a href="{{asset(resultat.chemin)}}"> {{resultat.nom}} </a></p>
+
+
+{% endfor %}
+
+
+{% endfor %}
+
+{% endblock %}

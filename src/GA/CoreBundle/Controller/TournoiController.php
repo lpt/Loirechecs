@@ -154,7 +154,36 @@ class TournoiController extends Controller
 		
 		public function addTournoiLienAction($id, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$lien = new Lien;
+						
+			$form   = $this->container->get('form.factory')->create(lienAddType::class, $lien);
+
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
+				
+					$em = $this->getDoctrine()->getManager();
+					$lien->setDateCreate(New \DateTime);
+					$lien->setDateModif(New \DateTime);
+					
+									
+					$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($id);			
+							
+					$tournoi->addLien($lien);
+								
+					$em->persist($lien);
+					$em->persist($tournoi);
+					$em->flush();
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Lien bien enregistré.');
+
+					return $this->redirectToRoute('ga_core_tournoi', array('id' => $id));
+					
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:addLien.html.twig', array(
+				'form' => $form->createView(),
+			));
 		}
 	
 		public function addTournoiAfficheAction($id, Request $request)
