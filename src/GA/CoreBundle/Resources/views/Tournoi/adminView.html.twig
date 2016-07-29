@@ -8,42 +8,63 @@
 
 {% block core_body %}
 
+	<div class='well'>
+	<h3>{{tournoi.nom}} - <a href="{{ path('ga_core_tournoi_edit', {'id': tournoi.id})}}"> modifier </a></h3>
+	
+	<div class='well'>
+	
+	<h4>Général</h4>
 
-<h3>{{tournoi.nom}} - <a href="{{ path('ga_core_tournoi_edit', {'id': tournoi.id})}}"> modifier le tournoi et les rondes</a></h3>
-<p><a href="{{ path('ga_core_ressource_add_tournoi_resultat', {'id': tournoi.id})}}">ajouter un résultat général ou  une liste  de participants</a></p>
-<p><a href="{{ path('ga_core_ressource_add_tournoi_affiche', {'id': tournoi.id})}}">ajouter une affiche </a></p>
-<p><a href="{{ path('ga_core_ressource_add_tournoi_lien', {'id': tournoi.id})}}">ajouter un lien</a></p>
+	
+	<h5><strong>Liste des liens</strong> - <a href="{{ path('ga_core_ressource_add_tournoi_lien', {'id': tournoi.id})}}">ajouter</a>:</h5>
+{% for lien in tournoi.liens%}
+	
+	<p> <a href="{{lien.url}}"> {{lien.nom}} </a> => 
+	<a href="{{ path('ga_core_ressource_edit_tournoi_lien', {'id': tournoi.id, 'idR': lien.id})}} ">modifier</a> - 
+	<a href="{{ path('ga_core_ressource_delete_tournoi_lien', {'id': tournoi.id, 'idR': lien.id})}}"> supprimer </a></p>
 
-<p>liste des ressources liés aux tournoi</p>
-<br />
+{% endfor %}
+
+<h5><strong> Liste des particpant  et  Classement général</strong> - <a href="{{ path('ga_core_ressource_add_tournoi_resultat', {'id': tournoi.id})}}">ajouter</a>:</h5>
+
+<h5><strong> Affiche </strong> - <a href="{{ path('ga_core_ressource_add_tournoi_affiche', {'id': tournoi.id})}}">ajouter</a>:</h5>
+
+	<br />
+	
+	</div>
 
 
 {% for ronde in tournoi.rondes %}
+	<div class='well'>
+	
+	<h4>Ronde N° {{ronde.numero}}</h4>
 
-<h4>Ronde N° {{ronde.numero}}</h4>
 
+	<h5><strong> Liste des liens</strong> - <a href="{{ path('ga_core_ressource_add_ronde_lien', {'id': tournoi.id, 'num': ronde.numero})}}">ajouter </a>:</h5>
 
-<h5><strong> Liste des liens</strong> - <a href="{{ path('ga_core_ressource_add_ronde_lien', {'id': tournoi.id, 'num': ronde.numero})}}">ajouter un lien </a>:</h5>
+	{% for lien in ronde.liens%}
 
-{% for lien in ronde.liens%}
-<p> <a href="{{lien.url}}"> {{lien.nom}} </a> => 
-<a href="{{ path('ga_core_ressource_edit_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}} ">modifier</a> - 
-<a href="{{ path('ga_core_ressource_delete_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}}"> supprimer </a></p>
+		<p> <a href="{{lien.url}}"> {{lien.nom}} </a> => 
+		<a href="{{ path('ga_core_ressource_edit_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}} ">modifier</a> - 
+		<a href="{{ path('ga_core_ressource_delete_ronde_lien', {'id': tournoi.id, 'num': ronde.id, 'idR': lien.id})}}"> supprimer </a></p>
+
+	{% endfor %}
+
+	<h5><strong> Appariement et Résultat</strong> - <a href="{{ path('ga_core_ressource_add_ronde_resultat', {'id': tournoi.id, 'num': ronde.numero})}}">ajouter un resultat  ou appariement</a>:</h5>
+
+	{% for resultat in ronde.resultats%}
+
+		<p><a href="{{asset(resultat.chemin)}}"> {{resultat.nom}} </a > =>
+		<a href="{{ path('ga_core_ressource_delete_ronde_resultat', {'id': tournoi.id, 'num': ronde.id, 'idR': resultat.id})}}"> supprimer </a></p>
+
+	{% endfor %}
+	
+	<h5><strong> Liste des images </strong> - <a href="#">ajouter  une image </a>:</h5>
+	
+	</div>
+
 
 {% endfor %}
-
-<h5><strong> Liste des résultat</strong> - <a href="{{ path('ga_core_ressource_add_ronde_resultat', {'id': tournoi.id, 'num': ronde.numero})}}">ajouter un resultat  ou appariement</a>:</h5>
-
-
-{% for resultat in ronde.resultats%}
-
-<p><a href="{{asset(resultat.chemin)}}"> {{resultat.nom}} </a > =>
-<a href="{{ path('ga_core_ressource_delete_ronde_resultat', {'id': tournoi.id, 'num': ronde.id, 'idR': resultat.id})}}"> supprimer </a></p>
-
-
-{% endfor %}
-
-
-{% endfor %}
+</div>
 
 {% endblock %}

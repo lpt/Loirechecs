@@ -35,6 +35,6 @@ class StaticController extends Controller
 	{
 		return $this->render('GACoreBundle:Admin:index.html.twig');
 	}
-		
-		
+	
+				
 }

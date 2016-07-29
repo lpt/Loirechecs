@@ -123,9 +123,18 @@ class TournoiController extends Controller
 					->getRepository('GACoreBundle:Tournoi');
 				
 			$listeTournoi  = $repository->findAll();
-		
+			
+			foreach ($listeTournoi as $tournoi)
+			{
+				 $saison[] = $tournoi->getSaison();
+			}
+			
+			var_dump($saison);
+			exit;
+			
 			return $this->render('GACoreBundle:Tournoi:admin.html.twig', array(
-				'listeTournoi' => $listeTournoi
+				'listeTournoi' => $listeTournoi,
+				'saison' => $saison
 			));
 		}
 		
@@ -199,9 +208,35 @@ class TournoiController extends Controller
 			
 			//EDITIONS
 			
-		public function editTournoiLienAction($id, Request $request)
+		public function editTournoiLienAction($id, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$lien = $em
+						->getRepository('GACoreBundle:Lien')
+						->find($idR);
+						
+			$form   = $this->container->get('form.factory')->create(lienAddType::class, $lien);
+
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
+				
+					$lien->setDateModif(New \DateTime);
+					$em->persist($lien);
+					$em->flush();
+					
+					if ($lien === null)
+					{
+						throw new NotFoundHttpException("Le lien ".$idr."n\'existe pas.");
+					}
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Lien bien enregistré.');
+
+					return $this->redirectToRoute('ga_core_admin');
+					
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:editLien.html.twig', array(
+				'form' => $form->createView(),
+			));
 		}
 		
 		public function editTournoiAfficheAction($id, Request $request)
@@ -217,9 +252,33 @@ class TournoiController extends Controller
 			
 			// SUPPRESSIONS
 			
-		public function deleteTournoiLienAction($id, Request $request)
+		public function deleteTournoiLienAction($id, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$lien = $em
+					->getRepository('GACoreBundle:Lien')
+					->find($idR);
+					
+			if ($lien === null)
+			{
+				throw new NotFoundHttpException("le lien ".$idR."n'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create(DeleteType::class, $lien);
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+			{
+				$em->remove($lien);						
+				$em->flush();
+				$request->getSession()->getFlashBag()->add('info', "Le lien a bien été supprimée.");
+				
+				return $this->redirectToRoute('ga_core_admin');
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:deleteLien.html.twig', array(
+      'lien' => $lien,
+      'form'   => $form->createView(),
+			));
 		}
 		
 		public function deleteTournoiAfficheAction($id, Request $request)
@@ -416,5 +475,26 @@ class TournoiController extends Controller
 			));
 			
 		}
+		
+		public function TestAction($id, Request $request)
+		{
+			
+			$em = $this->getDoctrine()->getManager();
+			$tournoi = $em
+							-> getRepository('GACoreBundle:Tournoi')
+							-> find($id);
+				
+						
+			$saison = $tournoi->getSaison();
+			
+			var_dump($saison);
+			exit();
+			
+			return $this->render('GACoreBundle:Tournoi:test.html.twig', array(
+			'tournoi' => $tournoi,
+			));
+			
+		}
+		
 		
 }

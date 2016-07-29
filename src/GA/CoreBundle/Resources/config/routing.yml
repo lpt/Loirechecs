@@ -2,7 +2,7 @@ ga_core_annonce:
     path:     /{page}
     defaults:  { _controller: GACoreBundle:Annonce:index, page: 1 }
     requirements: 
-            page: \d*
+            page: '\d+'
 
 ga_core_annonce_id:
     path:     /annonce/{id}
@@ -135,7 +135,7 @@ ga_core_ressource_add_tournoi_resultat:
         _controller: GACoreBundle:Tournoi:addTournoiResultat
 
 ga_core_ressource_edit_tournoi_lien:
-    path:    /admin/ressource/edit/tournoi/lien/{id}
+    path:    /admin/ressource/edit/tournoi/{id}/lien/{idR}
     defaults:
         _controller: GACoreBundle:Tournoi:editTournoiLien
 
@@ -145,9 +145,9 @@ ga_core_ressource_edit_tournoi_affiche:
         _controller: GACoreBundle:Tournoi:editTournoiAffiche
 
 ga_core_ressource_delete_tournoi_lien:
-    path:    /admin/ressource/delete/tournoi/lien/{id}
+    path:    /admin/ressource/delete/tournoi/{id}/lien/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:deleteTournoiLien
+        _controller: GACoreBundle:Tournoi:deleteTournoiLien
 
 ga_core_ressource_delete_tournoi_affiche:
     path:    /admin/ressource/delete/tournoi/affiche/{id}
@@ -221,3 +221,9 @@ ga_core_product_delete:
        id: \d*
 
 
+ga_core_tournoi_test:
+    path:     /test/tournoi/{id}
+    defaults:
+        _controller: GACoreBundle:Tournoi:test
+        requirements:
+        id: \d*

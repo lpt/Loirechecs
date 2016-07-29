@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tournoi
 {
-
+		
    
 		/**
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist", "remove"})
@@ -28,6 +28,11 @@ class Tournoi
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Resultat", cascade={"persist", "remove"})
 		*/
 		private $resultats; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Affiche", cascade={"persist", "remove"})
+		*/
+		private $affiches; 
 		
 		/**
      * @var int
@@ -313,4 +318,54 @@ class Tournoi
     {
         return $this->resultats;
     }
+		
+		
+    /**
+     * Add affich
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affich
+     *
+     * @return Tournoi
+     */
+    public function addAffich(\GA\CoreBundle\Entity\Affiche $affich)
+    {
+        $this->affiches[] = $affich;
+
+        return $this;
+    }
+
+    /**
+     * Remove affich
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affich
+     */
+    public function removeAffich(\GA\CoreBundle\Entity\Affiche $affich)
+    {
+        $this->affiches->removeElement($affich);
+    }
+
+    /**
+     * Get affiches
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAffiches()
+    {
+        return $this->affiches;
+    }
+		
+		public function getSaison()
+		{
+			$listeRonde = $this->getRondes();
+			$ronde = $listeRonde[0];
+			
+			$dateEvent = $ronde->getDateEvent();
+			
+			$annee = $dateEvent->sub(new \DateInterval('P8M'));
+			$annee1 = intval($annee->format('Y'));
+			$annee2 = $annee1 + 1;
+			$saison = $annee1." - ".$annee2;
+			
+			return $saison;
+		}
 }

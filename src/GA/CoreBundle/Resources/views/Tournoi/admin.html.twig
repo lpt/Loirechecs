@@ -10,16 +10,12 @@
 
 <div class="well">
 
-		<h4> Ajouter un tournoi </h4>				
-	
-		<p><a href="{{ path('ga_core_tournoi_add')}}">Ajouter</a>
   
-		<h4> Liste des tournois</h4>
+		<h5><strong> Liste des tournois<a href="{{ path('ga_core_tournoi_add')}}"></strong> Ajouter</a> :</h5>
+		
 		{%for tournoi in listeTournoi%}
 	
-			<p><strong>{{tournoi.nom}} </strong>
-				<a href="{{ path('ga_core_tournoi_id_admin', {'id': tournoi.id})}}"> administrer </a>
-			</p>
+			<p>{{tournoi.nom}} - {{saison}} <a href="{{ path('ga_core_tournoi_id_admin', {'id': tournoi.id})}}"> administrer </a>			</p>
 				
 		{%endfor%}
 		
