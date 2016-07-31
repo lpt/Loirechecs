@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use GA\CoreBundle\Form\RondeType;
 
 
@@ -27,6 +28,28 @@ class TournoiType extends AbstractType
             ->add('contactNom',		TextType::class)
             ->add('contactTph',		TextType::class)
             ->add('contactMail',	TextType::class)
+						->add('jeune',					ChoiceType::class, array(
+																									'choices'  => array(
+																											'Adulte' => 'Adulte',
+																											'Jeune' => 'Jeune',
+																											),
+																									'required'    => true,
+																									'label' => 'Catégorie'
+																									)	)
+						
+						
+						->add('saison',					ChoiceType::class, array(
+																									'choices'  => array(
+																											'2017-2018' => '2017-2018',
+																											'2016-2017' => '2016-2017',
+																											'2015-2016' => '2015-2016',
+																											'2014-2015' => '2014-2015',
+																											'2013-2014' => '2013-2014',
+																											),
+																									'required'    => true,
+																									'preferred_choices' => array('2016-2017')
+																									,))	
+						
 						
             ->add('rondes',				CollectionType::class, array(
 							'entry_type'		=> 	RondeType::class,

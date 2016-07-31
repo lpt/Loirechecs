@@ -39,8 +39,8 @@ services:
             - { name: doctrine.event_listener, event: preRemove}
             - { name: doctrine.event_listener, event: postRemove}
 
-    ga_core.tournoi_listener:
-        class: GA\CoreBundle\EventListener\TournoiListener
-
-        tags:
-            - { name: doctrine.event_listener, event: postLoad}
+#    ga_core.tournoi_listener:
+#        class: GA\CoreBundle\EventListener\TournoiListener
+#
+#        tags:
+#            - { name: doctrine.event_listener, event: postLoad}

@@ -493,7 +493,7 @@ class TournoiController extends Controller
 					->getManager()
 					->getRepository('GACoreBundle:Tournoi');
 				
-			$listeTournoi  = $repository->findAll();
+			$listeTournoi  = $repository->findByJeune(false);
 			 
 			 return $this->render('GACoreBundle:Tournoi:nav.html.twig', array(
 															'listeTournoi' => $listeTournoi
