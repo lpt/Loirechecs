@@ -15,7 +15,7 @@
 		
 		{%for tournoi in listeTournoi%}
 	
-			<p>{{tournoi.nom}} - {{saison}} <a href="{{ path('ga_core_tournoi_id_admin', {'id': tournoi.id})}}"> administrer </a>			</p>
+			<p>{{tournoi.nom}} - {{tournoi.saison}}  =><a href="{{ path('ga_core_tournoi_id_admin', {'id': tournoi.id})}}"> administrer </a>			</p>
 				
 		{%endfor%}
 		

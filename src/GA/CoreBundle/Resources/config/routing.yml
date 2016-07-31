@@ -227,3 +227,4 @@ ga_core_tournoi_test:
         _controller: GACoreBundle:Tournoi:test
         requirements:
         id: \d*
+

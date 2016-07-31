@@ -77,6 +77,8 @@ class Tournoi
      * @ORM\Column(name="contactMail", type="string", length=255)
      */
     private $contactMail;
+		
+		private $saison;
 
 
     /**
@@ -354,18 +356,31 @@ class Tournoi
         return $this->affiches;
     }
 		
-		public function getSaison()
+		public function createSaison()
 		{
 			$listeRonde = $this->getRondes();
 			$ronde = $listeRonde[0];
 			
 			$dateEvent = $ronde->getDateEvent();
+			$annee = clone $dateEvent;
+			$annee->sub(new \DateInterval('P8M'));
 			
-			$annee = $dateEvent->sub(new \DateInterval('P8M'));
 			$annee1 = intval($annee->format('Y'));
 			$annee2 = $annee1 + 1;
 			$saison = $annee1." - ".$annee2;
 			
 			return $saison;
+		}
+		
+		public function setSaison ($saison)
+    {
+        $this->saison = $saison;
+
+        return $this;
+    }
+		
+		public function getSaison()
+		{
+				return $this->saison;
 		}
 }

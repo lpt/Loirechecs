@@ -124,18 +124,9 @@ class TournoiController extends Controller
 				
 			$listeTournoi  = $repository->findAll();
 			
-			foreach ($listeTournoi as $tournoi)
-			{
-				 $saison[] = $tournoi->getSaison();
-			}
-			
-			var_dump($saison);
-			exit;
-			
 			return $this->render('GACoreBundle:Tournoi:admin.html.twig', array(
 				'listeTournoi' => $listeTournoi,
-				'saison' => $saison
-			));
+				));
 		}
 		
 		public function adminViewAction($id)
@@ -494,6 +485,19 @@ class TournoiController extends Controller
 			'tournoi' => $tournoi,
 			));
 			
+		}
+		
+		public function navAction()
+		{
+			 $repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Tournoi');
+				
+			$listeTournoi  = $repository->findAll();
+			 
+			 return $this->render('GACoreBundle:Tournoi:nav.html.twig', array(
+															'listeTournoi' => $listeTournoi
+															));
 		}
 		
 		

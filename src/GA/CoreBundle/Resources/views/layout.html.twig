@@ -44,7 +44,7 @@
 									<li><a href="{{ path('ga_core_agenda') }}">Agenda</a></li>
 									
 									{# devra récupérer la liste des tournois (nom, saison, catégorie, type)#}
-									<li class="dropdown">
+									<!--<li class="dropdown">
 										<a  class="dropdown-toggle" data-toggle="dropdown"  href="#"> Compétition adulte<span class="caret"></span>
 										</a>
 										<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -62,7 +62,10 @@
 												</ul>
 											</li>
 										</ul>
-									</li>
+									</li>-->
+									
+									{{ render(controller("GACoreBundle:Tournoi:nav")) }}
+									
 									<li><a href="{{ path('ga_core_admin') }}">Espace reservé</a></li>
 								</ul>
 							</div>
