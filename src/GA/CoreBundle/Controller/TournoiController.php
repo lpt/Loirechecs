@@ -496,6 +496,7 @@ class TournoiController extends Controller
 			$jeune = false;
 			$listeSaison  = $repository->findListeSaison($jeune);		
 			
+			
 			foreach($listeSaison as $key => $saisonArray)
 			{
 				
@@ -503,10 +504,16 @@ class TournoiController extends Controller
 				$listeTournoi[$saison] = $repository->findTournoiBySaisonAdulte($saison);
 			}
 			
-						
-			 return $this->render('GACoreBundle:Tournoi:navAdulte.html.twig', array(
+			if(isset($listeTournoi)) 
+			{
+					return $this->render('GACoreBundle:Tournoi:navAdulte.html.twig', array(
 																														'listeTournoi'=> $listeTournoi
 																														));
+			}
+						
+			return  $this->render('GACoreBundle:Tournoi:nav.html.twig');
+			 
+																														
 		}
 		
 		public function navJeuneAction()
@@ -526,10 +533,16 @@ class TournoiController extends Controller
 				$listeTournoi[$saison] = $repository->findTournoiBySaisonJeune($saison);
 			}
 			
+			if(isset($listeTournoi)) 
+			{
 									
-			 return $this->render('GACoreBundle:Tournoi:navJeune.html.twig', array(
+				return $this->render('GACoreBundle:Tournoi:navJeune.html.twig', array(
 																														'listeTournoi'=> $listeTournoi
 																														));
+			}
+			
+			return  $this->render('GACoreBundle:Tournoi:nav.html.twig');
+			
 		}
 		
 		

@@ -3,6 +3,7 @@
 namespace GA\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ronde
@@ -14,11 +15,13 @@ class Ronde
 {		
 		/**
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
+		* @Assert\Valid()
 		*/
 		private $liens; 
 		
 		/**
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Resultat", cascade={"persist", "remove"})
+		* @Assert\Valid()
 		*/
 		private $resultats; 
 
@@ -35,6 +38,7 @@ class Ronde
      * @var int
      *
      * @ORM\Column(name="numero", type="integer")
+		 * @Assert\Type(type="integer", message="{{ value }} n'est pas du type {{ type }}")
      */
     private $numero;
 
@@ -42,6 +46,8 @@ class Ronde
      * @var \DateTime
      *
      * @ORM\Column(name="dateEvent", type="datetime")
+		 * @Assert\DateTime(message= "DateTime non valide")
+		 * @Assert\NotBlank(message="Date requise")
      */
     private $dateEvent;
 
@@ -49,6 +55,8 @@ class Ronde
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255)
+		 * @Assert\length(
+     *								max=255, maxMessage = "{{ limit }} caractères maxium")
      */
     private $adresse;
 
@@ -56,6 +64,9 @@ class Ronde
      * @var string
      *
      * @ORM\Column(name="ville", type="string", length=255)
+		  * @Assert\length(
+		 * 							min=4, minMessage = "{{ limit }} caractères minimun",
+     *								max=30, maxMessage = "{{ limit }} caractères maxium")
      */
     private $ville;
 

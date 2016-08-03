@@ -11,13 +11,31 @@
 <div class="well">
 
   
-		<h5><strong> Liste des tournois<a href="{{ path('ga_core_tournoi_add')}}"></strong> Ajouter</a> :</h5>
+		<h5><strong> LISTE DES TOURNOIS<a href="{{ path('ga_core_tournoi_add')}}"></strong> Ajouter</a> :</h5>
 		
-		{%for tournoi in listeTournoi%}
-	
+		<div class = "row">
+		<div class = "col-xs-6">
+		<h5> TOURNOI ADULTE</h5>
+		<br />
+		
+		{% for tournoi in listeTournoi %}
+		{% if  tournoi.jeune == 0 %}
 			<p>{{tournoi.nom}} - {{tournoi.saison}}  =><a href="{{ path('ga_core_tournoi_id_admin', {'id': tournoi.id})}}"> administrer </a>			</p>
-				
-		{%endfor%}
+		
+		{% endif %}
+		{% endfor %}
+		</div>
+		<div class = "col-xs-6">
+		<h5> TOURNOI JEUNE </h5>
+		<br />
+		{% for tournoi in listeTournoi %}
+		{% if  tournoi.jeune == 1 %}	
+			<p>{{tournoi.nom}} - {{tournoi.saison}}  =><a href="{{ path('ga_core_tournoi_id_admin', {'id': tournoi.id})}}"> administrer </a>			</p>
+		
+		{% endif %}		
+		{% endfor %}
+		</div>
+		</div>
 		
 	</div>
 

@@ -3,6 +3,7 @@
 namespace GA\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tournoi
@@ -16,21 +17,25 @@ class Tournoi
    
 		/**
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist", "remove"})
+		* @Assert\Valid()
 		*/
 		private $rondes; 
 		
 		/**
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
+		* @Assert\Valid()
 		*/
 		private $liens; 
 		
 		/**
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Resultat", cascade={"persist", "remove"})
+		* @Assert\Valid()
 		*/
 		private $resultats; 
 		
 		/**
 		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Affiche", cascade={"persist", "remove"})
+		* @Assert\Valid()
 		*/
 		private $affiches; 
 		
@@ -47,13 +52,19 @@ class Tournoi
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
-     */
+		 * @Assert\length(
+		 * 							min=4, minMessage = "{{limit}} caractères minimun",
+     *								max=25, maxMessage = "{{limit}} caractères maxium")
+		 *@Assert\NotBlank(message = "Nom requis")
+		 */
     private $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+		 * @Assert\length(
+     *								max=255, maxMessage = "{{limit}} caractères maxium")
      */
     private $description;
 
@@ -61,6 +72,9 @@ class Tournoi
      * @var string
      *
      * @ORM\Column(name="contactNom", type="string", length=255)
+		 * @Assert\length(
+		 * 							min=4, minMessage = "{{limit}} caractères minimun",
+     *								max=25, maxMessage = "{{limit}} caractères maxium")
      */
     private $contactNom;
 
@@ -68,6 +82,9 @@ class Tournoi
      * @var string
      *
      * @ORM\Column(name="contactTph", type="string", length=255)
+		 * @Assert\length(
+		 * 							min=10, minMessage = " {{ limit }} caractères minimun",
+     *								max=14, maxMessage = " {{ limit }} caractères maxium")
      */
     private $contactTph;
 
@@ -75,6 +92,7 @@ class Tournoi
      * @var string
      *
      * @ORM\Column(name="contactMail", type="string", length=255)
+		 *@Assert\Email(message = "Email {{ value }}  non valide")
      */
     private $contactMail;
 		
@@ -82,13 +100,18 @@ class Tournoi
      * @var string
      *
      * @ORM\Column(name="saison", type="string", length=255)
-     */
+		 * @Assert\length(
+		 * 							min=9,
+     *								max=9, exactMessage = " {{ limit }} caractères maxium")
+		 *@Assert\NotBlank(message="Saison requise")
+		 */
 		private $saison;
 		
 		/**
 		*@var boolean
 		*
 		*@ORM\Column(name="jeune", type="boolean", options={"default":0})
+		*@Assert\Type(type="boolean", message=" {{ value }} n'est pas du type {{ type }}")
 		*/
 		private $jeune;
 

@@ -30,8 +30,8 @@ class TournoiType extends AbstractType
             ->add('contactMail',	TextType::class)
 						->add('jeune',					ChoiceType::class, array(
 																									'choices'  => array(
-																											'Adulte' => 0,
-																											'Jeune' =>  1,
+																											'Adulte' => false,
+																											'Jeune' =>  true,
 																											),
 																									'required'    => true,
 																									'label' => 'Catégorie'
