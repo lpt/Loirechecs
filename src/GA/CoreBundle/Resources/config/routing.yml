@@ -222,9 +222,6 @@ ga_core_product_delete:
 
 
 ga_core_tournoi_test:
-    path:     /test/tournoi/{id}
+    path:     /test
     defaults:
-        _controller: GACoreBundle:Tournoi:test
-        requirements:
-        id: \d*
-
+        _controller: GACoreBundle:Tournoi:navAdulte

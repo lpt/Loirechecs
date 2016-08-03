@@ -10,4 +10,28 @@ namespace GA\CoreBundle\Repository;
  */
 class TournoiRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findListeSaison($jeune)
+	{
+		$qb = $this->createQueryBuilder('t')->select('t.saison')->distinct(true);
+		
+		$qb->where('t.jeune = :jeune')
+							->setParameter('jeune', $jeune)
+		;
+		
+		return $qb->getQuery()->getArrayResult();
+		
+	}
+	
+	public function findTournoiBySaison($saison)
+	{
+		$qb = $this->createQueryBuilder('t')->select('t.id','t.nom');
+		
+		$qb->where('t.saison = :saison')
+								->setParameter('saison', $saison)
+		;
+		
+		return $qb->getQuery()->getArrayResult();
+		}
 }
+
+

@@ -487,16 +487,77 @@ class TournoiController extends Controller
 			
 		}
 		
-		public function navAction()
+		public function navAdulteAction()
+		{
+			 $repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Tournoi');
+			
+			$jeune = false;
+			$listeSaison  = $repository->findListeSaison($jeune);		
+			
+			foreach($listeSaison as $key => $saisonArray)
+			{
+				
+				$saison = $saisonArray['saison'];
+				$listeTournoi[$saison] = $repository->findTournoiBySaison($saison);
+			}
+			
+				foreach($listeTournoi as $tournoi)
+			{
+				 $id[]= array_column($tournoi, 'id');
+				 $nom[] = array_column($tournoi, 'nom');
+				 
+				 
+			}
+			
+						
+	
+			$saisonTest = array_column($listeSaison, 'saison');
+			
+			$a = array_combine($saisonTest, $id);
+		 
+		 //print_r($listeTournoi);
+		//	exit();
+
+			
+			 return $this->render('GACoreBundle:Tournoi:navAdulte.html.twig', array(
+															'listeSaison' => $listeSaison,
+															'listeTournoi'=> $listeTournoi,
+															'a' => $a,
+															'id' => $id
+															));
+		}
+		
+		public function navJeuneAction()
 		{
 			 $repository = $this->getDoctrine()
 					->getManager()
 					->getRepository('GACoreBundle:Tournoi');
 				
-			$listeTournoi  = $repository->findByJeune(false);
+			$listeTournoi  = $repository->findByJeune(true);
+			
+			foreach($listeTournoi as $tournoi)
+			{
+				$listeSaison = $tournoi->getSaison();
+			}
+			
+			var_dump($listeSaison);
+			exit();
+			
+			foreach($listeSaison as $saison)
+			{
+				$tournoiBySaison = findBySaison($saison);
+			}
+			
+			$listeTournoiAll = $repository->findAll();
+			
+			
 			 
-			 return $this->render('GACoreBundle:Tournoi:nav.html.twig', array(
-															'listeTournoi' => $listeTournoi
+			 return $this->render('GACoreBundle:Tournoi:navJeune.html.twig', array(
+															'listeTournoi' => $listeTournoi,
+															'listeTournoiAll' => $listeTournoiAll
+														
 															));
 		}
 		
