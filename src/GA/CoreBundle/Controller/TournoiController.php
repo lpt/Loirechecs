@@ -500,65 +500,36 @@ class TournoiController extends Controller
 			{
 				
 				$saison = $saisonArray['saison'];
-				$listeTournoi[$saison] = $repository->findTournoiBySaison($saison);
-			}
-			
-				foreach($listeTournoi as $tournoi)
-			{
-				 $id[]= array_column($tournoi, 'id');
-				 $nom[] = array_column($tournoi, 'nom');
-				 
-				 
+				$listeTournoi[$saison] = $repository->findTournoiBySaisonAdulte($saison);
 			}
 			
 						
-	
-			$saisonTest = array_column($listeSaison, 'saison');
-			
-			$a = array_combine($saisonTest, $id);
-		 
-		 //print_r($listeTournoi);
-		//	exit();
-
-			
 			 return $this->render('GACoreBundle:Tournoi:navAdulte.html.twig', array(
-															'listeSaison' => $listeSaison,
-															'listeTournoi'=> $listeTournoi,
-															'a' => $a,
-															'id' => $id
-															));
+																														'listeTournoi'=> $listeTournoi
+																														));
 		}
 		
 		public function navJeuneAction()
 		{
-			 $repository = $this->getDoctrine()
+			  $repository = $this->getDoctrine()
 					->getManager()
 					->getRepository('GACoreBundle:Tournoi');
+			
+			$jeune = true;
+			$listeSaison  = $repository->findListeSaison($jeune);
+
+					
+			foreach($listeSaison as $key => $saisonArray)
+			{
 				
-			$listeTournoi  = $repository->findByJeune(true);
-			
-			foreach($listeTournoi as $tournoi)
-			{
-				$listeSaison = $tournoi->getSaison();
+				$saison = $saisonArray['saison'];
+				$listeTournoi[$saison] = $repository->findTournoiBySaisonJeune($saison);
 			}
 			
-			var_dump($listeSaison);
-			exit();
-			
-			foreach($listeSaison as $saison)
-			{
-				$tournoiBySaison = findBySaison($saison);
-			}
-			
-			$listeTournoiAll = $repository->findAll();
-			
-			
-			 
+									
 			 return $this->render('GACoreBundle:Tournoi:navJeune.html.twig', array(
-															'listeTournoi' => $listeTournoi,
-															'listeTournoiAll' => $listeTournoiAll
-														
-															));
+																														'listeTournoi'=> $listeTournoi
+																														));
 		}
 		
 		

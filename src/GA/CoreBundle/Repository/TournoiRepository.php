@@ -22,12 +22,27 @@ class TournoiRepository extends \Doctrine\ORM\EntityRepository
 		
 	}
 	
-	public function findTournoiBySaison($saison)
+	public function findTournoiBySaisonAdulte($saison)
 	{
 		$qb = $this->createQueryBuilder('t')->select('t.id','t.nom');
 		
 		$qb->where('t.saison = :saison')
 								->setParameter('saison', $saison)
+					->andwhere('t.jeune = :jeune')
+								->setParameter('jeune', false)
+		;
+		
+		return $qb->getQuery()->getArrayResult();
+		}
+		
+		public function findTournoiBySaisonJeune($saison)
+	{
+		$qb = $this->createQueryBuilder('t')->select('t.id','t.nom');
+		
+		$qb->where('t.saison = :saison')
+								->setParameter('saison', $saison)
+					->andwhere('t.jeune = :jeune')
+								->setParameter('jeune', true)
 		;
 		
 		return $qb->getQuery()->getArrayResult();

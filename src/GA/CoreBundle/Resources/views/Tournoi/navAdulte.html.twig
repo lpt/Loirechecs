@@ -1,22 +1,3 @@
-<!--1<li class="dropdown">
-										2<a  class="dropdown-toggle" data-toggle="dropdown"  href="#"> Compétition adulte<span class="caret"></span>										</a>
-										3<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-											4<li class="dropdown-submenu">
-												5<a tabindex="-1" href="#">Principaux</a>// saison
-											6	<ul class="dropdown-menu">
-													7 <li class="dropdown-submenu">
-													<a href="#">Nom du tournoi</a>
-													<ul class="dropdown-menu">
-														<li><a href="#">saison</a></li>
-														<li><a href="#">saison</a></li>
-													</ul>
-													</li>
-												
-												</ul>
-											</li>
-										</ul>
-									</li>-->
-									
 <li class="dropdown">
 <a  class="dropdown-toggle" data-toggle="dropdown"  href="#"> Compétition adulte<span class="caret"></span></a>
 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -33,8 +14,12 @@
 												{% for key,value in v %}
 												
 												{% for key,id in value %}
-												{% if value.id is string %}
-												<a href="#">{{id}}</a> 
+												{% if isInt(id)  %}
+												<a href="{{ path('ga_core_tournoi', {'id': id})}}"> 
+												{% endif %}
+												{% if isString(id)  %}
+												{{id}}
+												</a>
 												{% endif %}
 												
 												{% endfor %}
@@ -49,28 +34,4 @@
 
 </li>
 </ul>
-
-
-
-
-{#
-{% for key,v  in a %}
-
-{{key}} <br />
-
-{% for key,value in v %}
-
-{{value}} <br />
-
-{% endfor %}
-
-{% endfor %} #}
-
-
-
-
-		
-	
-
-
 	

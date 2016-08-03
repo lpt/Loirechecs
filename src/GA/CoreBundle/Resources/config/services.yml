@@ -44,3 +44,9 @@ services:
 #
 #        tags:
 #            - { name: doctrine.event_listener, event: postLoad}
+
+    core.twig_extension:
+        class:    GA\CoreBundle\Twig\CoreExtension
+        public:    false
+        tags:
+                - { name:    twig.extension}
