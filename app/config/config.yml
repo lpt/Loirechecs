@@ -9,6 +9,7 @@ parameters:
     locale: en
     resultat_directory: '%kernel.root_dir%/../web/uploads/resultat'
     affiche_directory: '%kernel.root_dir%/../web/uploads/affiche'
+    image_directory: '%kernel.root_dir%/../web/uploads/image'
 
 framework:
     #esi:             ~

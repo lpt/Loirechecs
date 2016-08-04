@@ -43,3 +43,17 @@ services:
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: preRemove}
             - { name: doctrine.event_listener, event: postRemove}
+
+    ga_core.image_uploader:
+        class: GA\CoreBundle\FileUploader\FileUploader
+        arguments: ['%image_directory%']
+
+    ga_core.image_listener:
+        class: GA\CoreBundle\EventListener\ImageUploadListener
+        arguments: ['@ga_core.image_uploader']
+ 
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: preRemove}
+            - { name: doctrine.event_listener, event: postRemove}

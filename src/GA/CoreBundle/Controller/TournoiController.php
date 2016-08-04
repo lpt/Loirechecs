@@ -11,11 +11,13 @@ use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Entity\Lien;
 use GA\CoreBundle\Entity\Resultat;
 use GA\CoreBundle\Entity\Affiche;
+use GA\CoreBundle\Entity\Image;
 use GA\CoreBundle\Form\LienAddType;
 use GA\CoreBundle\Form\ResultatAddType;
 use GA\CoreBundle\Form\TournoiType;
 use GA\CoreBundle\Form\DeleteType;
 use GA\CoreBundle\Form\AfficheAddType;
+use GA\CoreBundle\Form\ImageAddType;
 
 
 class TournoiController extends Controller
@@ -265,7 +267,42 @@ class TournoiController extends Controller
             'form' => $form->createView(),
         ));
 		}
-			
+		
+		public function addTournoiImageAction($id, Request $request)
+		{
+				$image = new Image();
+        $form = $this->createForm(ImageAddType::class, $image);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+                         
+						$em = $this->getDoctrine()->getManager();
+						$image->setDateCreate(New \DateTime);
+						$image->setDateModif(New \DateTime);
+						$validator = $this->get('validator');
+						$listErrors = $validator->validate($image);
+						if(count($listErrors) > 0) 
+						{
+							return new Response((string) $listErrors);
+						} 
+						
+						$tournoi = $em
+						->getRepository('GACoreBundle:Tournoi')
+						->find($id);
+						
+									
+						$tournoi->addImage($image);
+						
+						$em->persist($image);
+						$em->flush();
+
+            return $this->redirect($this->generateUrl('ga_core_admin'));
+				}
+				
+				return $this->render('GACoreBundle:Tournoi:addImage.html.twig', array(
+            'form' => $form->createView(),
+        ));
+		}
 			
 			//EDITIONS
 			
@@ -394,6 +431,33 @@ class TournoiController extends Controller
 			));
 		}
 			
+		public function deleteTournoiImageAction($id, $idR, Request $request)
+		{
+			$em = $this->getDoctrine()->getManager();
+			$image = $em
+					->getRepository('GACoreBundle:Image')
+					->find($idR);
+								
+			if ($affiche === null){
+				throw new NotFoundHttpException("l\'image d'id".$idR."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($image);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "L\'image a bien été supprimé.");
+				
+			return $this->redirect($this->generateUrl('ga_core_admin'));
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:deleteImage.html.twig', array(
+      'image' => $image,
+			'id' => $id,
+		  'form'   => $form->createView(),
+			));
+		}
 		
 		// GESTION DES RESSOURCES D UNE RONDE
 		

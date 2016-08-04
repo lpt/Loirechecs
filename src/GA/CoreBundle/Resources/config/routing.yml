@@ -134,6 +134,11 @@ ga_core_ressource_add_tournoi_resultat:
     defaults:
         _controller: GACoreBundle:Tournoi:addTournoiResultat
 
+ga_core_ressource_add_tournoi_image:
+    path:    /admin/ressource/add/tournoi/{id}/image
+    defaults:
+        _controller: GACoreBundle:Tournoi:addTournoiImage
+
 ga_core_ressource_edit_tournoi_lien:
     path:    /admin/ressource/edit/tournoi/{id}/lien/{idR}
     defaults:
@@ -153,6 +158,11 @@ ga_core_ressource_delete_tournoi_resultat:
     path:    /admin/ressource/delete/tournoi/{id}/resultat/{idR}
     defaults:
         _controller: GACoreBundle:Tournoi:deleteTournoiResultat
+
+ga_core_ressource_delete_tournoi_image:
+    path:    /admin/ressource/delete/tournoi/{id}/image/{idR}
+    defaults:
+        _controller: GACoreBundle:Tournoi:deleteTournoiImage
 
 ga_core_ressource_add_annonce:
     path:    /admin/ressource/add/annonce/{id}/{type}

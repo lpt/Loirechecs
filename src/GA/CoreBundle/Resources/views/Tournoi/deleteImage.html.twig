@@ -1,0 +1,27 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer un tournoi - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+  <h2>Supprimer un fichier </h2>
+
+<p>Etes-vous certain de vouloir supprimer le fichier ?  </p>
+
+
+	{% if num is defined %}
+	<form action="{{ path('ga_core_ressource_delete_ronde_image', {'idR': image.id, 'id' : id, 'num' : num}) }}" method="post">
+	{% else %}
+	<form action="{{ path('ga_core_ressource_delete_tournoi_image', {'idR': image.id, 'id' : id}) }}" method="post">
+	{% endif %}
+	
+		
+  
+		<input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+	</form>
+
+ 
+{% endblock %}

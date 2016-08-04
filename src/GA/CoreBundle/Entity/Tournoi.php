@@ -40,6 +40,12 @@ class Tournoi
 		private $affiches; 
 		
 		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Image", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $images; 
+		
+		/**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -439,5 +445,63 @@ class Tournoi
     public function getJeune()
     {
         return $this->jeune;
+    }
+
+    /**
+     * Add affiche
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affich
+     *
+     * @return Tournoi
+     */
+    public function addAffich(\GA\CoreBundle\Entity\Affiche $affiche)
+    {
+        $this->affiches[] = $affiche;
+
+        return $this;
+    }
+
+    /**
+     * Remove affiche
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affiche
+     */
+    public function removeAffich(\GA\CoreBundle\Entity\Affiche $affiche)
+    {
+        $this->affiches->removeElement($affich);
+    }
+
+    /**
+     * Add image
+     *
+     * @param \GA\CoreBundle\Entity\Image $image
+     *
+     * @return Tournoi
+     */
+    public function addImage(\GA\CoreBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \GA\CoreBundle\Entity\Image $image
+     */
+    public function removeImage(\GA\CoreBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

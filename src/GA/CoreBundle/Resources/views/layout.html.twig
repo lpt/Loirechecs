@@ -45,7 +45,18 @@
 									{{ render(controller("GACoreBundle:Tournoi:navAdulte")) }}
 									{{ render(controller("GACoreBundle:Tournoi:navJeune")) }}	
 									<li><a href="{{ path('ga_core_admin') }}">Espace reservé</a></li>
-								</ul>
+									
+									
+									{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+									<p class="navbar-text navbar-right"><em>Connecté en tant que  <a href="#" class="navbar-link">{{ app.user.username }}</a></em></p>
+									<li>
+    <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+{% else %}
+    <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+{% endif %}
+
+							</ul>
+							
 							</div>
 						</div>
 					</nav>

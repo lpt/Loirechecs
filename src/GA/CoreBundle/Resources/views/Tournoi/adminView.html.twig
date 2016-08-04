@@ -28,7 +28,7 @@
 <h5><strong> Liste des particpant  et  Classement général</strong> - <a href="{{ path('ga_core_ressource_add_tournoi_resultat', {'id': tournoi.id})}}">ajouter</a>:</h5>
 {% for resultat in tournoi.resultats %}
 
-<p><a href="{{asset(resultat.chemin)}}">{{resultat.nom}}</a> =>
+<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> =>
 <a href="{{ path('ga_core_ressource_delete_tournoi_resultat', {'id': tournoi.id, 'idR': resultat.id})}}"> supprimer </a></p>
 
 {% endfor %}
@@ -40,6 +40,15 @@
 <a href="{{ path('ga_core_ressource_delete_tournoi_affiche', {'id': tournoi.id, 'idR': affiche.id})}}"> supprimer </a></p>
 
 {% endfor %}
+
+<h5><strong>Liste des images</strong> - <a href="{{ path('ga_core_ressource_add_tournoi_image', {'id': tournoi.id})}}">ajouter</a>:</h5>
+{% for image in tournoi.images%}
+	
+	<p> <a href="{{asset('uploads/image/'~image.chemin~'')}}"> {{image.nom}} </a> => 
+		<a href="{{ path('ga_core_ressource_delete_tournoi_image', {'id': tournoi.id, 'idR': image.id})}}"> supprimer </a></p>
+
+{% endfor %}
+
 
 	<br />
 	
