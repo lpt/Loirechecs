@@ -65,7 +65,7 @@ class ResultatUploadListener
 
         $fileName = $entity->getChemin();
 
-        $entity->setChemin(new File('/uploads/resultats/'.$fileName));
+        $entity->setChemin(new File('uploads/resultat/'.$fileName));
     }
 		
 	public function preRemove(LifecycleEventArgs $args)
@@ -82,9 +82,11 @@ class ResultatUploadListener
 		// stocke l'adresse du fichier avant la suppression de l'id
 		$fileName = $entity->getChemin();
 		
+		$fileName = 'uploads/resultat/'.$fileName;
 		
 		
 		$entity->setCheminTemp(new File($fileName));
+		
 		
 	
 	}

@@ -166,5 +166,29 @@ class Affiche
     {
         return $this->chemin;
     }
+		
+		/**
+     * Set cheminTemp
+     *
+     * @param string $cheminTemp
+     *
+     * @return Resultat
+     */
+    public function setCheminTemp($cheminTemp)
+    {
+        $this->cheminTemp = $cheminTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get cheminTemp
+     *
+     * @return string
+     */
+    public function getCheminTemp()
+    {
+        return $this->cheminTemp;
+    }
 }
 

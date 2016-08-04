@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AfficheType extends AbstractType
 {
@@ -19,9 +20,8 @@ class AfficheType extends AbstractType
         $builder
             ->add('dateCreate')
             ->add('dateModif')
-            ->add('nom')
-            ->add('chemin')
-						->add('affiche', 						FileType::class, array('label' => 'Affiche (PDF File)'))
+            ->add('nom',										TextType::class)
+            ->add('chemin',							FileType::class, array('label' => 'Affiche (PDF File)'))
 						->add('sauvegarder',			SubmitType::class)
 						
         ;

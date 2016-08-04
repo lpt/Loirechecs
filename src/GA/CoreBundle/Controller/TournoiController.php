@@ -10,10 +10,12 @@ use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Entity\Lien;
 use GA\CoreBundle\Entity\Resultat;
+use GA\CoreBundle\Entity\Affiche;
 use GA\CoreBundle\Form\LienAddType;
 use GA\CoreBundle\Form\ResultatAddType;
 use GA\CoreBundle\Form\TournoiType;
 use GA\CoreBundle\Form\DeleteType;
+use GA\CoreBundle\Form\AfficheAddType;
 
 
 class TournoiController extends Controller
@@ -194,7 +196,38 @@ class TournoiController extends Controller
 	
 		public function addTournoiAfficheAction($id, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+				$affiche = new Affiche();
+        $form = $this->createForm(AfficheAddType::class, $affiche);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+                         
+						$em = $this->getDoctrine()->getManager();
+						$affiche->setDateCreate(New \DateTime);
+						$affiche->setDateModif(New \DateTime);
+						$validator = $this->get('validator');
+						$listErrors = $validator->validate($affiche);
+						if(count($listErrors) > 0) 
+						{
+							return new Response((string) $listErrors);
+						} 
+						
+						$tournoi = $em
+						->getRepository('GACoreBundle:Tournoi')
+						->find($id);
+						
+									
+						$tournoi->addAffiche($affiche);
+						
+						$em->persist($affiche);
+						$em->flush();
+
+            return $this->redirect($this->generateUrl('ga_core_admin'));
+				}
+				
+				return $this->render('GACoreBundle:Tournoi:addAffiche.html.twig', array(
+            'form' => $form->createView(),
+        ));
 		}
 		
 		public function addTournoiResultatAction($id, Request $request)
@@ -305,9 +338,32 @@ class TournoiController extends Controller
 			));
 		}
 		
-		public function deleteTournoiAfficheAction($id, Request $request)
+		public function deleteTournoiAfficheAction($id, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$affiche = $em
+					->getRepository('GACoreBundle:Affiche')
+					->find($idR);
+								
+			if ($affiche === null){
+				throw new NotFoundHttpException("l\'affiche d'id".$idR."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($affiche);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "L\'affiche a bien été supprimé.");
+				
+			return $this->redirect($this->generateUrl('ga_core_admin'));
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:deleteAffiche.html.twig', array(
+      'affiche' => $affiche,
+			'id' => $id,
+		  'form'   => $form->createView(),
+			));
 		}
 		
 		public function deleteTournoiResultatAction($id, $idR, Request $request)
@@ -391,7 +447,7 @@ class TournoiController extends Controller
 		
 		public function addRondeImageAction($id, $num, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+						return $this->redirectToRoute('ga_core_admin');
 		}
 		
 		public function addRondeResultatAction($id, $num, Request $request)
@@ -505,7 +561,6 @@ class TournoiController extends Controller
 			));
 		}
 	
-		
 		public function deleteRondeImageAction($id, Request $request)
 		{
 			return $this->redirectToRoute('ga_core_admin');
@@ -541,6 +596,8 @@ class TournoiController extends Controller
 			
 		}
 		
+			// TEST
+			
 		public function TestAction($id, Request $request)
 		{
 			
@@ -561,6 +618,8 @@ class TournoiController extends Controller
 			
 		}
 		
+			// INCLUSION BARRE DE NAVIGATION
+			
 		public function navAdulteAction()
 		{
 			 $repository = $this->getDoctrine()

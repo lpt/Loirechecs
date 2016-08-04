@@ -145,9 +145,10 @@ ga_core_ressource_delete_tournoi_lien:
         _controller: GACoreBundle:Tournoi:deleteTournoiLien
 
 ga_core_ressource_delete_tournoi_affiche:
-    path:    /admin/ressource/delete/tournoi/affiche/{id}
+    path:    /admin/ressource/delete/tournoi/{id}/affiche/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:deleteTournoiAffiche
+        _controller: GACoreBundle:Tournoi:deleteTournoiAffiche
+
 ga_core_ressource_delete_tournoi_resultat:
     path:    /admin/ressource/delete/tournoi/{id}/resultat/{idR}
     defaults:

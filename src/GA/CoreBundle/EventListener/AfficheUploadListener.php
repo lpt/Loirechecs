@@ -5,13 +5,13 @@ namespace GA\CoreBundle\EventListener;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use GA\CoreBundle\Entity\Product;
+use GA\CoreBundle\Entity\Affiche;
 use GA\CoreBundle\FileUploader\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 
-class BrochureUploadListener
+class AfficheUploadListener
 {
 	private $uploader;
 	
@@ -36,12 +36,12 @@ class BrochureUploadListener
 	
 	private function uploadFile($entity)
 	{
-		if (!$entity instanceof Product)
+		if (!$entity instanceof Affiche)
 		{
 			return;
 		}
 		
-		$file = $entity->getBrochure();
+		$file = $entity->getChemin();
 		
 		if(!$file instanceof UploadedFile)
 		{
@@ -49,7 +49,7 @@ class BrochureUploadListener
 		}
 		
 		$fileName = $this->uploader->upload($file);
-		$entity->setBrochure($fileName);
+		$entity->setChemin($fileName);
 
 		
 	}
@@ -58,29 +58,34 @@ class BrochureUploadListener
     {
         $entity = $args->getEntity();
 				
-				if(!$entity instanceof Product)
+				if(!$entity instanceof Tournoi)
 				{
 					return;
 				}
 
-        $fileName = $entity->getBrochure();
+        $fileName = $entity->getChemin();
 
-        $entity->setBrochure(new File('uploads/brochures/'.$fileName));
+        $entity->setChemin(new File('/uploads/documents/'.$fileName));
     }
 		
 	public function preRemove(LifecycleEventArgs $args)
 	{
 		$entity = $args->getEntity();
+		
+
 				
-				if(!$entity instanceof Product)
+				if(!$entity instanceof Affiche)
 				{
 					return;
 				}
 				
 		// stocke l'adresse du fichier avant la suppression de l'id
-		$fileName = $entity->getBrochure();
-		$tempFile = __DIR__.'/../../../../web/'.$fileName;
-		$entity->setTempFile(new File($tempFile));
+		$fileName = $entity->getChemin();
+		
+		$fileName = 'uploads/affiche/'.$fileName;
+		
+		
+		$entity->setCheminTemp(new File($fileName));
 		
 	
 	}
@@ -90,13 +95,14 @@ class BrochureUploadListener
 		
 		$entity = $args->getEntity();
 				
-				if(!$entity instanceof Product)
+				if(!$entity instanceof Affiche)
 				{
 					return;
 				}
+			
 		
 		// récupère l'adresse du fichier de l'entité supprimé et supprime le fichier
-		$tempFile = $entity->getTempFile();
+		$tempFile = $entity->getCheminTemp();
 		
 				
 		if (file_exists($tempFile))

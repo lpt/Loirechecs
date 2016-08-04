@@ -7,8 +7,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    brochures_directory: '%kernel.root_dir%/../web/uploads/brochures'
-    resultat_directory: '%kernel.root_dir%/../web'
+    resultat_directory: '%kernel.root_dir%/../web/uploads/resultat'
+    affiche_directory: '%kernel.root_dir%/../web/uploads/affiche'
 
 framework:
     #esi:             ~

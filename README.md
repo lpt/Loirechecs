@@ -12,7 +12,9 @@ le site démarre sur une page de liste de news avec sur le côté les prochains 
 
 On peut visualiser une news, des tournois  (affiche, déscription, résultats,...),  un calendrier et l'exporter en pdf
 
-On peut aussi visualiser  des pages d'informations écrit en dur.
+On peut aussi visualiser  des pages d'informations diverses.
+
+La barre de navigation se construit en fonction des tournois et agenda.
 
 
 Contenu:
@@ -22,15 +24,13 @@ le fichier src comprendra un bundle principal (GACoreBundle) et un Bundle pour l
 
 GACoreBundle contiendra les contrôleurs(/conttoleur):
 
-		StaticController chargera des pages statiques.
+		StaticController charge des pages statiques.
 	
-		MonoController gérera les  tournois mono journée.
+		TournoiController gère les tournois.
 		
-		MultiController gérera les tournois multi journées.
+		AnnonceController gère les annonces. (indexAction() est l'entrée du site)
 		
-		AnnonceController gérera le système d'annonce. (indexAction() est l'entrée du site)
-		
-		AgendaController  gérera le calendrier.
+		AgendaController  gére le calendrier.
 		
 		
 		
@@ -46,3 +46,8 @@ GACoreBundle contiendra les modèles gérer par l'ORM Doctrine 2:
 		
 
 GAUserBundle? contiendra la gestion des utilisateurs, leur modèles et leur vue et la relation de sécurité avec symfony pour l'authentification et les autorisations
+
+Note: 
+
+un event.listener doctrine pour l' upload
+une extension Twig

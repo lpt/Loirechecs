@@ -33,7 +33,13 @@
 
 {% endfor %}
 
-<h5><strong> Affiche </strong> - <a href="{{ path('ga_core_ressource_add_tournoi_affiche', {'id': tournoi.id})}}">ajouter</a>:</h5>
+<h5><strong> Liste des documents </strong> - <a href="{{ path('ga_core_ressource_add_tournoi_affiche', {'id': tournoi.id})}}">ajouter</a>:</h5>
+{% for affiche in tournoi.affiches %}
+
+<p><a href="{{asset('uploads/affiche/'~affiche.chemin~'')}}">{{affiche.nom}}</a> =>
+<a href="{{ path('ga_core_ressource_delete_tournoi_affiche', {'id': tournoi.id, 'idR': affiche.id})}}"> supprimer </a></p>
+
+{% endfor %}
 
 	<br />
 	
@@ -60,7 +66,7 @@
 
 	{% for resultat in ronde.resultats%}
 
-		<p><a href="{{asset(resultat.chemin)}}"> {{resultat.nom}} </a > =>
+		<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}"> {{resultat.nom}} </a > =>
 		<a href="{{ path('ga_core_ressource_delete_ronde_resultat', {'id': tournoi.id, 'num': ronde.id, 'idR': resultat.id})}}"> supprimer </a></p>
 
 	{% endfor %}

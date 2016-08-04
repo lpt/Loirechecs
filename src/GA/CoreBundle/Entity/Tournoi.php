@@ -365,7 +365,7 @@ class Tournoi
      *
      * @return Tournoi
      */
-    public function addAffich(\GA\CoreBundle\Entity\Affiche $affiche)
+    public function addAffiche(\GA\CoreBundle\Entity\Affiche $affiche)
     {
         $this->affiches[] = $affiche;
 
@@ -377,7 +377,7 @@ class Tournoi
      *
      * @param \GA\CoreBundle\Entity\Affiche $affiche
      */
-    public function removeAffich(\GA\CoreBundle\Entity\Affiche $affiche)
+    public function removeAffiche(\GA\CoreBundle\Entity\Affiche $affiche)
     {
         $this->affiches->removeElement($affiche);
     }

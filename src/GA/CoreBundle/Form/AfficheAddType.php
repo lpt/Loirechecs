@@ -17,8 +17,7 @@ class AfficheAddType extends AfficheType
         $builder
             ->remove('dateCreate')
             ->remove('dateModif')
-            ->remove('chemin')
-        ;
+            ;
     }
     
 		public function getParent()

@@ -9,21 +9,6 @@ services:
     ga_core.test_controller:
         class: GA\CoreBundle\Controller\TestaController
 
-    ga_core.brochure_uploader:
-        class: GA\CoreBundle\FileUploader\FileUploader
-        arguments: ['%brochures_directory%']
-
-    ga_core.brochure_listener:
-        class: GA\CoreBundle\EventListener\BrochureUploadListener
-        arguments: ['@ga_core.brochure_uploader']
- 
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
-            - { name: doctrine.event_listener, event: postLoad }
-            - { name: doctrine.event_listener, event: preRemove}
-            - { name: doctrine.event_listener, event: postRemove}
-
     ga_core.resultat_uploader:
         class: GA\CoreBundle\FileUploader\FileUploader
         arguments: ['%resultat_directory%']
@@ -39,14 +24,22 @@ services:
             - { name: doctrine.event_listener, event: preRemove}
             - { name: doctrine.event_listener, event: postRemove}
 
-#    ga_core.tournoi_listener:
-#        class: GA\CoreBundle\EventListener\TournoiListener
-#
-#        tags:
-#            - { name: doctrine.event_listener, event: postLoad}
-
     core.twig_extension:
         class:    GA\CoreBundle\Twig\CoreExtension
         public:    false
         tags:
                 - { name:    twig.extension}
+
+    ga_core.affiche_uploader:
+        class: GA\CoreBundle\FileUploader\FileUploader
+        arguments: ['%affiche_directory%']
+
+    ga_core.affiche_listener:
+        class: GA\CoreBundle\EventListener\AfficheUploadListener
+        arguments: ['@ga_core.affiche_uploader']
+ 
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: preRemove}
+            - { name: doctrine.event_listener, event: postRemove}
