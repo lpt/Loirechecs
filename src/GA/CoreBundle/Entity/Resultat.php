@@ -26,13 +26,15 @@ class Resultat
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreate", type="datetimetz")
-     */
-    private $dateCreate;
+		 * @Assert\DateTime(message= "DateTime non valide")
+		 */
+     private $dateCreate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateModif", type="datetimetz")
+		 * @Assert\DateTime(message= "DateTime non valide")
      */
     private $dateModif;
 
@@ -40,6 +42,10 @@ class Resultat
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+		 * @Assert\length(
+		 * 							min=4, minMessage = "{{limit}} caractères minimun",
+     *								max=25, maxMessage = "{{limit}} caractères maxium")
+		 * @Assert\NotBlank(message = "Nom requis")
      */
     private $nom;
 

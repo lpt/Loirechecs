@@ -5,6 +5,7 @@ namespace GA\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Entity\Lien;
@@ -163,7 +164,12 @@ class TournoiController extends Controller
 					$em = $this->getDoctrine()->getManager();
 					$lien->setDateCreate(New \DateTime);
 					$lien->setDateModif(New \DateTime);
-					
+					$validator = $this->get('validator');
+					$listErrors = $validator->validate($lien);
+					if(count($listErrors) > 0) 
+					{
+						return new Response((string) $listErrors);
+					} 			
 									
 					$tournoi = $em
 					->getRepository('GACoreBundle:Tournoi')
@@ -210,7 +216,13 @@ class TournoiController extends Controller
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
 				
-					$lien->setDateModif(New \DateTime);
+					$lien->setDateModif(New  \DateTime);
+					$validator = $this->get('validator');
+					$listErrors = $validator->validate($lien);
+					if(count($listErrors) > 0) 
+					{
+						return new Response((string) $listErrors);
+					} 
 					$em->persist($lien);
 					$em->flush();
 					
@@ -299,6 +311,12 @@ class TournoiController extends Controller
 					$em = $this->getDoctrine()->getManager();
 					$lien->setDateCreate(New \DateTime);
 					$lien->setDateModif(New \DateTime);
+					$validator = $this->get('validator');
+					$listErrors = $validator->validate($lien);
+					if(count($listErrors) > 0) 
+					{
+						return new Response((string) $listErrors);
+					} 
 					
 					$tournoi = $em
 					->getRepository('GACoreBundle:Tournoi')
@@ -343,6 +361,12 @@ class TournoiController extends Controller
 						$em = $this->getDoctrine()->getManager();
 						$resultat->setDateCreate(New \DateTime);
 						$resultat->setDateModif(New \DateTime);
+						$validator = $this->get('validator');
+						$listErrors = $validator->validate($resultat);
+						if(count($listErrors) > 0) 
+						{
+							return new Response((string) $listErrors);
+						} 
 						
 						$tournoi = $em
 						->getRepository('GACoreBundle:Tournoi')
@@ -380,6 +404,12 @@ class TournoiController extends Controller
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){ 
 				
 					$lien->setDateModif(New \DateTime);
+					$validator = $this->get('validator');
+					$listErrors = $validator->validate($lien);
+					if(count($listErrors) > 0) 
+					{
+						return new Response((string) $listErrors);
+					} 
 					$em->persist($lien);
 					$em->flush();
 					

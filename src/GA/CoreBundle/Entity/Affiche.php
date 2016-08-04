@@ -3,6 +3,7 @@
 namespace GA\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Affiche
@@ -25,13 +26,15 @@ class Affiche
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreate", type="datetimetz")
-     */
+		 * @Assert\DateTime(message= "DateTime non valide")
+		 */
     private $dateCreate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateModif", type="datetimetz")
+		 * @Assert\DateTime(message= "DateTime non valide")
      */
     private $dateModif;
 
@@ -39,6 +42,10 @@ class Affiche
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+		 * @Assert\length(
+		 * 							min=4, minMessage = "{{limit}} caractères minimun",
+     *								max=25, maxMessage = "{{limit}} caractères maxium")
+		 * @Assert\NotBlank(message = "Nom requis")
      */
     private $nom;
 
@@ -46,6 +53,8 @@ class Affiche
      * @var string
      *
      * @ORM\Column(name="chemin", type="string", length=255)
+		 * @Assert\NotBlank(message="Uploader un pdf")
+     * @Assert\File(mimeTypes={ "application/pdf" })
      */
     private $chemin;
 		

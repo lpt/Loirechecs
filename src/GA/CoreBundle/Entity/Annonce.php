@@ -3,6 +3,7 @@
 namespace GA\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Annonce
@@ -39,6 +40,10 @@ class Annonce
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+		 * @Assert\length(
+		 * 							min=4, minMessage = "{{limit}} caractères minimun",
+     *								max=50, maxMessage = "{{limit}} caractères maxium")
+		 * @Assert\NotBlank(message = "Nom requis")
      */
     private $titre;
 
@@ -46,6 +51,10 @@ class Annonce
      * @var string
      *
      * @ORM\Column(name="auteur", type="string", length=255)
+		 * @Assert\length(
+		 * 							min=4, minMessage = "{{limit}} caractères minimun",
+     *								max=25, maxMessage = "{{limit}} caractères maxium")
+		 * @Assert\NotBlank(message = "Nom requis")
      */
     private $auteur;
 
@@ -53,6 +62,7 @@ class Annonce
      * @var text
      *
      * @ORM\Column(name="contenu", type="text")
+		 * @Assert\NotBlank(message = "Nom requis")
      */
     private $contenu;
 		
