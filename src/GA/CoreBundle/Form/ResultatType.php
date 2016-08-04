@@ -24,6 +24,7 @@ class ResultatType extends AbstractType
 																									'choices'  => array(
 																											'Resultat' => 'Resultat',
 																											'Appariement' => 'Appariement',
+																											'Liste particpants' => 'Liste participants'
 																											),
 																									'required'    => false,
 																									'empty_data'  => 'Resultat'

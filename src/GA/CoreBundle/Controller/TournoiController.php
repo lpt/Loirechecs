@@ -199,7 +199,38 @@ class TournoiController extends Controller
 		
 		public function addTournoiResultatAction($id, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+				$resultat = new Resultat();
+        $form = $this->createForm(ResultatAddType::class, $resultat);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+                         
+						$em = $this->getDoctrine()->getManager();
+						$resultat->setDateCreate(New \DateTime);
+						$resultat->setDateModif(New \DateTime);
+						$validator = $this->get('validator');
+						$listErrors = $validator->validate($resultat);
+						if(count($listErrors) > 0) 
+						{
+							return new Response((string) $listErrors);
+						} 
+						
+						$tournoi = $em
+						->getRepository('GACoreBundle:Tournoi')
+						->find($id);
+						
+									
+						$tournoi->addResultat($resultat);
+						
+						$em->persist($resultat);
+						$em->flush();
+
+            return $this->redirect($this->generateUrl('ga_core_admin'));
+        }
+
+        return $this->render('GACoreBundle:Tournoi:addResultat.html.twig', array(
+            'form' => $form->createView(),
+        ));
 		}
 			
 			
@@ -240,19 +271,9 @@ class TournoiController extends Controller
 			return $this->render('GACoreBundle:Tournoi:editLien.html.twig', array(
 				'form' => $form->createView(),
 			));
+			
 		}
 		
-		public function editTournoiAfficheAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-		
-		public function editTournoiResultatAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-			
-			
 			// SUPPRESSIONS
 			
 		public function deleteTournoiLienAction($id, $idR, Request $request)
@@ -289,9 +310,32 @@ class TournoiController extends Controller
 			return $this->redirectToRoute('ga_core_admin');
 		}
 		
-		public function deleteTournoiResultatAction($id, Request $request)
+		public function deleteTournoiResultatAction($id, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$resultat = $em
+					->getRepository('GACoreBundle:Resultat')
+					->find($idR);
+								
+			if ($resultat === null){
+				throw new NotFoundHttpException("le resultat d'id".$idR."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($resultat);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "Le resultat a bien été supprimé.");
+				
+			return $this->redirect($this->generateUrl('ga_core_admin'));
+			}
+			
+			return $this->render('GACoreBundle:Tournoi:deleteResultat.html.twig', array(
+      'resultat' => $resultat,
+			'id' => $id,
+		  'form'   => $form->createView(),
+			));
 		}
 			
 		
