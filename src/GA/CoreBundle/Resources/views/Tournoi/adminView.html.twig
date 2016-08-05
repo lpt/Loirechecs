@@ -80,7 +80,13 @@
 
 	{% endfor %}
 	
-	<h5><strong> Liste des images </strong> - <a href="#">ajouter  une image </a>:</h5>
+	<h5><strong> Liste des images </strong> - <a href="{{ path('ga_core_ressource_add_ronde_image', {'id': tournoi.id, 'num':ronde.numero})}}">ajouter</a>:</h5>
+	{% for image in ronde.images%}
+
+		<p><a href="{{asset('uploads/image/'~image.chemin~'')}}"> {{image.nom}} </a > =>
+		<a href="{{ path('ga_core_ressource_delete_ronde_image', {'id': tournoi.id, 'num': ronde.id, 'idR': image.id})}}"> supprimer </a></p>
+
+	{% endfor %}
 	
 	</div>
 

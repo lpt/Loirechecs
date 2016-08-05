@@ -82,7 +82,7 @@ class ImageUploadListener
 		// stocke l'adresse du fichier avant la suppression de l'id
 		$fileName = $entity->getChemin();
 		
-		$fileName = 'uploads/affiche/'.$fileName;
+		$fileName = 'uploads/image/'.$fileName;
 		
 		
 		$entity->setCheminTemp(new File($fileName));

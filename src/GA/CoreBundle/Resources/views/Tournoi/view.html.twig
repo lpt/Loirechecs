@@ -11,21 +11,34 @@
 
 <h3>{{tournoi.nom}} </h3>
 
-<h5><strong> Liste des liens:</strong></h5>
+<div class="well">
 
-{% for lien in tournoi.liens%}
-<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
+<h4>Description</h4>
+<p> {{tournoi.description}} </p>
+<br />
 
+{% for affiche in tournoi.affiches%} {% if  loop.length > 0  %}  toto {% endif %} {% endfor %}
+
+{% for affiche in tournoi.affiches%}
+<p>{{ loop.length }} - <a href="{{asset('uploads/affiche/'~affiche.chemin~'')}}">{{affiche.nom}}</a> </p>
 {% endfor %}
 
 
-<br />
 
+{% for lien in tournoi.liens%}
+<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
+{% endfor %}
+
+{% for resultat in tournoi.resultats%}
+<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> </p>
+{% endfor %}
+
+<br />
+</div>
 
 {% for ronde in tournoi.rondes %}
-
+<div class="well">
 <h4>Ronde N° {{ronde.numero}}</h4>
-
 
 <h5><strong> Liste des liens:</strong></h5>
 
@@ -40,11 +53,11 @@
 {% for resultat in ronde.resultats%}
 
 <p><a href="{{asset(resultat.chemin)}}"> {{resultat.nom}} </a></p>
-
-
+ 
 {% endfor %}
 
-
+</div>
 {% endfor %}
+
 
 {% endblock %}

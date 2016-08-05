@@ -204,6 +204,16 @@ ga_core_ressource_delete_ronde_resultat:
     defaults:
         _controller: GACoreBundle:Tournoi:deleteRondeResultat
 
+ga_core_ressource_add_ronde_image:
+    path:    /admin/ressource/add/tournoi/{id}/ronde/{num}/image
+    defaults:
+        _controller: GACoreBundle:Tournoi:addRondeImage
+
+ga_core_ressource_delete_ronde_image:
+    path:    /admin/ressource/delete/tournoi/{id}/ronde/{num}/image/{idR}
+    defaults:
+        _controller: GACoreBundle:Tournoi:deleteRondeImage
+
 ga_core_tournoi_id_admin:
     path:     /admin/tournoi/view/{id}
     defaults:

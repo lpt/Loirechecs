@@ -24,6 +24,12 @@ class Ronde
 		* @Assert\Valid()
 		*/
 		private $resultats; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Image", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $images; 
 
     /**
      * @var int
@@ -256,4 +262,38 @@ class Ronde
     }
 		
 		
+
+    /**
+     * Add image
+     *
+     * @param \GA\CoreBundle\Entity\Image $image
+     *
+     * @return Ronde
+     */
+    public function addImage(\GA\CoreBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \GA\CoreBundle\Entity\Image $image
+     */
+    public function removeImage(\GA\CoreBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
 }
