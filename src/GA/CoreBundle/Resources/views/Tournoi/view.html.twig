@@ -8,56 +8,165 @@
 
 {% block core_body %}
 
+<div class ="well">
 
-<h3>{{tournoi.nom}} </h3>
+		<h3><strong>{{tournoi.nom}} </strong> - {{tournoi.saison}} </h3>
+		{% if tournoi.contactNom is not null %}
+		<p><strong><em> 	Responsable du tournoi:</strong>
+		{% if tournoi.contactMail is not null %}<a href="'mailto:{{tournoi.contactMail}}">{% endif %}
+		{{tournoi.contactNom}}
+		{% if tournoi.contactMail is not null %} </a> {% endif %}
+		{% if tournoi.contactTph is not null %}
+		- tph : {{tournoi.contactTph}}
+		{% endif %}
+		{% if tournoi.contactMail is not null %}
+		- email : {{tournoi.contactMail}}
+		{% endif %}
+		</p></em>
+		{% endif %}
 
-<div class="well">
+		<div class="well">
 
-<h4>Description</h4>
-<p> {{tournoi.description}} </p>
-<br />
+				{% if tournoi.description is not null %}
+				<div class="row">
+				<h4><strong>Description</strong></h4>
+				<p> {{tournoi.description}} </p>
+				<br />
+				</div>
+				{% endif %}
+				
+				
+				
 
-{% for affiche in tournoi.affiches%} {% if  loop.length > 0  %}  toto {% endif %} {% endfor %}
+				<div class="row">
+						{% for affiche in tournoi.affiches %}
+						{% if loop.first %} 
+								<div class="col-sm-3">
+										<h4><strong>{% if loop.last %} {{affiche.nom}} {% else %}  Documents {% endif %} </strong> </h4> 							
+						{% endif %}
+										<p><a href="{{asset('uploads/affiche/'~affiche.chemin~'')}}">{{affiche.nom}}</a> </p>
+						{% if loop.last %}
+								</div>
+						{% endif %}
+						{% endfor %}
+						
+						{% for lien in tournoi.liens%}
+						{% if loop.first %} 
+								<div class="col-sm-3">
+										<h4><strong> Liens </strong> </h4>				
+						{% endif %}
+										<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
+						{% if loop.last %} 
+								</div>
+						{% endif %}
+						{% endfor %}
 
-{% for affiche in tournoi.affiches%}
-<p>{{ loop.length }} - <a href="{{asset('uploads/affiche/'~affiche.chemin~'')}}">{{affiche.nom}}</a> </p>
+						{% for resultat in tournoi.resultats %}
+						{% if resultat.nom == "Liste participants" %}
+								<div class="col-sm-3">
+										<h4><strong> Liste des participants </strong></h4> 
+										<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> </p>
+								</div>
+						{% endif %}	
+						{% endfor %}
+
+						{% for resultat in tournoi.resultats %}
+						{% if resultat.nom == "Resultat" %}
+								<div class="col-sm-3">
+										<h4><strong> Résultat général</strong> </h4> 
+										<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> </p>
+								</div>
+						{% endif %}	
+						{% endfor %} 
+						
+				</div>
+				<br />
+<div class="row">
+{% for image in tournoi.images%}
+{% if loop.first %} 
+<div class="row">
+{% endif %}
+<div class="col-sm-3">
+<p><img   src="{{ asset('uploads/image/'~image.chemin~'') }}"  alt="{{ image.nom }}" /></p>
+</div>
+{% if loop.last %} 
+</div>
+<br /> 
+{% endif %}
 {% endfor %}
-
-
-
-{% for lien in tournoi.liens%}
-<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
-{% endfor %}
-
-{% for resultat in tournoi.resultats%}
-<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> </p>
-{% endfor %}
-
+</div>
 <br />
 </div>
 
 {% for ronde in tournoi.rondes %}
+{% if loop.length > 1 %}
 <div class="well">
-<h4>Ronde N° {{ronde.numero}}</h4>
+<h4><strong>Ronde N° {{ronde.numero}}</strong></h4>
 
-<h5><strong> Liste des liens:</strong></h5>
-
-{% for lien in ronde.liens%}
-<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
-
-{% endfor %}
-
-<h5><strong> Liste des résultat:</strong></h5>
-
-
-{% for resultat in ronde.resultats%}
-
-<p><a href="{{asset(resultat.chemin)}}"> {{resultat.nom}} </a></p>
+<p> la ronde 
+{% if  date(ronde.dateEvent) < date() %}
+a eu
+{% else %}
+aura
+{% endif %}
+ lieu le <strong> {{ronde.dateEvent|date("m/d/Y")}} </strong> lieu:  <strong>
+{% if ronde.adresse != "NC" %}
+ {{ronde.adresse}} 
+ {% endif %}
+ à {{ronde.ville}} </strong></p>
  
+						<div class="row">
+						{% for resultat in ronde.resultats %}
+						{% if resultat.nom == "Appariement" %}
+								<div class="col-sm-4">
+										<h5><strong> Appariement </strong></h5> 
+										<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> </p>
+								</div>
+						{% endif %}	
+						{% endfor %}
+ 
+						{% for resultat in ronde.resultats %}
+						{% if resultat.nom == "Resultat" %}
+								<div class="col-sm-4">
+										<h5><strong> Resultat </strong></h5> 
+										<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> </p>
+								</div>
+						{% endif %}	
+						{% endfor %}
+						
+						{% for lien in ronde.liens%}
+						{% if loop.first %} 
+								<div class="col-sm-3">
+										<h5><strong> Liens </strong> </h5>				
+						{% endif %}
+										<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
+						{% if loop.last %} 
+								</div>
+						{% endif %}
+						{% endfor %}
+						
+						</div>
+						<br />
+ 
+ 
+
+
+{% for image in ronde.images%}
+{% if loop.first %} 
+<div class="row">
+{% endif %}
+<div class="col-sm-3">
+<p><img   src="{{ asset('uploads/image/'~image.chemin~'') }}"  alt="{{ image.nom }}" /></p>
+</div>
+{% if loop.last %} 
+</div>
+<br /> 
+{% endif %}
 {% endfor %}
 
 </div>
+{% endif  %}
 {% endfor %}
 
-
+</div>
 {% endblock %}

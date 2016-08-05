@@ -52,8 +52,6 @@ class Resultat
     /**
      * @ORM\Column(type="string")
      *
-     * @Assert\NotBlank(message="Uploader un resultat en html")
-     * @Assert\File(mimeTypes={ "text/html" })
      */
     private $chemin;
 		

@@ -44,7 +44,7 @@ class Lien
      * @ORM\Column(name="nom", type="string", length=255)
 		 * @Assert\length(
 		 * 							min=4, minMessage = "{{limit}} caractères minimun",
-     *								max=25, maxMessage = "{{limit}} caractères maxium")
+     *								max=50, maxMessage = "{{limit}} caractères maxium")
 		 * @Assert\NotBlank(message = "Nom requis")
      */
     private $nom;

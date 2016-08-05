@@ -53,8 +53,6 @@ class Image
      * @var string
      *
      * @ORM\Column(name="chemin", type="string", length=255)
-		 * @Assert\NotBlank(message="Uploader une image")
-     * @Assert\File(mimeTypes={ "image/*" })
      */
     private $chemin;
 		

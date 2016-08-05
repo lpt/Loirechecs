@@ -53,9 +53,7 @@ class Affiche
      * @var string
      *
      * @ORM\Column(name="chemin", type="string", length=255)
-		 * @Assert\NotBlank(message="Uploader un pdf")
-     * @Assert\File(mimeTypes={ "application/pdf" })
-     */
+		 */
     private $chemin;
 		
 		private $cheminTemp;

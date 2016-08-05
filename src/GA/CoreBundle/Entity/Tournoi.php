@@ -68,9 +68,9 @@ class Tournoi
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="text")
 		 * @Assert\length(
-     *								max=255, maxMessage = "{{limit}} caractères maxium")
+     *								max=2500, maxMessage = "{{limit}} caractères maxium")
      */
     private $description;
 
