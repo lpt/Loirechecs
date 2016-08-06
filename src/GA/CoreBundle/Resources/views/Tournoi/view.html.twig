@@ -109,7 +109,7 @@ a eu
 {% else %}
 aura
 {% endif %}
- lieu le <strong> {{ronde.dateEvent|date("m/d/Y")}} </strong> lieu:  <strong>
+ lieu le <strong> {{ronde.dateEvent|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }} </strong> lieu:  <strong>
 {% if ronde.adresse != "NC" %}
  {{ronde.adresse}} 
  {% endif %}
