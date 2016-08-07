@@ -48,27 +48,11 @@ class AnnonceController extends Controller
 			));
     }
 		
-		public function viewAction($id)
+		public function viewAction(Annonce $annonce, $id)
 		{
-			// On récupère le repository
-			$repository = $this->getDoctrine()
-				->getManager()
-				->getRepository('GACoreBundle:Annonce');
-
-			// On récupère l'entité correspondante à l'id $id
-			$annonce = $repository->find($id);
-
-			// On verifie que l'Entity n'est pas null
-			if (null === $annonce) {
-				throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-			}
-		
-			// On envoie les données à la vue
-			
 			return $this->render('GACoreBundle:Annonce:view.html.twig', array(
       'annonce' => $annonce
 			));
-	
 		}
 		
 		public function addAction(Request $request)
@@ -101,16 +85,8 @@ class AnnonceController extends Controller
 			
 		}
 		
-		public function editAction($id, Request $request)
+		public function editAction(Annonce $annonce, $id, Request $request)
 		{
-			$em = $this->getDoctrine()->getManager();
-			
-			$annonce = $em->getRepository('GACoreBundle:Annonce')->find($id);
-			
-			if ($annonce === null){
-				throw new NotFoundHttpException('L\'annonce '.$id.'n\'existe pas.');
-			}
-			
 			$form = $this->get('form.factory')->create(AnnonceEditType::class, $annonce);
 			
 			if ($request->isMethod('POST')){
@@ -134,15 +110,9 @@ class AnnonceController extends Controller
 			'form' => $form->createView(),));
 		}
 		
-		public function deleteAction($id, Request $request)
+		public function deleteAction(Annonce $annonce, $id, Request $request)
 		{
-			$em = $this->getDoctrine()->getManager();
-			$annonce = $em->getRepository('GACoreBundle:Annonce')->find($id);
-			
-			if (null === $annonce) {
-				throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-			}
-			// On crée un formulaire vide, qui ne contiendra que le champ CSRF
+						// On crée un formulaire vide, qui ne contiendra que le champ CSRF
     // Cela permet de protéger la suppression d'annonce contre cette faille
 			$form = $this->get('form.factory')->create();
     
@@ -172,7 +142,15 @@ class AnnonceController extends Controller
 			return $this->render('GACoreBundle:Annonce:admin.html.twig', array(
 			'listeAnnonce' => $listeAnnonce
 			));
-	}
+		}
+		
+		public function adminViewAction(Annonce $annonce, $id)
+		{
+			return $this->render('GACoreBundle:Annonce:adminView.html.twig', array(
+				'annonce' => $annonce
+				));
+
+		}
 	
 	// GESTION DES RESSOURCES D UNE ANNONCE
 			// AJOUTS

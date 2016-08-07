@@ -221,26 +221,6 @@ ga_core_tournoi_id_admin:
         requirements:
         id: \d*
 
-ga_core_product:
-   path:    /product
-   defaults:
-       _controller: GACoreBundle:Product:new
-
-ga_core_product_id:
-   path:    /product/{id}
-   defaults:
-       _controller: GACoreBundle:Product:view
-       requirements:
-       id: \d*
-
-ga_core_product_delete:
-   path:    /delete/product/{id}
-   defaults:
-       _controller: GACoreBundle:Product:delete
-       requirements:
-       id: \d*
-
-
 ga_core_tournoi_test:
     path:     /test
     defaults:

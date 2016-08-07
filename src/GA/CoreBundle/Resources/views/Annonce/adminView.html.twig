@@ -1,0 +1,56 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+
+  Annonce - {{ parent() }}
+
+{% endblock %}
+
+{% block core_body %}
+
+	<div class='well'>
+	<h3>{{annonce.titre}} - <a href="{{ path('ga_core_annonce_edit', {'id': annonce.id})}}"> modifier </a></h3>
+	
+	<div class='well'>
+	
+	<strong>Contenu : </strong>{{annonce.contenu}}
+	
+	
+	{#
+	<h5><strong>Liste des liens</strong> - <a href="{{ path('ga_core_ressource_add_annonce_lien', {'id': annonce.id})}}">ajouter</a>:</h5>
+{% for lien in annonce.liens%}
+	
+	<p> <a href="{{lien.url}}"> {{lien.nom}} </a> => 
+	<a href="{{ path('ga_core_ressource_edit_annonce_lien', {'id': annonce.id, 'idR': lien.id})}} ">modifier</a> - 
+	<a href="{{ path('ga_core_ressource_delete_annonce_lien', {'id': annonce.id, 'idR': lien.id})}}"> supprimer </a></p>
+
+{% endfor %}
+
+<h5><strong> Liste des particpant  et  Classement général</strong> - <a href="{{ path('ga_core_ressource_add_annonce_resultat', {'id': annonce.id})}}">ajouter</a>:</h5>
+{% for resultat in annonce.resultats %}
+
+<p><a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}">{{resultat.nom}}</a> =>
+<a href="{{ path('ga_core_ressource_delete_annonce_resultat', {'id': annonce.id, 'idR': resultat.id})}}"> supprimer </a></p>
+
+{% endfor %}
+
+<h5><strong> Liste des documents </strong> - <a href="{{ path('ga_core_ressource_add_annonce_affiche', {'id': annonce.id})}}">ajouter</a>:</h5>
+{% for affiche in annonce.affiches %}
+
+<p><a href="{{asset('uploads/affiche/'~affiche.chemin~'')}}">{{affiche.nom}}</a> =>
+<a href="{{ path('ga_core_ressource_delete_annonce_affiche', {'id': annonce.id, 'idR': affiche.id})}}"> supprimer </a></p>
+
+{% endfor %}
+
+<h5><strong>Liste des images</strong> - <a href="{{ path('ga_core_ressource_add_annonce_image', {'id': annonce.id})}}">ajouter</a>:</h5>
+{% for image in annonce.images%}
+	
+	<p> <a href="{{asset('uploads/image/'~image.chemin~'')}}"> {{image.nom}} </a> => 
+		<a href="{{ path('ga_core_ressource_delete_annonce_image', {'id': annonce.id, 'idR': image.id})}}"> supprimer </a></p>
+
+{% endfor %}
+#}
+
+</div>
+
+{% endblock %}
