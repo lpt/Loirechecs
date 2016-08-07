@@ -9,5 +9,3 @@ Problème suite validator du form
      * @Assert\File(mimeTypes={ "application/pdf" })
 		 
 Champs requis  pour adresse
-
-Affichage du texte description (retour à la ligne)

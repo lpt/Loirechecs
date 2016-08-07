@@ -13,7 +13,7 @@
 		<h3><strong>{{tournoi.nom}} </strong> - {{tournoi.saison}} </h3>
 		{% if tournoi.contactNom is not null %}
 		<p><strong><em> 	Responsable du tournoi:</strong>
-		{% if tournoi.contactMail is not null %}<a href="'mailto:{{tournoi.contactMail}}">{% endif %}
+		{% if tournoi.contactMail is not null %}<a href="mailto:{{tournoi.contactMail}}">{% endif %}
 		{{tournoi.contactNom}}
 		{% if tournoi.contactMail is not null %} </a> {% endif %}
 		{% if tournoi.contactTph is not null %}
@@ -30,7 +30,7 @@
 				{% if tournoi.description is not null %}
 				<div class="row">
 				<h4><strong>Description</strong></h4>
-				<p> {{tournoi.description}} </p>
+				<p> {{tournoi.description|nl2br}} </p>
 				<br />
 				</div>
 				{% endif %}
@@ -109,11 +109,11 @@ a eu
 {% else %}
 aura
 {% endif %}
- lieu le <strong> {{ronde.dateEvent|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }} </strong> lieu:  <strong>
+ lieu le <strong> {{ronde.dateEvent|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }} </strong> - lieu:  <strong>
 {% if ronde.adresse != "NC" %}
- {{ronde.adresse}} 
+ {{ronde.adresse}} - 
  {% endif %}
- à {{ronde.ville}} </strong></p>
+  {{ronde.ville}} </strong></p>
  
 						<div class="row">
 						{% for resultat in ronde.resultats %}
