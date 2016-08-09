@@ -11,6 +11,8 @@
 		<h4> Ajouter une annonce </h4>				
 	
 		<p><a href="{{ path('ga_core_annonce_add')}}">Ajouter</a>
+		
+		<p><a href="{{ path('ga_core_annonce_add', {'tournoi_id' : tournoi.id})}}">Ajouter annonce tournoi</a>
   
 		<h4> Liste des annonces </h4>
 		{%for annonce in listeAnnonce%}

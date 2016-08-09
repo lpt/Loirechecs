@@ -12,3 +12,9 @@ services:
         tags:
              - { name: twig.extension }
 
+    twig.extension.I18n:
+        class: Twig_Extensions_Extension_I18n
+        tags:
+             - { name: twig.extension }
+
+

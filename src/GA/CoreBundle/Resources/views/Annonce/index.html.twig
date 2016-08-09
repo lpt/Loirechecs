@@ -7,11 +7,13 @@
 {% block core_body %}
 	
 	<div class="col-sm-9">
-  
 		
-		{%for annonce in listeAnnonce%}
+		{% set key = [ 3 * page - 2 , 3 * page - 1 , 3 * page ]%}
+		
+		
+		{% for annonce in listeAnnonce %}
 		<div class="row">
-		
+		{% if loop.index in key %}
 		<div class="well well-sm"  >
 						
 			<h4><strong>{{annonce.titre}} </strong>
@@ -24,10 +26,13 @@
 				{% if annonce.dateCreat != annonce.dateModif %}
 				<span class="dateModif"><em>Modifiée par {{annonce.auteurModif}} le {{annonce.dateModif|date('d/m/Y - H:i')}}</em></span>
 				{% endif %}
-				</p><br />
+				</p>
+				<p><span class="label label-default">Tournoi</span><span class="label label-default">Inscription</span></p>
+				<br />
 															
 		</div>
 		
+		{% endif %}
 		</div>
 		
 		{%endfor%}

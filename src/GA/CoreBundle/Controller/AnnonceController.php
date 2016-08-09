@@ -34,7 +34,7 @@ class AnnonceController extends Controller
 			$listeAnnonce  = $repository->findAll();
 			
 			$nbPages = ceil(count($listeAnnonce) / $nbPerPage);
-			// Si la page n'existe pas, on retourne une 404
+			
 			if ($page > $nbPages) {
       throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
 			}
@@ -60,9 +60,28 @@ class AnnonceController extends Controller
 			
 			$annonce = new Annonce();
 			
-			$form = $this->get('form.factory')->create(AnnonceAddType::class, $annonce)
-				
-			;
+			// test  d affectation d'un tournoi
+			
+			$tournoiId = $request->query->get('tournoi_id');
+			
+			
+			$em = $this->getDoctrine()->getManager();
+			
+			$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($tournoiId);
+					
+			if ($tournoi === null){
+				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
+			}
+			
+			$annonce->setTitre($tournoi->getNom());
+			
+			// fin de test
+			
+			$form = $this->get('form.factory')->create(AnnonceAddType::class, $annonce);
+			
+			
 			
 			if ($request->isMethod('POST')){
 				
@@ -81,7 +100,8 @@ class AnnonceController extends Controller
 			}
 			
 			return $this->render('GACoreBundle:Annonce:add.html.twig', array(
-			'form' => $form->createView(),));
+			'form' => $form->createView(),
+			));
 			
 		}
 		
@@ -138,9 +158,16 @@ class AnnonceController extends Controller
 					->getRepository('GACoreBundle:Annonce');
 				
 			$listeAnnonce  = $repository->findAll();
+			
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Tournoi');
+					
+			$tournoi = $repository->find(1);
 				
 			return $this->render('GACoreBundle:Annonce:admin.html.twig', array(
-			'listeAnnonce' => $listeAnnonce
+			'listeAnnonce' => $listeAnnonce,
+			'tournoi' => $tournoi,
 			));
 		}
 		
@@ -181,22 +208,7 @@ class AnnonceController extends Controller
 		{
 			return $this->redirectToRoute('ga_core_admin');
 		}
-		
-		public function editRondeImageAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-		
-		public function editRondeResultatAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-		
-		public function editRondeAfficheAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-			
+					
 			// SUPPRESSIONS
 			
 		public function deleteRondeLienAction($id, Request $request)

@@ -3,5 +3,6 @@ ga_core:
     prefix:   /
 
 fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    resource: "@GAUserBundle/Resources/config/routing/all.xml"
+
 
