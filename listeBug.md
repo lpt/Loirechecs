@@ -22,9 +22,7 @@ Listes des taches
 				-convertir paramètre de requête pour le tournoiControlleur
 
 -modifier l'entité annonce:
-			
-				- rajout de publicaction
-				
+					
 				- Relation lien , image, resulat, affiche
 
 -controlleur annnonce:

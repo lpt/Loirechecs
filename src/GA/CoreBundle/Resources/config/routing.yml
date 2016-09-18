@@ -164,20 +164,20 @@ ga_core_ressource_delete_tournoi_image:
     defaults:
         _controller: GACoreBundle:Tournoi:deleteTournoiImage
 
-ga_core_ressource_add_annonce:
-    path:    /admin/ressource/add/annonce/{id}/{type}
+ga_core_ressource_add_annonce_lien:
+    path:    /admin/ressource/add/annonce/{id}/lien
     defaults:
-        _controller: GACoreBundle:Ressource:addAnnonce
+        _controller: GACoreBundle:Annonce:addLien
 
-ga_core_ressource_edit_annonce:
-    path:    /admin/ressource/edit/annonce/{id}/{type}/{idR}
+ga_core_ressource_edit_annonce_lien:
+    path:    /admin/ressource/edit/annonce/{id}/lien/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:editAnnonce
+        _controller: GACoreBundle:Annonce:editLien
 
-ga_core_ressource_delete_annonce:
-    path:    /admin/ressource/delete/annonce/{id}/{type}/{idR}
+ga_core_ressource_delete_annonce_lien:
+    path:    /admin/ressource/delete/annonce/{id}/lien/{idR}
     defaults:
-        _controller: GACoreBundle:Ressource:deleteAnnonce
+        _controller: GACoreBundle:Annonce:deleteLien
 
 ga_core_ressource_add_ronde_lien:
     path:    /admin/ressource/add/tournoi/{id}/ronde/{num}/lien

@@ -22,4 +22,14 @@ class AnnonceRepository extends \Doctrine\ORM\EntityRepository
 		return $qb ->getQuery()
 										 ->getResult();
 	}
+	
+	public function findAllInv()
+	{
+		$qb = $this->createQueryBuilder('a');
+
+		$qb->orderBy('a.dateCreat', 'DESC');
+
+		return $qb ->getQuery()
+										 ->getResult();
+	}
 }

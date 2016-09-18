@@ -12,7 +12,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="GA\CoreBundle\Repository\AnnonceRepository")
  */
 class Annonce
-{
+{	
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $liens; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Affiche", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $affiches; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Image", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $images; 
+
     /**
      * @var int
      *
@@ -77,7 +95,7 @@ class Annonce
 		/**
 		*@var boolean
 		*
-		*@ORM\Column(name="jeune", type="boolean", options={"default":0})
+		*@ORM\Column(name="publication", type="boolean", options={"default":0})
 		*@Assert\Type(type="boolean", message=" {{ value }} n'est pas du type {{ type }}")
 		*/
 		private $publication;
@@ -244,5 +262,29 @@ class Annonce
     public function getAuteurModif()
     {
         return $this->auteurModif;
+    }
+
+    /**
+     * Set publication
+     *
+     * @param boolean $publication
+     *
+     * @return Annonce
+     */
+    public function setPublication($publication)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return boolean
+     */
+    public function getPublication()
+    {
+        return $this->publication;
     }
 }

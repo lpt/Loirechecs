@@ -17,4 +17,13 @@
 	
 </div>
 
+<h5><strong>Liste des liens</strong> - <a href="{{ path('ga_core_ressource_add_annonce_lien', {'id': annonce.id})}}">ajouter</a>:</h5>
+{% for lien in annonce.liens%}
+	
+	<p> <a href="{{lien.url}}"> {{lien.nom}} </a> => 
+	<a href="{{ path('ga_core_ressource_edit_annonce_lien', {'id': annonce.id, 'idR': lien.id})}} ">modifier</a> - 
+	<a href="{{ path('ga_core_ressource_delete_annonce_lien', {'id': annonce.id, 'idR': lien.id})}}"> supprimer </a></p>
+
+{% endfor %}
+
 {% endblock %}

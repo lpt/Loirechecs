@@ -15,11 +15,20 @@
 		{#  test d' affectation d un tournoi #}
 		
 		<p><a href="{{ path('ga_core_annonce_add', {'tournoi_id' : tournoi.id})}}">Ajouter annonce tournoi</a>
-  
+	</div>
+	
+	<div class="well">	
 		<h4> Liste des annonces </h4>
 		{%for annonce in listeAnnonce%}
 	
 			<p><strong>{{annonce.titre}}</strong> - {{ annonce.dateCreat|date('d/m/Y - H:i') }} 
+			
+			{% if annonce.publication == 1 %}
+			 - Publié
+			 {% else %}
+			- Non publié
+			{% endif %}
+			
 				<a href="{{ path('ga_core_annonce_id_admin', {'id': annonce.id})}}"> - administrer</a>
 			</p>
 				

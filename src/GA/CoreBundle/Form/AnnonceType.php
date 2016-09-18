@@ -26,7 +26,7 @@ class AnnonceType extends AbstractType
             ->add('auteur',							TextType::class)
             ->add('contenu',						TextareaType::class)
             ->add('auteurModif',			TextType::class)
-						->add('publication',				CheckboxType::class)
+						->add('publication',				CheckboxType::class, array('required' => false))
 					 	->add('Enregistrer',						SubmitType::class)
         ;
     }

@@ -12,7 +12,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="GA\CoreBundle\Repository\AnnonceRepository")
  */
 class Annonce
-{
+{	
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Lien", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $liens; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Affiche", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $affiches; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Image", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $images; 
+
     /**
      * @var int
      *
@@ -268,5 +286,107 @@ class Annonce
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Add lien
+     *
+     * @param \GA\CoreBundle\Entity\Lien $lien
+     *
+     * @return Annonce
+     */
+    public function addLien(\GA\CoreBundle\Entity\Lien $lien)
+    {
+        $this->liens[] = $lien;
+
+        return $this;
+    }
+
+    /**
+     * Remove lien
+     *
+     * @param \GA\CoreBundle\Entity\Lien $lien
+     */
+    public function removeLien(\GA\CoreBundle\Entity\Lien $lien)
+    {
+        $this->liens->removeElement($lien);
+    }
+
+    /**
+     * Get liens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLiens()
+    {
+        return $this->liens;
+    }
+
+    /**
+     * Add affiche
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affiche
+     *
+     * @return Annonce
+     */
+    public function addAffiche(\GA\CoreBundle\Entity\Affiche $affiche)
+    {
+        $this->affiches[] = $affiche;
+
+        return $this;
+    }
+
+    /**
+     * Remove affiche
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affiche
+     */
+    public function removeAffiche(\GA\CoreBundle\Entity\Affiche $affiche)
+    {
+        $this->affiches->removeElement($affiche);
+    }
+
+    /**
+     * Get affiches
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAffiches()
+    {
+        return $this->affiches;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \GA\CoreBundle\Entity\Image $image
+     *
+     * @return Annonce
+     */
+    public function addImage(\GA\CoreBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \GA\CoreBundle\Entity\Image $image
+     */
+    public function removeImage(\GA\CoreBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
