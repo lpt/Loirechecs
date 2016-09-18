@@ -10,4 +10,16 @@ namespace GA\CoreBundle\Repository;
  */
 class AnnonceRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findListeAnnoncePost()
+	{
+		$qb = $this->createQueryBuilder('a');
+		
+		$qb	->where('a.publication = :publication')
+					->setParameter('publication', 1);
+
+		$qb->orderBy('a.dateCreat', 'DESC');
+
+		return $qb ->getQuery()
+										 ->getResult();
+	}
 }

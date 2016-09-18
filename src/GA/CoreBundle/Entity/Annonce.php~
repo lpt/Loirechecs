@@ -77,7 +77,7 @@ class Annonce
 		/**
 		*@var boolean
 		*
-		*@ORM\Column(name="publication", type="boolean", options={"default":0})
+		*@ORM\Column(name="jeune", type="boolean", options={"default":0})
 		*@Assert\Type(type="boolean", message=" {{ value }} n'est pas du type {{ type }}")
 		*/
 		private $publication;
@@ -244,29 +244,5 @@ class Annonce
     public function getAuteurModif()
     {
         return $this->auteurModif;
-    }
-
-    /**
-     * Set publication
-     *
-     * @param boolean $publication
-     *
-     * @return Annonce
-     */
-    public function setPublication($publication)
-    {
-        $this->publication = $publication;
-
-        return $this;
-    }
-
-    /**
-     * Get publication
-     *
-     * @return boolean
-     */
-    public function getPublication()
-    {
-        return $this->publication;
     }
 }

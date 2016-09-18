@@ -31,7 +31,7 @@ class AnnonceController extends Controller
 				->getManager()
 				->getRepository('GACoreBundle:Annonce');
 				
-			$listeAnnonce  = $repository->findAll();
+			$listeAnnonce  = $repository->findListeAnnoncePost();
 			
 			$nbPages = ceil(count($listeAnnonce) / $nbPerPage);
 			

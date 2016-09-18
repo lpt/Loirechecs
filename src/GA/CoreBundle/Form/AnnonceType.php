@@ -20,13 +20,14 @@ class AnnonceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateCreat',				DateTimeType::class)
+            ->add('dateCreat',					DateTimeType::class)
             ->add('dateModif',				DateTimeType::class)
-            ->add('titre',							TextType::class)
-            ->add('auteur',						TextType::class)
+            ->add('titre',								TextType::class)
+            ->add('auteur',							TextType::class)
             ->add('contenu',						TextareaType::class)
             ->add('auteurModif',			TextType::class)
-					 	->add('Publier',						SubmitType::class)
+						->add('publication',				CheckboxType::class)
+					 	->add('Enregistrer',						SubmitType::class)
         ;
     }
     

@@ -8,7 +8,7 @@
 
   
 
-<h3>Formulaire d'annonce</h3>
+<h3>Formulaire d annonce</h3>
 
 <div class="well">
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
@@ -45,9 +45,13 @@
     <div class="col-sm-10">
       {{ form_widget(form.auteur, {'attr': {'class': 'form-control'}}) }}
     </div>
-  </div>
+		</div>
+
   
-  {{ form_widget(form.Publier, {'attr': {'class': 'btn btn-primary'}}) }}
+	{{ form_row(form.publication, {'attr': {'class': 'form-control'}}) }}	
+  
+  {{ form_widget(form.Enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+
 
   {# Génération automatique des champs pas encore écrits.
      Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)

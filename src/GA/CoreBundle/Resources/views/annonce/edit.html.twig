@@ -47,7 +47,10 @@
     </div>
   </div>
   
-  {{ form_widget(form.Publier, {'attr': {'class': 'btn btn-primary'}}) }}
+  	{{ form_row(form.publication, {'attr': {'class': 'form-control'}}) }}	
+  
+  {{ form_widget(form.Enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+
 
   {# Génération automatique des champs pas encore écrits.
      Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
