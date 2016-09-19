@@ -169,6 +169,16 @@ ga_core_ressource_add_annonce_lien:
     defaults:
         _controller: GACoreBundle:Annonce:addLien
 
+ga_core_ressource_add_annonce_affiche:
+    path:    /admin/ressource/add/annonce/{id}/affiche
+    defaults:
+        _controller: GACoreBundle:Annonce:addAffiche
+
+ga_core_ressource_add_annonce_image:
+    path:    /admin/ressource/add/annonce/{id}/image
+    defaults:
+        _controller: GACoreBundle:Annonce:addImage
+
 ga_core_ressource_edit_annonce_lien:
     path:    /admin/ressource/edit/annonce/{id}/lien/{idR}
     defaults:
@@ -178,6 +188,16 @@ ga_core_ressource_delete_annonce_lien:
     path:    /admin/ressource/delete/annonce/{id}/lien/{idR}
     defaults:
         _controller: GACoreBundle:Annonce:deleteLien
+
+ga_core_ressource_delete_annonce_affiche:
+    path:    /admin/ressource/delete/annonce/{id}/affiche/{idR}
+    defaults:
+        _controller: GACoreBundle:Annonce:deleteAffiche
+
+ga_core_ressource_delete_annonce_image:
+    path:    /admin/ressource/delete/annonce/{id}/image/{idR}
+    defaults:
+        _controller: GACoreBundle:Annonce:deleteImage
 
 ga_core_ressource_add_ronde_lien:
     path:    /admin/ressource/add/tournoi/{id}/ronde/{num}/lien

@@ -232,17 +232,74 @@ class AnnonceController extends Controller
 		
 		public function addImageAction($id, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+				$image = new Image();
+        $form = $this->createForm(ImageAddType::class, $image);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+                         
+						$em = $this->getDoctrine()->getManager();
+						$image->setDateCreate(New \DateTime);
+						$image->setDateModif(New \DateTime);
+						$validator = $this->get('validator');
+						$listErrors = $validator->validate($image);
+						if(count($listErrors) > 0) 
+						{
+							return new Response((string) $listErrors);
+						} 
+						
+						$annonce = $em
+						->getRepository('GACoreBundle:Annonce')
+						->find($id);
+						
+									
+						$annonce->addImage($image);
+						
+						$em->persist($image);
+						$em->flush();
+
+            return $this->redirectToRoute('ga_core_annonce_id_admin', array('id' => $id));
+				}
+				
+				return $this->render('GACoreBundle:Annonce:addImage.html.twig', array(
+            'form' => $form->createView(),
+        ));
 		}
-		
-		public function addResultatAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
-		
+				
 		public function addAfficheAction($id, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+				$affiche = new Affiche();
+        $form = $this->createForm(AfficheAddType::class, $affiche);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+                         
+						$em = $this->getDoctrine()->getManager();
+						$affiche->setDateCreate(New \DateTime);
+						$affiche->setDateModif(New \DateTime);
+						$validator = $this->get('validator');
+						$listErrors = $validator->validate($affiche);
+						if(count($listErrors) > 0) 
+						{
+							return new Response((string) $listErrors);
+						} 
+						
+						$annonce = $em
+						->getRepository('GACoreBundle:Annonce')
+						->find($id);
+						
+									
+						$annonce->addAffiche($affiche);
+						
+						$em->persist($affiche);
+						$em->flush();
+
+            return $this->redirectToRoute('ga_core_annonce_id_admin', array('id' => $id));
+				}
+				
+				return $this->render('GACoreBundle:Annonce:addAffiche.html.twig', array(
+            'form' => $form->createView(),
+        ));
 		}
 		
 			// EDITIONS
@@ -315,18 +372,60 @@ class AnnonceController extends Controller
 			));
 		}
 		
-		public function deleteRondeImageAction($id, Request $request)
+		public function deleteImageAction($id, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$image = $em
+					->getRepository('GACoreBundle:Image')
+					->find($idR);
+								
+			if ($image === null){
+				throw new NotFoundHttpException("l\'image d'id".$idR."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($image);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "L\'image a bien été supprimé.");
+				
+			return $this->redirect($this->generateUrl('ga_core_admin'));
+			}
+			
+			return $this->render('GACoreBundle:Annonce:deleteImage.html.twig', array(
+      'image' => $image,
+			'id' => $id,
+		  'form'   => $form->createView(),
+			));
 		}
 		
-		public function deleteRondeResultatAction($id, Request $request)
-		{
-			return $this->redirectToRoute('ga_core_admin');
-		}
 		
-		public function deleteRondeAfficheAction($id, Request $request)
+		public function deleteAfficheAction($id, $idR, Request $request)
 		{
-			return $this->redirectToRoute('ga_core_admin');
+			$em = $this->getDoctrine()->getManager();
+			$affiche = $em
+					->getRepository('GACoreBundle:Affiche')
+					->find($idR);
+								
+			if ($affiche === null){
+				throw new NotFoundHttpException("l\'affiche d'id".$idR."n\'existe pas.");
+			}			
+				
+			$form = $this->get('form.factory')->create();
+    
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			$em->remove($affiche);						
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('info', "L\'affiche a bien été supprimé.");
+				
+			return $this->redirect($this->generateUrl('ga_core_admin'));
+			}
+			
+			return $this->render('GACoreBundle:Annonce:deleteAffiche.html.twig', array(
+      'affiche' => $affiche,
+			'id' => $id,
+		  'form'   => $form->createView(),
+			));
 		}
 }

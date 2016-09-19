@@ -1,0 +1,17 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  une news - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+	
+			
+<h2>Ajouter une affiche ou un document PDF </h2>
+
+{{ form_start(form) }}
+        {{ form_row(form.chemin) }}
+{{ form_end(form) }}
+
+{% endblock %}
