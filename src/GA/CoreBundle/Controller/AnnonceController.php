@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use GA\CoreBundle\Entity\Annonce;
+use GA\CoreBundle\Entity\Tournoi;
 use GA\CoreBundle\Form\AnnonceAddType;
 use GA\CoreBundle\Form\AnnonceEditType;
 use GA\CoreBundle\Entity\Lien;
@@ -58,40 +59,49 @@ class AnnonceController extends Controller
 			));
     }
 		
-		public function viewAction(Annonce $annonce, $id)
+		public function adminAction()
+		{
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Annonce');
+				
+			$listeAnnonce  = $repository->findAllInv();
+			
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Tournoi');
+					
+			$tournoi = $repository->find(1);
+				
+			return $this->render('GACoreBundle:Annonce:admin.html.twig', array(
+			'listeAnnonce' => $listeAnnonce,
+			'tournoi' => $tournoi,
+			));
+		}
+		
+		public function adminViewAction(Annonce $annonce, $id)
+		{
+			return $this->render('GACoreBundle:Annonce:adminView.html.twig', array(
+				'annonce' => $annonce
+				));
+
+		}
+	
+			public function viewAction(Annonce $annonce, $id)
 		{
 			return $this->render('GACoreBundle:Annonce:view.html.twig', array(
       'annonce' => $annonce
 			));
 		}
 		
+	// ANNONCE DIVERS
+			
 		public function addAction(Request $request)
 		{
 			
 			$annonce = new Annonce();
-			
-			// test  d affectation d'un tournoi
-			
-			$tournoiId = $request->query->get('tournoi_id');
-			
-			
-			$em = $this->getDoctrine()->getManager();
-			
-			$tournoi = $em
-					->getRepository('GACoreBundle:Tournoi')
-					->find($tournoiId);
-					
-			if ($tournoi === null){
-				throw new NotFoundHttpException("le tournoi d'id".$id."n\'existe pas.");
-			}
-			
-			$annonce->setTitre($tournoi->getNom());
-			
-			// fin de test
-			
+				
 			$form = $this->get('form.factory')->create(AnnonceAddType::class, $annonce);
-			
-			
 			
 			if ($request->isMethod('POST')){
 				
@@ -160,33 +170,192 @@ class AnnonceController extends Controller
 			));
 			
 		}
-		
-		public function adminAction()
+
+	// ANNONCE TOURNOI
+	
+		public function addTournoiAction(Request $request)
 		{
-			$repository = $this->getDoctrine()
-					->getManager()
-					->getRepository('GACoreBundle:Annonce');
-				
-			$listeAnnonce  = $repository->findAllInv();
 			
-			$repository = $this->getDoctrine()
+			if(!isset($_GET['idTournoi'])){ 
+			
+				$repository = $this->getDoctrine()
 					->getManager()
 					->getRepository('GACoreBundle:Tournoi');
-					
-			$tournoi = $repository->find(1);
+			
+				$jeune = false;
+				$listeSaisonAdulte  = $repository->findListeSaison($jeune);		
+			
+			
+				foreach($listeSaisonAdulte as $key => $saisonArray)
+				{
 				
-			return $this->render('GACoreBundle:Annonce:admin.html.twig', array(
-			'listeAnnonce' => $listeAnnonce,
-			'tournoi' => $tournoi,
-			));
-		}
+				$saison = $saisonArray['saison'];
+				$listeTournoiAdulte[$saison] = $repository->findTournoiBySaisonAdulte($saison);
+				}
+				
+				$jeune = true;
+				$listeSaisonJeune  = $repository->findListeSaison($jeune);		
+			
+			
+				foreach($listeSaisonJeune as $key => $saisonArray)
+				{
+				
+				$saison = $saisonArray['saison'];
+				$listeTournoiJeune[$saison] = $repository->findTournoiBySaisonJeune($saison);
+				}
+				
+				
+				if(isset($listeTournoiAdulte) OR $listeTournoiJeune) 
+			{
+					return $this->render('GACoreBundle:Annonce:selectTournoi.html.twig', array(
+																														'listeTournoiAdulte'=> $listeTournoiAdulte, 'listeTournoiJeune'=> $listeTournoiJeune
+																														));
+			}
+			
+						
+				return $this->render('GACoreBundle:Annonce:selectTournoi.html.twig');
+			}			
+			
+			if(isset($_GET['idTournoi']) AND !isset($_GET['idRonde'])){
+			
+				$em = $this->getDoctrine()->getManager();
+			
+				$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($_GET['idTournoi']);
+				
+				return $this->render('GACoreBundle:Annonce:selectRonde.html.twig', array(
+																												'tournoi'=> $tournoi
+																												));
+			}
+			$annonce = new Annonce();
+			
+			$em = $this->getDoctrine()->getManager();
+			
+			$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find($_GET['idTournoi']);
+			
+			$ronde = $em
+					->getRepository('GACoreBundle:Ronde')
+					->find($_GET['idRonde']);
+			
+			$annonce->setTitre($tournoi->getNom());
+			
+			$form = $this->get('form.factory')->create(AnnonceAddType::class, $annonce);
+			
+			
+			if ($request->isMethod('POST')){
+				
+				$form->handleRequest($request);
+				
+				if($form->isValid()){
+					
+					if(isset($_POST['lienPost'])){
+						foreach($_POST['lienPost'] as  $value)
+						{
+							$value = intval($value);
+						 
+							$lien = $em
+								->getRepository('GACoreBundle:Lien')
+								->find($value);
+						 
+							$annonce->addLien($lien);
+						}
+					}
+					
+					if(isset($_POST['resultatPost'])){
+						foreach($_POST['resultatPost'] as  $value)
+						{
+							$value = intval($value);
+						 
+							$resultat = $em
+								->getRepository('GACoreBundle:Resultat')
+								->find($value);
+						 
+							$annonce->addResultat($resultat);
+						}
+					}
+					
+					if(isset($_POST['imagePost'])){
+						foreach($_POST['imagePost'] as  $value)
+						{
+							$value = intval($value);
+						 
+							$image = $em
+								->getRepository('GACoreBundle:Image')
+								->find($value);
+						 
+							$annonce->addImage($image);
+						}
+					}
+					
+					if(isset($_POST['affichePost'])){
+						foreach($_POST['affichePost'] as  $value)
+						{
+							$value = intval($value);
+						 
+							$affiche = $em
+								->getRepository('GACoreBundle:Affiche')
+								->find($value);
+						 
+							$annonce->addAffiche($affiche);
+						}
+					}
+					
+					if(isset($_POST['lienRondePost'])){
+						foreach($_POST['lienRondePost'] as  $value)
+						{
+							$value = intval($value);
+						 
+							$lien = $em
+								->getRepository('GACoreBundle:Lien')
+								->find($value);
+						 
+							$annonce->addLien($lien);
+						}
+					}
+					
+					if(isset($_POST['resultatRondePost'])){
+						foreach($_POST['resultatRondePost'] as  $value)
+						{
+							$value = intval($value);
+						 
+							$resultat = $em
+								->getRepository('GACoreBundle:Resultat')
+								->find($value);
+						 
+							$annonce->addResultat($resultat);
+						}
+					}
+					
+					if(isset($_POST['imageRondePost'])){
+						foreach($_POST['imageRondePost'] as  $value)
+						{
+							$value = intval($value);
+						 
+							$image = $em
+								->getRepository('GACoreBundle:Image')
+								->find($value);
+						 
+							$annonce->addImage($image);
+						}
+					}
 		
-		public function adminViewAction(Annonce $annonce, $id)
-		{
-			return $this->render('GACoreBundle:Annonce:adminView.html.twig', array(
-				'annonce' => $annonce
-				));
-
+					$em = $this->getDoctrine()->getManager();
+					$em->persist($annonce);
+					$em->flush();
+					
+					$request->getSession()->getFlashBag()->add('notice', 'Annonce enregistrée');
+					
+					return $this->redirectToRoute('ga_core_annonce_id', array('id' => $annonce->getId()));
+				}
+			}
+			
+			return $this->render('GACoreBundle:Annonce:addTournoi.html.twig', array('tournoi' => $tournoi, 'ronde'=> $ronde,
+			'form' => $form->createView(),
+			));
+			
 		}
 	
 	// GESTION DES RESSOURCES D UNE ANNONCE
@@ -428,4 +597,22 @@ class AnnonceController extends Controller
 		  'form'   => $form->createView(),
 			));
 		}
-}
+
+		// TEST
+		
+		public function testAction(Request $request)
+		{
+			// recuperation des ressources 
+			
+			$em = $this->getDoctrine()->getManager();
+			
+			$tournoi = $em
+					->getRepository('GACoreBundle:Tournoi')
+					->find(1);
+			
+			
+			return $this->render('GACoreBundle:Annonce:test.html.twig', array(
+      'tournoi' => $tournoi))	;
+		}
+	}
+

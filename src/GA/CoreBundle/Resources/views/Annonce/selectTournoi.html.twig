@@ -1,0 +1,94 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Ajouter une news - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+
+<h3>Choisir un tournoi</h3>
+
+{# <a href={{ path('ga_core_annonce_add_tournoi', {'idTournoi': 1})}}> tournoi 1 </a> #}
+
+<div class="row">
+
+
+<li class="dropdown">
+<a  class="dropdown-toggle" data-toggle="dropdown"  href="#"> Compétition adulte<span class="caret"></span></a>
+<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+
+
+{% for key,v  in listeTournoiAdulte %}
+
+<li class="dropdown-submenu">
+<a tabindex="-1" href="#"> {{key}} </span></a>
+
+<ul class="dropdown-menu">
+													<li class="dropdown-submenu">
+													
+												{% for key,value in v %}
+												
+												{% for key,id in value %}
+												{% if isInt(id)  %}
+												<a href="{{path('ga_core_annonce_add_tournoi', {'idTournoi': id})}}"> 
+												{% endif %}
+												{% if isString(id)  %}
+												{{id}}
+												</a>
+												{% endif %}
+												
+												{% endfor %}
+												
+
+												{% endfor %}
+												
+												</li>
+												</ul>
+
+{% endfor %}
+
+</li>
+</ul>
+</div>
+		<div class="row">
+		
+<li class="dropdown">
+<a  class="dropdown-toggle" data-toggle="dropdown"  href="#"> Compétition jeune<span class="caret"></span></a>
+<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+
+
+{% for key,v  in listeTournoiJeune %}
+
+<li class="dropdown-submenu">
+<a tabindex="-1" href="#"> {{key}} </span></a>
+
+<ul class="dropdown-menu">
+													<li class="dropdown-submenu">
+													
+												{% for key,value in v %}
+												
+												{% for key,id in value %}
+												{% if isInt(id)  %}
+												<a href="{{path('ga_core_annonce_add_tournoi', {'idTournoi': id})}}"> 
+												{% endif %}
+												{% if isString(id)  %}
+												{{id}}
+												</a>
+												{% endif %}
+												
+												{% endfor %}
+												
+
+												{% endfor %}
+												
+												</li>
+												</ul>
+
+{% endfor %}
+
+</li>
+</ul>
+</div>
+
+{% endblock %}

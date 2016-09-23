@@ -1,0 +1,29 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Ajouter une news - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+  
+
+<h3>Formulaire d annonce</h3>
+
+<form action="{{path('ga_core_tournoi_test')}}" method="post">
+  
+{% for lien in tournoi.liens%}
+						{% if loop.first %} 
+								<div class="col-sm-3">
+										<h4><strong> Liens </strong> </h4>				
+						{% endif %}
+										<p> <a href="{{lien.url}}"> {{lien.nom}} </a>   <input type="checkbox" name="{{loop.index}}" value="{{lien.id}}"> </p>
+						{% if loop.last %} 
+						<p><input type="submit" value="OK"></p>
+								</div>
+						{% endif %}
+						{% endfor %}
+
+</form>
+
+{% endblock %}

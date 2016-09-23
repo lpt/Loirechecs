@@ -1,0 +1,16 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Ajouter une news - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+<h3>Choisir une ronde </h3>
+
+{% for ronde in tournoi.rondes %}
+<p><a href={{ path('ga_core_annonce_add_tournoi', {'idTournoi':  tournoi.id, 'idRonde': ronde.id})}}> Ronde N°  {{ronde.numero}} </a></p>
+{% endfor %}
+
+ 
+{% endblock %}

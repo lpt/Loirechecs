@@ -21,7 +21,10 @@
 				</h4>
 						
 				<p>{{annonce.contenu}}</p>
-					
+				
+				{% for lien in annonce.liens %}
+				<p> <a href="{{lien.url}}"> {{lien.nom}} </a> </p>
+				{% endfor %}
 				<p><a href="{{ path('ga_core_annonce_id', {'id': annonce.id})}}">Plus de détail</a>
 				{% if annonce.dateCreat != annonce.dateModif %}
 				<span class="dateModif"><em>Modifiée par {{annonce.auteurModif}} le {{annonce.dateModif|date('d/m/Y - H:i')}}</em></span>

@@ -1,0 +1,178 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Ajouter une news - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+<h3>Formulaire d annonce</h3>
+
+<div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(form) }}
+
+  <div class="form-group">
+    
+    {{ form_label(form.titre, "Titre", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+
+    {{ form_errors(form.titre) }}
+
+    <div class="col-sm-10">
+    
+      {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div> 
+
+  <div class="form-group">
+    {{ form_label(form.contenu, "Contenu", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.contenu) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+	
+	<div class="form-group">
+    {{ form_label(form.auteur, "Auteur", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.auteur) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.auteur, {'attr': {'class': 'form-control'}}) }}
+    </div>
+		
+
+	<div class="col-sm-2">
+	</div>
+	<div class="col-sm-9 col-sm-offset-1">
+	{{ form_row(form.publication) }}	
+  </div>
+	
+	<div class="row">
+	
+	<div class="col-sm-6">
+	<h4> Ressource tournoi </h4>
+	
+	{% for lien in tournoi.liens%}
+						{% if loop.first %} 
+							<div class="row">
+								<div class="col-sm-1 col-sm-offset-1">
+										<h5><strong> Liens </strong> </h5>
+								</div>
+								<div class="col-sm-9 col-sm-offset-1"><p>
+						{% endif %}
+										 <a href="{{lien.url}}"> {{lien.nom}} </a>   <input type="checkbox" name="lienPost[]" value="{{lien.id}}">  - 			
+						{% if loop.last %}
+								</p>		
+								</div>
+								</div>
+						{% endif %}
+	{% endfor %}
+	{% for affiche in tournoi.affiches%}
+						{% if loop.first %} 
+						<div class="row">
+								<div class="col-sm-1 col-sm-offset-1">
+										<h5><strong> affiches </strong> </h5>			
+								</div>
+								<div class= "col-sm-9 col-sm-offset-1"	><p>
+						{% endif %}
+										 <a href="{{asset('uploads/affiche/'~affiche.chemin~'')}}"> {{affiche.nom}} </a>   <input type="checkbox" name="affichePost[]" value="{{affiche.id}}">
+						{% if loop.last %}
+								</p>
+								</div>
+								</div>
+						{% endif %}
+	{% endfor %}
+	{% for image in tournoi.images%}
+						{% if loop.first %} 
+								<div class="row">
+								<div class="col-sm-1 col-sm-offset-1">
+										<h5><strong> images </strong> </h5>
+								</div>
+								<div class= "col-sm-9 col-sm-offset-1"	><p>
+						{% endif %}
+										<a href="{{ asset('uploads/image/'~image.chemin~'') }}"> {{image.nom}} </a>   <input type="checkbox" name="imagePost[]" value="{{image.id}}">
+								{% if loop.last %}
+								</p>
+								</div>
+								</div>
+						{% endif %}
+	{% endfor %}
+	{% for resultat in tournoi.resultats%}
+						{% if loop.first %} 
+								<div class="row">
+								<div class="col-sm-1 col-sm-offset-1">
+										<h5><strong> resultats </strong> </h5>		
+								</div>
+								<div class= "col-sm-9 col-sm-offset-1"	><p>
+						{% endif %}
+										<a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}"> {{resultat.nom}} </a>   <input type="checkbox" name="resultatPost[]" value="{{resultat.id}}">
+						{% if loop.last %}
+								</p>
+								</div>
+								</div>
+						{% endif %}
+	{% endfor %}
+	</div>
+	
+	<div class="col-sm-6">
+	<h4> Ressource Ronde</h4>
+	
+	{% for lien in ronde.liens%}
+						{% if loop.first %} 
+							<div class="row">
+								<div class="col-sm-1 col-sm-offset-1">
+										<h5><strong> Liens </strong> </h5>
+								</div>
+								<div class="col-sm-9 col-sm-offset-1"><p>
+						{% endif %}
+										 <a href="{{lien.url}}"> {{lien.nom}} </a>   <input type="checkbox" name="lienRondePost[]" value="{{lien.id}}">  - 			
+						{% if loop.last %}
+								</p>		
+								</div>
+								</div>
+						{% endif %}
+	{% endfor %}
+	
+	{% for image in ronde.images%}
+						{% if loop.first %} 
+								<div class="row">
+								<div class="col-sm-1 col-sm-offset-1">
+										<h5><strong> images </strong> </h5>
+								</div>
+								<div class= "col-sm-9 col-sm-offset-1"	><p>
+						{% endif %}
+										<a href="{{ asset('uploads/image/'~image.chemin~'') }}"> {{image.nom}} </a>   <input type="checkbox" name="imageRondePost[]" value="{{image.id}}">
+								{% if loop.last %}
+								</p>
+								</div>
+								</div>
+						{% endif %}
+	{% endfor %}
+	{% for resultat in ronde.resultats%}
+						{% if loop.first %} 
+								<div class="row">
+								<div class="col-sm-1 col-sm-offset-1">
+										<h5><strong> resultats </strong> </h5>		
+								</div>
+								<div class= "col-sm-9 col-sm-offset-1"	><p>
+						{% endif %}
+										<a href="{{asset('uploads/resultat/'~resultat.chemin~'')}}"> {{resultat.nom}} </a>   <input type="checkbox" name="resultatRondePost[]" value="{{resultat.id}}">
+						{% if loop.last %}
+								</p>
+								</div>
+								</div>
+						{% endif %}
+	{% endfor %}
+	</div>
+	</div>
+
+	{{ form_widget(form.Enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+	
+  {{ form_rest(form) }}
+
+   {{ form_end(form) }}
+</div>
+</div>
+ 
+{% endblock %}

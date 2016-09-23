@@ -47,6 +47,17 @@ class TournoiRepository extends \Doctrine\ORM\EntityRepository
 		
 		return $qb->getQuery()->getArrayResult();
 		}
+		
+		public function getIdLien($id)
+		{
+			$qb = $this->createQueryBuilder('t');
+			
+			$qb ->innerJoin('t.lien', 'l')
+						->addSelect('l');
+						
+			return $qb->getQuery()->getArrayResult();
+			
+		}
 }
 
 

@@ -28,6 +28,11 @@ ga_core_annonce_add:
     defaults:
         _controller: GACoreBundle:Annonce:add
 
+ga_core_annonce_add_tournoi:
+    path:   /admin/annonce/add/tournoi
+    defaults:
+        _controller: GACoreBundle:Annonce:addTournoi
+
 ga_core_annonce_edit:
     path:   /admin/annonce/edit/{id}
     defaults:
@@ -244,4 +249,4 @@ ga_core_tournoi_id_admin:
 ga_core_tournoi_test:
     path:     /test
     defaults:
-        _controller: GACoreBundle:Tournoi:navAdulte
+        _controller: GACoreBundle:Annonce:test

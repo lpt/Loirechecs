@@ -30,6 +30,12 @@ class Annonce
 		* @Assert\Valid()
 		*/
 		private $images; 
+		
+		/**
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Resultat", cascade={"persist", "remove"})
+		* @Assert\Valid()
+		*/
+		private $resultats; 
 
     /**
      * @var int
@@ -388,5 +394,63 @@ class Annonce
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Add affiche
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affiche
+     *
+     * @return Annonce
+     */
+    public function addAffich(\GA\CoreBundle\Entity\Affiche $affiche)
+    {
+        $this->affiches[] = $affiche;
+
+        return $this;
+    }
+
+    /**
+     * Remove affiche
+     *
+     * @param \GA\CoreBundle\Entity\Affiche $affiche
+     */
+    public function removeAffich(\GA\CoreBundle\Entity\Affiche $affiche)
+    {
+        $this->affiches->removeElement($affiche);
+    }
+
+    /**
+     * Add resultat
+     *
+     * @param \GA\CoreBundle\Entity\Resultat $resultat
+     *
+     * @return Annonce
+     */
+    public function addResultat(\GA\CoreBundle\Entity\Resultat $resultat)
+    {
+        $this->resultats[] = $resultat;
+
+        return $this;
+    }
+
+    /**
+     * Remove resultat
+     *
+     * @param \GA\CoreBundle\Entity\Resultat $resultat
+     */
+    public function removeResultat(\GA\CoreBundle\Entity\Resultat $resultat)
+    {
+        $this->resultats->removeElement($resultat);
+    }
+
+    /**
+     * Get resultats
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultats()
+    {
+        return $this->resultats;
     }
 }
