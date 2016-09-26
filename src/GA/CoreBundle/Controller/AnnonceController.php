@@ -637,7 +637,10 @@ class AnnonceController extends Controller
 					$annonce = new Annonce();
 					
 					$titre = $tournoi->getNom() . ' - Ronde N° ' .$ronde->getNumero();
-					$dateEventFormat = ' 5 Octrobre ';
+					$dateEvent= $ronde->getDateEvent();					
+					$dateEventFormat= 'le ' .$dateEvent->format('d'). '/'.$dateEvent->format('m'). '/'.$dateEvent->format('Y');
+				
+			//		$dateEventFormat = ' 5 Octrobre ';
 					$contenu = 'La ronde N°' .$ronde->getNumero(). ' aura lieu le ' . $dateEventFormat . '  -  ' .$ronde->getAdresse(). ' à ' .$ronde->getVille();				
 					$annonce ->setTitre($titre)
 										  	 ->setContenu($contenu)
