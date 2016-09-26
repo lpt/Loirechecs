@@ -49,6 +49,7 @@ class TournoiController extends Controller
 			$form   = $this->get('form.factory')->create(tournoiType::class, $tournoi);
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+				
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($tournoi);
 				$em->flush();

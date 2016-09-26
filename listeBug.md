@@ -21,31 +21,17 @@ Listes des taches
 
 				-convertir paramètre de requête pour le tournoiControlleur
 
--modifier l'entité annonce:
-					
-				- Relation lien , image, resulat, affiche
-
 -controlleur annnonce:
 
 				- ajout des ressources
 
 				- ajout d'une annonce tournoi existant :
-				
-																-  inscription : 
-																
+																		
 																-  inscription interne (non prioritaire)
 																
-																-  resultat : 
+																-  amélioration 
 																
-																- evenement manuel (publi auto agenda false)
-																
-				- recupération des ressources tournois (coche publier)
-					
-				- ajout d'une annonce divers (divers + tournoi non existant)
-					
 				- ajout d'une annonce evenement auto (publi auto agenda true)
-				
-				
 				
 -creer l'entité agenda:
 

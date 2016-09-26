@@ -75,6 +75,14 @@ class Ronde
      *								max=30, maxMessage = "{{ limit }} caractères maxium")
      */
     private $ville;
+		
+		/**
+		*@var boolean
+		*
+		*@ORM\Column(name="poste", type="boolean", options={"default":0})
+		*@Assert\Type(type="boolean", message=" {{ value }} n'est pas du type {{ type }}")
+		*/
+		private $poste = false;
 
 
     /**
@@ -295,5 +303,29 @@ class Ronde
     public function getImages()
     {
         return $this->images;
+    }
+		
+		/**
+     * Set poste
+     *
+     * @param boolean $poste
+     *
+     * @return Tournoi
+     */
+    public function setPoste($poste)
+    {
+        $this->poste = $poste;
+
+        return $this;
+    }
+
+    /**
+     * Get jeune
+     *
+     * @return boolean
+     */
+    public function getPoste()
+    {
+        return $this->poste;
     }
 }

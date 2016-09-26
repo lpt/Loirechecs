@@ -10,4 +10,25 @@ namespace GA\CoreBundle\Repository;
  */
 class RondeRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findRondePoster()
+	{
+		$qb = $this->createQueryBuilder('r')
+		->select('r.id','r.dateEvent','r.poste')
+		->where('r.poste = :poste')
+			->setParameter(':poste', false)
+		;
+		
+		
+		$end = new \Datetime ;
+		$end ->add(new \DateInterval('P10D'));
+		
+    $qb
+      ->andWhere('r.dateEvent < :end')
+      ->setParameter('end', $end) 
+    ;
+			
+		
+		return $qb->getQuery()->getArrayResult();
+		}
+		
 }

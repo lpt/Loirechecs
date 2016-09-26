@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use GA\CoreBundle\Entity\Annonce;
 use GA\CoreBundle\Entity\Tournoi;
+use GA\CoreBundle\Entity\Ronde;
 use GA\CoreBundle\Form\AnnonceAddType;
 use GA\CoreBundle\Form\AnnonceEditType;
 use GA\CoreBundle\Entity\Lien;
@@ -29,6 +30,8 @@ class AnnonceController extends Controller
 {
     public function indexAction($page)
     {
+			
+			$this->autoPoster();
 			// On renvoie une exeption si la page n'existe pas
 			if($page<1)
 			{
@@ -598,21 +601,67 @@ class AnnonceController extends Controller
 			));
 		}
 
-		// TEST
+		// AUTO POST
 		
-		public function testAction(Request $request)
+		public function autoPoster()
 		{
-			// recuperation des ressources 
-			
+				
 			$em = $this->getDoctrine()->getManager();
+
+			$rondes = $em
+					->getRepository('GACoreBundle:Ronde')
+					-> findRondePoster();		
 			
-			$tournoi = $em
-					->getRepository('GACoreBundle:Tournoi')
-					->find(1);
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Tournoi');
+			
+				
+			foreach($rondes as $key => $rondeArray)
+			{
+			
+				$idRonde = $rondeArray['id'];
+			
+				$idRondeArray = array($idRonde);
 			
 			
-			return $this->render('GACoreBundle:Annonce:test.html.twig', array(
-      'tournoi' => $tournoi))	;
+				$listeTournoi = $repository->findTournoiByRonde($idRondeArray);		
+				
+				$ronde = $em
+					->getRepository('GACoreBundle:Ronde')
+					-> find($idRonde);		
+			
+				foreach($listeTournoi as $key => $tournoi)
+				{
+				
+					$annonce = new Annonce();
+					
+					$titre = $tournoi->getNom() . ' - Ronde N° ' .$ronde->getNumero();
+					$dateEventFormat = ' 5 Octrobre ';
+					$contenu = 'La ronde N°' .$ronde->getNumero(). ' aura lieu le ' . $dateEventFormat . '  -  ' .$ronde->getAdresse(). ' à ' .$ronde->getVille();				
+					$annonce ->setTitre($titre)
+										  	 ->setContenu($contenu)
+										  	->setAuteur('Webmaster')
+										  	->setPublication(true);
+				
+				
+					$em = $this->getDoctrine()->getManager();
+					$em->persist($annonce);
+					$em->flush();
+					
+					$em = $this->getDoctrine()->getManager();				
+				}
+			
+				
+					
+				$ronde->setPoste(true);
+				$em->persist($ronde);
+				$em->flush();
+				
+			}
+			
+			return;
+					
 		}
 	}
 
