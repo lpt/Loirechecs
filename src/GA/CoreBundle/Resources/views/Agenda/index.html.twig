@@ -31,5 +31,5 @@
 			{% endif %}
     {% endfor %}
 		
-		<button type="button" class="btn btn-default">Export en PDF</button>
+		<a href="{{ path('ga_core_agenda', {'pdf': true})}}">Export en PDF</a>
 {% endblock %}

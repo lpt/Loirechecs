@@ -77,3 +77,10 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: GA\UserBundle\Entity\User
+
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:    []

@@ -13,12 +13,6 @@ class AgendaController extends Controller
 {
     public function indexAction()
     {
-			if(isset($_GET['pdf']) and $_GET['pdf'] == true)
-			{
-				$this->creePdf();
-				
-				return $this->render('GACoreBundle:Agenda:index.html.twig');
-			}
 			
 				$repository = $this->getDoctrine()
 				->getManager()
@@ -26,6 +20,23 @@ class AgendaController extends Controller
 			
 			
 			$listeAgenda  = $repository->findAll();
+			
+			if(isset($_GET['pdf']) and $_GET['pdf'] == true)
+			{									
+				$html = $this->renderView('GACoreBundle:Agenda:pdf.html.twig', array(
+												'listeAgenda'  => $listeAgenda
+												));
+
+				return new Response(
+							$this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+							200,
+							array(
+									'Content-Type'          => 'application/pdf',
+									'Content-Disposition'   => 'attachment; filename="file.pdf"'
+									)
+									);
+			}
+			
 			
        return $this->render('GACoreBundle:Agenda:index.html.twig', array('listeAgenda' => $listeAgenda));
     }
@@ -70,11 +81,6 @@ class AgendaController extends Controller
 		public function deleteAction()
 		{
 			return $this->render('GACoreBundle:Agenda:delete.html.twig');
-		}
-		
-		public function creerPdf()
-		{
-			return;
 		}
 		
 		public function navAction()

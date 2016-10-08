@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new GA\CoreBundle\GACoreBundle(),
 						new FOS\UserBundle\FOSUserBundle(),
             new GA\UserBundle\GAUserBundle(),
+						new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
