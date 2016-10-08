@@ -44,6 +44,8 @@ Listes des taches
 					- liste des evenement
 					
 					- creation PDF
+					
+					- bug d'affichage nav
 								
 
 -page erreur

@@ -29,7 +29,7 @@ class RondeType extends AbstractType
             ->add('dateEvent',	DateTimeType::class)
             ->add('adresse',		TextType::class)
             ->add('ville',			TextType::class)
-					//	->add('poste',				ChexkBoxType::class, array('data' => false,))
+					
 						
 						
 						

@@ -1,0 +1,17 @@
+{% extends "GACoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Agenda - {{ parent() }}
+{% endblock %}
+
+{% block core_body %}
+
+<h4> Ajouter un agenda  - <a href="{{ path('ga_core_agenda_add')}}">Ajouter une date</a></h4>
+
+<h4> Liste des dates </h4>
+	
+		{% for agenda in listeAgenda %}
+		agenda.nom
+    {% endfor %}
+	
+{% endblock %}

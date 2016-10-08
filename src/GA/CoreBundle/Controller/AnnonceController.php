@@ -4,6 +4,8 @@ namespace GA\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -28,42 +30,78 @@ use GA\CoreBundle\Form\ImageAddType;
 
 class AnnonceController extends Controller
 {
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
-			
+			// On poste les annonnces automatiques
 			$this->autoPoster();
+			
+			$response = new Response;
+			
 			// On renvoie une exeption si la page n'existe pas
 			if($page<1)
 			{
 				throw new notFoundHttpException('La page "'.$page.'" n\'existe pas.');
 			}
 			
-			$nbPerPage = 3;
+			if(isset($_GET['nbr'])){
+				
+				
+				$nbPerPage = intval($_GET['nbr']);
+				
+				$response->headers->setCookie(new Cookie('nbPerPage', $nbPerPage));
+				$response->send();
+				
+			}
 			
-			// On récupère le repository
+			
+	//		var_dump($_cookie);
+	//		exit();
+			
+			if(isset($_COOKIE['nbPerPage']) and !isset($_GET['nbr'])){
+				
+				$nbPerPage = intval($_COOKIE['nbPerPage']);
+				
+			}
+			
+			//Configuration du nombre d'annonce par page
+			if(!isset($nbPerPage)){
+			$nbPerPage = 5;
+			}
+						
+			// On récupère le repository Annonce
 			$repository = $this->getDoctrine()
 				->getManager()
 				->getRepository('GACoreBundle:Annonce');
-				
+			
+			// On récupère toutes les annnonces 
 			$listeAnnonce  = $repository->findListeAnnoncePost();
 			
+			//On récupère le nombre de pages d'annonce neccessaire
 			$nbPages = ceil(count($listeAnnonce) / $nbPerPage);
 			
 			if ($page > $nbPages) {
       throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
 			}
 			
-			// on récupère la liste des news
-					
+			//{% set key = [ 3 * page - 2 , 3 * page - 1 , 3 * page ]%}
+			$key = array();
+			for ($i = 1; $i <= $nbPerPage; $i++) {
+				$key[] = ($nbPerPage + 1 -$i) *  $page;
+			}
+		
+			// on récupère la liste des news		
       return $this->render('GACoreBundle:Annonce:index.html.twig', array(
       'listeAnnonce'	=> $listeAnnonce,
 			'nbPages'				=> $nbPages,
 			'page'					=> $page,
+			'key'						=> $key
 			));
     }
 		
 		public function adminAction()
 		{
+			
+			
 			$repository = $this->getDoctrine()
 					->getManager()
 					->getRepository('GACoreBundle:Annonce');
@@ -639,8 +677,6 @@ class AnnonceController extends Controller
 					$titre = $tournoi->getNom() . ' - Ronde N° ' .$ronde->getNumero();
 					$dateEvent= $ronde->getDateEvent();					
 					$dateEventFormat= 'le ' .$dateEvent->format('d'). '/'.$dateEvent->format('m'). '/'.$dateEvent->format('Y');
-				
-			//		$dateEventFormat = ' 5 Octrobre ';
 					$contenu = 'La ronde N°' .$ronde->getNumero(). ' aura lieu le ' . $dateEventFormat . '  -  ' .$ronde->getAdresse(). ' à ' .$ronde->getVille();				
 					$annonce ->setTitre($titre)
 										  	 ->setContenu($contenu)

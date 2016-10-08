@@ -1,13 +1,35 @@
 {% extends "GACoreBundle::layout.html.twig" %}
 
 {% block title %}
-  Calendrier - {{ parent() }}
+  Agenda - {{ parent() }}
 {% endblock %}
 
 {% block core_body %}
-
-  <h2>Calendrier</h2>
-
- <p> ici se trouvera la liste des evenments </p>
-
+	
+		{% for agenda in listeAgenda %}
+		{% if loop.first %}
+		<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Date</th>
+				 <th>Lieu</th>
+        <th> Contact</th>
+      </tr>
+    </thead>
+    <tbody>
+		{% endif %}
+      <tr>
+        <td> {{agenda.nom}}</td>
+        <td> {{ agenda.dateEvent|date('d/m/Y - H:i') }}</td>
+				<td> {{agenda.adresse}} - {{agenda.ville}} </td>
+        <td> {{agenda.contactNom}} - {{agenda.contactTph}} - <a mailto:"{{agenda.contactNom}} -">{{agenda.contactMail}}</a> </td>
+      </tr>
+			{% if loop.last %}
+			</tbody>
+			</table>
+			{% endif %}
+    {% endfor %}
+		
+		<button type="button" class="btn btn-default">Export en PDF</button>
 {% endblock %}
