@@ -13,6 +13,8 @@ class AgendaRepository extends \Doctrine\ORM\EntityRepository
 	public function findListeSaison()
 	{
 		$qb = $this->createQueryBuilder('a')->select('a.saison')->distinct(true);
+		
+		$qb->groupBy('a.saison');
 				
 		return $qb->getQuery()->getArrayResult();
 		

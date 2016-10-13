@@ -11,7 +11,7 @@ use GA\CoreBundle\Form\AgendaType;
 
 class AgendaController extends Controller
 {
-    public function indexAction()
+    public function indexAction($saison)
     {
 			
 				$repository = $this->getDoctrine()
@@ -38,7 +38,7 @@ class AgendaController extends Controller
 			}
 			
 			
-       return $this->render('GACoreBundle:Agenda:index.html.twig', array('listeAgenda' => $listeAgenda));
+       return $this->render('GACoreBundle:Agenda:index.html.twig', array('listeAgenda' => $listeAgenda, 'saison' => $saison));
     }
 		
 		public function adminAction()
@@ -91,7 +91,8 @@ class AgendaController extends Controller
 			
 			$listeSaison  = $repository->findListeSaison();		
 			
-			
+		//	var_dump($listeSaison);
+			//exit;
 			
 			if(isset($listeSaison)) 
 			{

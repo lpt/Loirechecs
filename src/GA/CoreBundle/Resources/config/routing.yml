@@ -75,7 +75,7 @@ ga_core_tournoi_delete:
         id: \d*
 
 ga_core_agenda:
-    path:     /agenda
+    path:     /agenda/{saison}
     defaults:
         _controller: GACoreBundle:Agenda:index 
 
@@ -83,6 +83,7 @@ ga_core_agenda_admin:
     path:     /admin/agenda
     defaults:
         _controller: GACoreBundle:Agenda:admin
+        requirements:
 
 ga_core_agenda_add:
     path:     /admin/agenda/add

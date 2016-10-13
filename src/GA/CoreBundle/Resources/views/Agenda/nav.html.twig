@@ -1,16 +1,12 @@
-<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Agenda <span class="caret"></span></a>
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">Agenda <span class="caret"></span></a>
 		<ul class="dropdown-menu">
 		{% for saisonArray in listeSaison %}	
-		
 	
-		{% for saison in saisonArray %}	
-			{% if loop.first%}
-		{% if isString(saison) %}
-		<li><a href="{{ path('ga_core_agenda')}}"> {{saison}}</li>
-		{% endif %}
-				{% endif %}
-		{% endfor %}					
+	<li><a href="{{ path('ga_core_agenda', {'saison': saisonArray.saison})}}">  {{saisonArray.saison}}</a></li>
 
 		{% endfor %}
+		
 		</ul>
 </li>
+
