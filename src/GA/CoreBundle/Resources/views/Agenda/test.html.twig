@@ -6,7 +6,7 @@
 
 {% block core_body %}
 	
-		{% for agenda in listeAgenda %}
+		{% for cal in calendrier %}
 		{% if loop.first %}
 		<table class="table table-striped">
     <thead>
@@ -19,17 +19,21 @@
     </thead>
     <tbody>
 		{% endif %}
+		
       <tr>
-        <td> {{agenda.nom}}</td>
+        <td> {{cal.nom}}</td>
       {#  <td> {{ agenda.dateEvent|date('d/m/Y - H:i') }}</td> #}
-				<td> {{agenda.adresse}} - {{agenda.ville}} </td>
+				<td> {{cal.adresse}} - {{cal.ville}} </td>
        {# <td> {{agenda.contactNom}} - {{agenda.contactTph}} - <a mailto:"{{agenda.contactNom}} -">{{agenda.contactMail}}</a> </td> #}
       </tr>
+			
 			{% if loop.last %}
 			</tbody>
 			</table>
 			{% endif %}
-    {% endfor %}
+			{% endfor %}
+			
+			
 		
-		<a href="{{ path('ga_core_agenda', {'pdf': true,'saison': saison})}}">Export en PDF</a>
+		
 {% endblock %}

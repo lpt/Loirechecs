@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Ronde
 {		
 		/**
-		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Tournoi", mappedBy="rondes")
+		* @ORM\ManyToMany(targetEntity="OC\PlatformBundle\Entity\Tournoi", mappedBy="ronde")
 		*/
 		private $tournois;
 		
@@ -204,7 +204,6 @@ class Ronde
     {
         $this->liens = new \Doctrine\Common\Collections\ArrayCollection();
 				$this->resultats = new \Doctrine\Common\Collections\ArrayCollection();
-				$this->applications = new \Doctrine\Common\CollectionsArrayCollection();
     }
 
     /**
@@ -333,41 +332,5 @@ class Ronde
     public function getPoste()
     {
         return $this->poste;
-    }
-
-    /**
-     * Add tournois
-     *
-     * @param \OC\PlatformBundle\Entity\Tournoi $tournois
-     *
-     * @return Ronde
-     */
-    public function addTournois(\GA\CoreBundle\Entity\Tournoi $tournoi)
-    {
-        $this->tournois[] = $tournoi;
-				
-				$tournoi->setRonde($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove tournois
-     *
-     * @param \OC\PlatformBundle\Entity\Tournoi $tournois
-     */
-    public function removeTournois(\GA\CoreBundle\Entity\Tournoi $tournoi)
-    {
-        $this->tournois->removeElement($tournoi);
-    }
-
-    /**
-     * Get tournois
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTournois()
-    {
-        return $this->tournois;
     }
 }

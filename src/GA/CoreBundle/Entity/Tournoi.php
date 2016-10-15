@@ -16,7 +16,7 @@ class Tournoi
 		
    
 		/**
-		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist", "remove"})
+		* @ORM\ManyToMany(targetEntity="GA\CoreBundle\Entity\Ronde", cascade={"persist", "remove"}, inversedBy="tournois")
 		* @Assert\Valid()
 		*/
 		private $rondes; 

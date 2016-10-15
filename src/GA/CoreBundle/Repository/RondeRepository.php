@@ -31,4 +31,21 @@ class RondeRepository extends \Doctrine\ORM\EntityRepository
 		return $qb->getQuery()->getArrayResult();
 		}
 		
+	public function findRondeBySaison(Array $saison)
+	{
+		$qb = $this->createQueryBuilder('r');
+
+   
+    $qb
+      ->join('r.tournois', 't')
+      ->addSelect('t')
+    ;
+
+    $qb->where($qb->expr()->in('t.saison', $saison));
+    
+    return $qb
+      ->getQuery()
+      ->getResult();
+			
+	}
 }

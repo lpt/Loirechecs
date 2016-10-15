@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use GA\CoreBundle\Entity\Agenda;
 use GA\CoreBundle\Form\AgendaType;
+//use GA\CoreBundle\Stock;
 
 class AgendaController extends Controller
 {
@@ -91,8 +92,7 @@ class AgendaController extends Controller
 			
 			$listeSaison  = $repository->findListeSaison();		
 			
-		//	var_dump($listeSaison);
-			//exit;
+		
 			
 			if(isset($listeSaison)) 
 			{
@@ -105,4 +105,68 @@ class AgendaController extends Controller
 			 
 																														
 		}
+		
+		public function testAction()
+		{
+						
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Ronde');
+			
+			$saisonArray = array('2016-2017');
+			$rondes = $repository->findRondeBySaison($saisonArray);
+			
+			foreach($rondes as $ronde)
+			{
+				$tournois = $ronde->getTournois();
+			
+			foreach($tournois as $tournoi)
+			{
+			$nom = $tournoi->getNom();
+			}
+			
+			
+			$adr = $ronde->getAdresse();
+			$numero = $ronde->getNumero();
+			$ville = $ronde->getVille();
+			$nomCal = $nom.' - Ronde N° '.$numero;
+						
+			$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+			end($calendrier)->setNom($nomCal);
+			end($calendrier)	->setVille($ville);
+			end($calendrier) ->setAdresse($adr);
+			
+			}			
+						
+						
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('GACoreBundle:Agenda');
+			
+			$listeAgenda  = $repository->findAll();
+			
+			foreach($listeAgenda as $agenda)
+			{
+				$adr = $agenda->getAdresse();
+				$ville = $agenda->getVille();
+				$nomCal = $agenda->getNom();
+				
+				$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+				end($calendrier)->setNom($nomCal);
+				end($calendrier)	->setVille($ville);
+				end($calendrier) ->setAdresse($adr);
+			}
+			
+			usort($calendrier, array('GA\CoreBundle\Controller\AgendaController','comparer'));
+						
+			 return $this->render('GACoreBundle:Agenda:test.html.twig', array('calendrier' => $calendrier));
+		}
+		
+		public function comparer($a, $b)
+		{
+			return strcmp($a->getNom(), $b->getNom());
+		}
+		
+		
+		
 }

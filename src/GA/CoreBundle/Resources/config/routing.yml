@@ -247,7 +247,7 @@ ga_core_tournoi_id_admin:
         requirements:
         id: \d*
 
-ga_core_tournoi_test:
+ga_core_agenda_test:
     path:     /test
     defaults:
-        _controller: GACoreBundle:Annonce:test
+        _controller: GACoreBundle:Agenda:test
