@@ -1,9 +1,9 @@
 <li class="dropdown">
 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Agenda <span class="caret"></span></a>
 		<ul class="dropdown-menu">
-		{% for saisonArray in listeSaison %}	
+		{% for saison in listeSaison %}	
 	
-	<li><a href="{{ path('ga_core_agenda', {'saison': saisonArray.saison})}}">  {{saisonArray.saison}}</a></li>
+	<li><a href="{{ path('ga_core_agenda', {'saison': saison})}}">  {{saison}}</a></li>
 
 		{% endfor %}
 		

@@ -151,11 +151,47 @@ class AgendaController extends Controller
 		
 		public function navAction()
 		{
-			 $repository = $this->getDoctrine()
+			 $listeSaison = array();
+			
+			$repository = $this->getDoctrine()
 					->getManager()
 					->getRepository('GACoreBundle:Agenda');
 			
-			$listeSaison  = $repository->findListeSaison();		
+			$agendas  = $repository->findAll();		
+			
+			foreach($agendas as $agenda)
+			{
+				$saisonTemp = $agenda->getSaison();			
+				
+				if (!in_array($saisonTemp , $listeSaison)) {
+					$listeSaison[] = $agenda->getSaison();
+				}
+			}
+						
+			$repository = $this->getDoctrine()
+			->getManager()
+			->getRepository('GACoreBundle:Ronde');
+					
+			$rondes =		$repository-> findAll();
+			
+			
+		
+			foreach($rondes as $ronde)
+			{
+			
+			$tournois = $ronde->getTournois();
+							
+			foreach($tournois as $tournoi)
+			{
+				
+				$saisonTemp = $tournoi->getSaison();
+				
+				if (!in_array($saisonTemp , $listeSaison)) {
+					$listeSaison[] = $tournoi->getSaison();
+				}
+			}
+			
+			}	
 			
 		
 			
@@ -173,7 +209,47 @@ class AgendaController extends Controller
 		
 		public function testAction()
 		{
+			$saison = array();
 			
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Agenda');
+			
+			$agendas  = $repository->findAll();		
+			
+			foreach($agendas as $agenda)
+			{
+				$saisonTemp = $agenda->getSaison();			
+				
+				if (!in_array($saisonTemp , $saison)) {
+					$saison[] = $agenda->getSaison();
+				}
+			}
+						
+			$repository = $this->getDoctrine()
+			->getManager()
+			->getRepository('GACoreBundle:Ronde');
+					
+			$rondes =		$repository-> findAll();
+			
+			
+		
+			foreach($rondes as $ronde)
+			{
+			
+			$tournois = $ronde->getTournois();
+							
+			foreach($tournois as $tournoi)
+			{
+				
+				$saisonTemp = $tournoi->getSaison();
+				
+				if (!in_array($saisonTemp , $saison)) {
+					$saison[] = $tournoi->getSaison();
+				}
+			}
+			
+			}
 						
 			 return $this->render('ga_core_annonce');
 		}
