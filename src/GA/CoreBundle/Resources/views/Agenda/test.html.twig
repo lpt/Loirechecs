@@ -12,9 +12,10 @@
     <thead>
       <tr>
         <th>Nom</th>
-        {#<th>Date</th>#}
+        <th>Date</th>
 				 <th>Lieu</th>
-       {# <th> Contact</th> #}
+        <th> Contact</th> 
+				
       </tr>
     </thead>
     <tbody>
@@ -22,10 +23,11 @@
 		
       <tr>
         <td> {{cal.nom}}</td>
-      {#  <td> {{ agenda.dateEvent|date('d/m/Y - H:i') }}</td> #}
+				<td> {{cal.jourEvent}} {{ cal.dateEvent|date('d') }} {{cal.moisEvent}} {{ cal.dateEvent|date('Y - H:i') }}</td> 
 				<td> {{cal.adresse}} - {{cal.ville}} </td>
-       {# <td> {{agenda.contactNom}} - {{agenda.contactTph}} - <a mailto:"{{agenda.contactNom}} -">{{agenda.contactMail}}</a> </td> #}
-      </tr>
+        <td> {{cal.contactNom}} - {{cal.contactTph}} - <a mailto:"{{cal.contactNom}} -">{{cal.contactMail}}</a> </td> 
+				
+				</tr>
 			
 			{% if loop.last %}
 			</tbody>

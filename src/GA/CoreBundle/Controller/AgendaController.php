@@ -8,19 +8,84 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use GA\CoreBundle\Entity\Agenda;
 use GA\CoreBundle\Form\AgendaType;
-//use GA\CoreBundle\Stock;
+
 
 class AgendaController extends Controller
 {
     public function indexAction($saison)
     {
 			
-				$repository = $this->getDoctrine()
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Ronde');
+			
+			$saisonArray = array($saison);
+			
+			$rondes = $repository->findRondeBySaison($saisonArray);
+			
+			foreach($rondes as $ronde)
+			{
+				$tournois = $ronde->getTournois();
+			
+			foreach($tournois as $tournoi)
+			{
+			$nom = $tournoi->getNom();
+			$description = $tournoi-> getDescription();
+			$contactMail = $tournoi-> getContactMail();
+			$contactTph = $tournoi-> getContactTph();
+			$contactNom = $tournoi-> getContactNom();
+			}
+			
+			$dateEvent = $ronde->getDateEvent();
+			$adresse = $ronde->getAdresse();
+			$numero = $ronde->getNumero();
+			$ville = $ronde->getVille();
+			$nomCal = $nom.' - Ronde N° '.$numero;
+						
+			$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+			end($calendrier)->setNom($nomCal);
+			end($calendrier)	->setVille($ville);
+			end($calendrier) ->setAdresse($adresse);
+			end($calendrier) ->setContactNom($contactNom);
+			end($calendrier) ->setContactMail($contactMail);
+			end($calendrier) ->setContactTph($contactTph);
+			end($calendrier) ->setDescription($description);
+			end($calendrier) ->setDateEvent($dateEvent);
+			
+			}			
+						
+						
+			$repository = $this->getDoctrine()
 				->getManager()
 				->getRepository('GACoreBundle:Agenda');
 			
+			$listeAgenda  = $repository->findAgendaBySaison($saison);
 			
-			$listeAgenda  = $repository->findAll();
+			foreach($listeAgenda as $agenda)
+			{
+				$adresseCal = $agenda->getAdresse();
+				$villeCal = $agenda->getVille();
+				$nomCal = $agenda->getNom();
+				$contactNomCal = $agenda->getContactNom();
+				$contactMailCal = $agenda->getContactMail();
+				$contactTphCal = $agenda->getContactTph();
+				$dateEventCal = $agenda->getDateEvent();
+				$descriptionCal= $agenda->getDescription();
+				
+				$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+				end($calendrier)->setNom($nomCal);
+				end($calendrier)	->setVille($villeCal);
+				end($calendrier) ->setAdresse($adresseCal);
+				end($calendrier) ->setContactNom($contactNomCal);
+				end($calendrier) ->setContactTph($contactTphCal);
+				end($calendrier) ->setContactMail($contactMailCal);
+				end($calendrier) ->setDescription($descriptionCal);
+				end($calendrier) ->setDateEvent($dateEventCal);
+			}
+			
+			usort($calendrier, array('GA\CoreBundle\Controller\AgendaController','comparer'));
+						
+			 return $this->render('GACoreBundle:Agenda:test.html.twig', array('calendrier' => $calendrier));
 			
 			if(isset($_GET['pdf']) and $_GET['pdf'] == true)
 			{									
@@ -38,8 +103,8 @@ class AgendaController extends Controller
 									);
 			}
 			
-			
-       return $this->render('GACoreBundle:Agenda:index.html.twig', array('listeAgenda' => $listeAgenda, 'saison' => $saison));
+			 return $this->render('GACoreBundle:Agenda:test.html.twig', array('calendrier' => $calendrier, 'saison' => $saison));
+     
     }
 		
 		public function adminAction()
@@ -108,65 +173,18 @@ class AgendaController extends Controller
 		
 		public function testAction()
 		{
+			
 						
-			$repository = $this->getDoctrine()
-					->getManager()
-					->getRepository('GACoreBundle:Ronde');
-			
-			$saisonArray = array('2016-2017');
-			$rondes = $repository->findRondeBySaison($saisonArray);
-			
-			foreach($rondes as $ronde)
-			{
-				$tournois = $ronde->getTournois();
-			
-			foreach($tournois as $tournoi)
-			{
-			$nom = $tournoi->getNom();
-			}
-			
-			
-			$adr = $ronde->getAdresse();
-			$numero = $ronde->getNumero();
-			$ville = $ronde->getVille();
-			$nomCal = $nom.' - Ronde N° '.$numero;
-						
-			$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
-			end($calendrier)->setNom($nomCal);
-			end($calendrier)	->setVille($ville);
-			end($calendrier) ->setAdresse($adr);
-			
-			}			
-						
-						
-			$repository = $this->getDoctrine()
-				->getManager()
-				->getRepository('GACoreBundle:Agenda');
-			
-			$listeAgenda  = $repository->findAll();
-			
-			foreach($listeAgenda as $agenda)
-			{
-				$adr = $agenda->getAdresse();
-				$ville = $agenda->getVille();
-				$nomCal = $agenda->getNom();
-				
-				$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
-				end($calendrier)->setNom($nomCal);
-				end($calendrier)	->setVille($ville);
-				end($calendrier) ->setAdresse($adr);
-			}
-			
-			usort($calendrier, array('GA\CoreBundle\Controller\AgendaController','comparer'));
-						
-			 return $this->render('GACoreBundle:Agenda:test.html.twig', array('calendrier' => $calendrier));
+			 return $this->render('ga_core_annonce');
 		}
 		
 		public function comparer($a, $b)
 		{
-			return strcmp($a->getNom(), $b->getNom());
+						
+			return gmp_cmp($a->getDateEventTime(), $b->getDateEventTime());
+			
+			;
 		}
 		
-		
-		
+			
 }

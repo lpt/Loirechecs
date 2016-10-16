@@ -20,7 +20,7 @@ class AgendaRepository extends \Doctrine\ORM\EntityRepository
 		
 	}
 	
-	public function findTournoiBySaisonAdulte($saison)
+		public function findAgendaBySaison($saison)
 	{
 		$qb = $this->createQueryBuilder('a');
 		
@@ -28,6 +28,6 @@ class AgendaRepository extends \Doctrine\ORM\EntityRepository
 								->setParameter('saison', $saison)
 		;
 		
-		return $qb->getQuery()->getArrayResult();
+		return $qb->getQuery()->getResult();
 		}
 }
