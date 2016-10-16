@@ -7,31 +7,36 @@
 	</head>
 <body>
 		
-		{% for agenda in listeAgenda %}
+		{% for cal in calendrier %}
 		{% if loop.first %}
-		<h2> Calendrier saison {{agenda.saison}}  </h2>
+		<h2> Calendrier saison {{saison}}</h2>
 		<table class="table table-striped">
     <thead>
       <tr>
-        <th><strong>Date</strong></th>
-				<th>Nom</th>
-        <th>Lieu</th>
-        <th> Contact</th>
+        <th>Nom</th>
+        <th>Date</th>
+				 <th>Lieu</th>
+        <th> Contact</th> 
+				
       </tr>
     </thead>
     <tbody>
 		{% endif %}
+		
       <tr>
-       <td><strong> {{ agenda.dateEvent|date('d/m/Y - H:i') }}</strong></td>
-			 <td> {{agenda.nom}}</td>
-        <td> {{agenda.adresse}} - {{agenda.ville}} </td>
-        <td> {{agenda.contactNom}} - {{agenda.contactTph}} - <a mailto:"{{agenda.contactNom}} -">{{agenda.contactMail}}</a> </td>
-      </tr>
+        <td> {{cal.nom}}</td>
+				<td> {{cal.jourEvent}} {{ cal.dateEvent|date('d') }} {{cal.moisEvent}} {{ cal.dateEvent|date('Y - H:i') }}</td> 
+				<td> {{cal.adresse}} - {{cal.ville}} </td>
+        <td> {{cal.contactNom}} - {{cal.contactTph}} - <a mailto:"{{cal.contactNom}} -">{{cal.contactMail}}</a> </td> 
+				
+				</tr>
+			
 			{% if loop.last %}
 			</tbody>
 			</table>
 			{% endif %}
-    {% endfor %}
+			{% endfor %}
+			
 
 </body>
 </htmL>

@@ -85,12 +85,12 @@ class AgendaController extends Controller
 			
 			usort($calendrier, array('GA\CoreBundle\Controller\AgendaController','comparer'));
 						
-			 return $this->render('GACoreBundle:Agenda:test.html.twig', array('calendrier' => $calendrier));
+			 
 			
 			if(isset($_GET['pdf']) and $_GET['pdf'] == true)
 			{									
 				$html = $this->renderView('GACoreBundle:Agenda:pdf.html.twig', array(
-												'listeAgenda'  => $listeAgenda
+												'calendrier'  => $calendrier, 'saison' => $saison
 												));
 
 				return new Response(
@@ -103,7 +103,7 @@ class AgendaController extends Controller
 									);
 			}
 			
-			 return $this->render('GACoreBundle:Agenda:test.html.twig', array('calendrier' => $calendrier, 'saison' => $saison));
+			 return $this->render('GACoreBundle:Agenda:index.html.twig', array('calendrier' => $calendrier, 'saison' => $saison));
      
     }
 		
@@ -149,6 +149,71 @@ class AgendaController extends Controller
 			return $this->render('GACoreBundle:Agenda:delete.html.twig');
 		}
 		
+		public function annonceAction()
+		{
+			$repository = $this->getDoctrine()
+					->getManager()
+					->getRepository('GACoreBundle:Ronde');
+			
+			$saison = '2016-2017';
+			$saisonArray = array($saison);
+			
+			$rondes = $repository->findRondeBySaison($saisonArray);
+			
+			foreach($rondes as $ronde)
+			{
+				$tournois = $ronde->getTournois();
+			
+			foreach($tournois as $tournoi)
+			{
+			$nom = $tournoi->getNom();
+			}
+			
+			$dateEvent = $ronde->getDateEvent();
+			$numero = $ronde->getNumero();
+			$nomCal = $nom.' - Ronde N° '.$numero;
+						
+			$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+			end($calendrier)->setNom($nomCal);
+			end($calendrier) ->setDateEvent($dateEvent);
+			
+			}			
+									
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('GACoreBundle:Agenda');
+			
+			$listeAgenda  = $repository->findAgendaBySaison($saison);
+			
+			foreach($listeAgenda as $agenda)
+			{
+				$nomCal = $agenda->getNom();
+				$dateEventCal = $agenda->getDateEvent();
+								
+				$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+				end($calendrier)->setNom($nomCal);
+				end($calendrier) ->setDateEvent($dateEventCal);
+			}
+			
+			usort($calendrier, array('GA\CoreBundle\Controller\AgendaController','comparer'));			
+			
+			$now =time();
+			$calendrierTemp = array();
+			
+			foreach($calendrier as $evenement)
+			{
+				if($evenement->getDateEventTime() >= $now AND key($calendrierTemp) < 3)
+				{
+					$calendrierTemp[] = new \GA\CoreBundle\Stock\Calendrier;
+					end($calendrierTemp)->setNom($evenement->getNom());
+					end($calendrierTemp) ->setDateEvent($evenement->getDateEvent());
+				}
+			}
+			
+			
+			 return $this->render('GACoreBundle:Agenda:annonce.html.twig', array('calendrier' => $calendrierTemp));
+				
+		}
 		public function navAction()
 		{
 			 $listeSaison = array();
@@ -209,49 +274,68 @@ class AgendaController extends Controller
 		
 		public function testAction()
 		{
-			$saison = array();
-			
+						
 			$repository = $this->getDoctrine()
 					->getManager()
-					->getRepository('GACoreBundle:Agenda');
+					->getRepository('GACoreBundle:Ronde');
 			
-			$agendas  = $repository->findAll();		
+			$saison = '2016-2017';
+			$saisonArray = array($saison);
 			
-			foreach($agendas as $agenda)
-			{
-				$saisonTemp = $agenda->getSaison();			
-				
-				if (!in_array($saisonTemp , $saison)) {
-					$saison[] = $agenda->getSaison();
-				}
-			}
-						
-			$repository = $this->getDoctrine()
-			->getManager()
-			->getRepository('GACoreBundle:Ronde');
-					
-			$rondes =		$repository-> findAll();
+			$rondes = $repository->findRondeBySaison($saisonArray);
 			
-			
-		
 			foreach($rondes as $ronde)
 			{
+				$tournois = $ronde->getTournois();
 			
-			$tournois = $ronde->getTournois();
-							
 			foreach($tournois as $tournoi)
 			{
-				
-				$saisonTemp = $tournoi->getSaison();
-				
-				if (!in_array($saisonTemp , $saison)) {
-					$saison[] = $tournoi->getSaison();
+			$nom = $tournoi->getNom();
+			}
+			
+			$dateEvent = $ronde->getDateEvent();
+			$numero = $ronde->getNumero();
+			$nomCal = $nom.' - Ronde N° '.$numero;
+						
+			$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+			end($calendrier)->setNom($nomCal);
+			end($calendrier) ->setDateEvent($dateEvent);
+			
+			}			
+									
+			$repository = $this->getDoctrine()
+				->getManager()
+				->getRepository('GACoreBundle:Agenda');
+			
+			$listeAgenda  = $repository->findAgendaBySaison($saison);
+			
+			foreach($listeAgenda as $agenda)
+			{
+				$nomCal = $agenda->getNom();
+				$dateEventCal = $agenda->getDateEvent();
+								
+				$calendrier[] = new \GA\CoreBundle\Stock\Calendrier;
+				end($calendrier)->setNom($nomCal);
+				end($calendrier) ->setDateEvent($dateEventCal);
+			}
+			
+			usort($calendrier, array('GA\CoreBundle\Controller\AgendaController','comparer'));			
+			
+			$now =time();
+			$calendrierTemp = array();
+			
+			foreach($calendrier as $evenement)
+			{
+				if($evenement->getDateEventTime() >= $now AND key($calendrierTemp) < 2)
+				{
+					$calendrierTemp[] = new \GA\CoreBundle\Stock\Calendrier;
+					end($calendrierTemp)->setNom($evenement->getNom());
+					end($calendrierTemp) ->setDateEvent($evenement->getDateEvent());
 				}
 			}
 			
-			}
-						
-			 return $this->render('ga_core_annonce');
+			
+			  return $this->render('GACoreBundle:Agenda:annonce.html.twig', array('calendrier' => $calendrierTemp));
 		}
 		
 		public function comparer($a, $b)
@@ -259,7 +343,6 @@ class AgendaController extends Controller
 						
 			return gmp_cmp($a->getDateEventTime(), $b->getDateEventTime());
 			
-			;
 		}
 		
 			

@@ -68,21 +68,7 @@
 	
 		<!--inclusion des 3 prochains évenements -->
 		
-			<div class="well well-sm" >
-					<h4>Prochains évenements</h4>						
-						<div class="alert alert-success">
-   						<p> <strong>Samedi 28 mai</strong></p>
-  						<p> Blitz de St Chamond</p>
- 						</div>
-						<div class="alert alert-success">
-   						<p> <strong>Dimanche 5 juin  </strong></p>
-  						<p> Coupe de la Loire</p>
- 						</div>
-						<div class="alert alert-success">
-   						<p> <strong>Samedi 11 juin  </strong></p>
-  						<p> Open de Saint Just</p>
- 						</div>
-			</div>
+			{{ render(controller("GACoreBundle:Agenda:annonce")) }}
 			
 			<div class="well well-sm" >						
 				<h4>Les clubs </h4>
